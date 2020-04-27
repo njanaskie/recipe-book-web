@@ -1,8 +1,9 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useEffect } from 'react'
 import AddIngredientForm from './AddIngredientForm'
 import IngredientsList from './IngredientsList'
 import ingredientsReducer from '../../reducers/ingredients'
 import IngredientsContext from '../../../context/ingredients-context'
+import database from '../../firebase/firebase'
 
 const IngredientsPage = () => {
     const [ingredients, dispatch] = useReducer(ingredientsReducer, [])

@@ -6,8 +6,8 @@ import database from '../../firebase/firebase'
 
 const AddIngredientForm = () => {
     const [name, setName] = useState('')
-    const [category, setCategory] = useState('')
-    const [price, setPrice] = useState('')
+    const [category, setCategory] = useState('dairy')
+    const [price, setPrice] = useState('1')
     const { dispatch } = useContext(IngredientsContext)
 
     const addIngredient = (e) => {
@@ -38,20 +38,39 @@ const AddIngredientForm = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                 />
-                <input
-                    type='text'
-                    placeholder='Category'
-                    autoFocus
+                <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                />
-                <input
-                    type='text'
-                    placeholder='Price'
-                    autoFocus
+                >
+                    <option value='dairy'>Dairy</option>
+                    <option value='meats'>Meats</option>
+                    <option value='seafood'>Seafood</option>
+                    <option value='vegetables'>Vegetables</option>
+                    <option value='fruit'>Fruit</option>
+                    <option value='baking and grains'>Baking and Grains</option>
+                    <option value='added sweeteners'>Added Sweeteners</option>
+                    <option value='condiments'>Condiments</option>
+                    <option value='spices'>Spices</option>
+                    <option value='fish'>Fish</option>
+                    <option value='oils'>Oils</option>
+                    <option value='seasonings'>Seasonings</option>
+                    <option value='sauces'>Sauces</option>
+                    <option value='legumes'>Legumes</option>
+                    <option value='alcohol'>Alcohol</option>
+                    <option value='soup'>Soup</option>
+                    <option value='nuts'>Nuts</option>
+                    <option value='dairy alternatives'>Dairy Alternatives</option>
+                    <option value='desserts and snacks'>Desserts and Snacks</option>
+                    <option value='beverages'>Beverages</option>
+                </select> 
+                <select
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
-                />
+                >
+                    <option value='1'>1</option>
+                    <option value='2'>2</option>
+                    <option value='3'>3</option>
+                </select>
                 <button>Add Ingredient</button>
             </form>
         </div>
