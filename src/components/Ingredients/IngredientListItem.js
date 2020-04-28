@@ -6,9 +6,8 @@ const IngredientListItem = ({ ingredient }) => {
   const { dispatch } = useContext(IngredientsContext) 
 
   const removeIngredient = () => {
-
-    database.ref(`ingredients/${ingredient.id}`).remove().then(() => {
-      dispatch({ type: 'REMOVE_INGREDIENT', ingredient: ingredient.id })
+    database.collection('ingredients').doc(ingredient.id).delete().then(() => {
+      dispatch({ type: 'REMOVE_INGREDIENT', id: ingredient.id })
     })
   }
 

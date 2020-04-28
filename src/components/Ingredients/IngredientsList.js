@@ -3,25 +3,30 @@ import IngredientListItem from './IngredientListItem'
 import IngredientsContext from '../../../context/ingredients-context'
 import database from '../../firebase/firebase'
 
-const IngredientsList = () => {
+const useIngredients = () => {
     const { ingredients, dispatch } = useContext(IngredientsContext)
 
     useEffect(() => {
-        database.ref('ingredients')
-        .once('value')
+        const unsubscribe = database.collection('ingredients')
+        .get()
         .then((snapshot) => {
-            const ingredients = [];
-
-            snapshot.forEach((childSnapshot) => {
-                ingredients.push({
-                    id: childSnapshot.key,
-                    ...childSnapshot.val()
-                });
-            });
+            const ingredients = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data()
+                }))
 
             dispatch({ type: 'SET_INGREDIENTS', ingredients})
             });
-        }, [ingredients])
+
+        return () => unsubscribe()
+        
+        }, [])
+
+    return ingredients
+}
+
+const IngredientsList = () => {
+    const ingredients = useIngredients()
 
     return (
         <div>

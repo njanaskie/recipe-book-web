@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import IngredientsContext from '../../../context/ingredients-context'
 import database from '../../firebase/firebase'
 
@@ -18,7 +17,7 @@ const AddIngredientForm = () => {
             price
         }
 
-        database.ref('ingredients').push(ingredient).then((ref) => {
+        database.collection('ingredients').add(ingredient).then((ref) => {
             dispatch(({ type: 'ADD_INGREDIENT', ingredient: {id: ref.key, ...ingredient} }))
         })
 
