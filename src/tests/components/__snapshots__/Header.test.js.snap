@@ -10,14 +10,14 @@ exports[`should render Header correctly 1`] = `
     <div
       className="header__content"
     >
-      <Link
+      <[object Object]
         className="header__title"
         to="/dashboard"
       >
         <h1>
-          Boilerplate
+          Recipe App
         </h1>
-      </Link>
+      </[object Object]>
       <button
         className="button button__link"
         onClick={[Function]}

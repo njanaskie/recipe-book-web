@@ -29,15 +29,8 @@ const useIngredients = () => {
 
 const IngredientsList = () => {
     const ingredients = useIngredients()
-    console.log(ingredients)
-
-//     const groupedIngredients = ingredients.reduce((acc, { category, name, price, id }) => {
-//         (acc[category] = acc[category] || []).push(name)
-//         return acc
-//     }, {})
 
     const groupedIngredients = _.groupBy(ingredients, 'category')
-    console.log(groupedIngredients)
 
     return (
         <div>

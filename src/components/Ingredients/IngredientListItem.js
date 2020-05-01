@@ -2,6 +2,11 @@ import React, { useContext, useState, useEffect } from 'react'
 import IngredientsContext from '../../../context/ingredients-context'
 import database from '../../firebase/firebase'
 
+// // Add this in your component file
+// require('react-dom');
+// window.React2 = require('react');
+// console.log(window.React1 === window.React2);
+
 const IngredientListItem = ({ ingredient }) => {
   const { dispatch } = useContext(IngredientsContext) 
 
