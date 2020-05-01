@@ -12,7 +12,7 @@ const IngredientListItem = ({ ingredient }) => {
   }
 
   return (
-    <div className='list-item'>
+    <div className='list-item' >
       <h3>{ingredient.name}</h3>
       <p>{ingredient.category}</p>
       <p>{ingredient.price}</p>
