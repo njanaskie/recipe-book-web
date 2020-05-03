@@ -27,7 +27,7 @@ const useIngredients = () => {
     return ingredients
 }
 
-const IngredientsList = () => {
+export const IngredientsList = () => {
     const ingredients = useIngredients()
 
     const groupedIngredients = _.groupBy(ingredients, 'category')

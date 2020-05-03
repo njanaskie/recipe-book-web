@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render IngredientsPage correctly 1`] = `
+<[object Object]
+  value={
+    Object {
+      "dispatch": [Function],
+      "ingredients": Array [],
+    }
+  }
+>
+  <h3>
+    Ingredients Page
+  </h3>
+  <AddIngredientForm />
+  <IngredientsList />
+</[object Object]>
+`;

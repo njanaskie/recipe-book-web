@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render IngredientListItem with ingredient 1`] = `
+<IngredientListItem
+  category="Dairy"
+  id="3"
+  name="Yoghurt"
+  price={2}
+/>
+`;

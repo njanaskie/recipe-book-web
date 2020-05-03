@@ -8,7 +8,7 @@ import database from '../../firebase/firebase'
 // console.log(window.React1 === window.React2);
 
 const IngredientListItem = ({ ingredient }) => {
-  const { dispatch } = useContext(IngredientsContext) 
+  const { dispatch } = useContext(IngredientsContext)
 
   const removeIngredient = () => {
     database.collection('ingredients').doc(ingredient.id).delete().then(() => {
