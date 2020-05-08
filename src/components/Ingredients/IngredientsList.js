@@ -3,13 +3,14 @@ import _ from 'lodash'
 import IngredientListItem from './IngredientListItem'
 import IngredientListHeader from './IngredientListHeader'
 import IngredientsContext from '../../../context/ingredients-context'
+import PantryContext from '../../../context/pantry-context'
 import database from '../../firebase/firebase'
 
 const useIngredients = () => {
     const { ingredients, dispatch } = useContext(IngredientsContext)
 
     useEffect(() => {
-        const unsubscribe = database.collection('ingredients')
+        database.collection('ingredients')
         .get()
         .then((snapshot) => {
             const ingredients = snapshot.docs.map((doc) => ({
@@ -19,16 +20,27 @@ const useIngredients = () => {
 
             dispatch({ type: 'SET_INGREDIENTS', ingredients})
             });
-
-        return () => unsubscribe()
         
         }, [])
 
     return ingredients
 }
 
+const usePantryIngredients = () => {
+    const { pantryIngredients, pantryDispatch } = useContext(PantryContext)
+
+    useEffect(() => {
+        pantryDispatch({ type: 'SET_PANTRY_INGREDIENTS', pantryIngredients})
+
+        console.log(pantryIngredients)
+    }, [pantryIngredients])
+
+    return pantryIngredients
+}
+
 export const IngredientsList = () => {
     const ingredients = useIngredients()
+    const pantryIngredients = usePantryIngredients()
 
     const groupedIngredients = _.groupBy(ingredients, 'category')
 
@@ -46,7 +58,6 @@ export const IngredientsList = () => {
                                 <IngredientListHeader category={category} />
                                 {groupedIngredients[category].map((ingredient, id) => {
                                     return (
-                                        // <div key={name}>x</div>
                                         <IngredientListItem key={id} ingredient={ingredient} />
                                     )
                                 })}

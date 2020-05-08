@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { startLogout } from '../actions/auth';
+import { firebase } from '../firebase/firebase';
 
 export const Header = ({ startLogout }) => (
     <header className="header">
@@ -10,7 +11,7 @@ export const Header = ({ startLogout }) => (
                 <Link className="header__title" to='/dashboard' >
                     <h1>Recipe App</h1>
                 </Link>
-                <button className="button button__link" onClick={startLogout}>Logout</button>
+                <button className="button button__link" onClick={() => firebase.auth().signOut()}>Logout</button>
             </div>
         </div>
     </header>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import AppRouter, { history } from './routers/AppRouter';
@@ -9,8 +9,9 @@ import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
 import { firebase } from './firebase/firebase';
 import LoadingPage from './components/LoadingPage';
+import FirebaseContext, { FirebaseProvider }from '../context/firebase-context'
 
-const store = configureStore();
+const store = configureStore()
 
 const jsx = (
     <Provider store={store}>
@@ -26,19 +27,40 @@ const renderApp = () => {
     }
 };
 
-ReactDOM.render(<LoadingPage />, document.getElementById('app'));
+ReactDOM.render(jsx, document.getElementById('app'));
+// ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
-firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-        store.dispatch(login(user.uid));
-        renderApp();
-        if (history.location.pathname === '/') {
-            history.push('/dashboard')
-        }
-    } else {
-        store.dispatch(logout());
-        renderApp();
-        history.push('/');
-    }
-});
+
+// const useAuthChange = () => {
+//     const { user } = useContext(FirebaseContext)
+
+//     if (user) {
+//         if (history.location.pathname === '/') {
+//             history.push('/dashboard')
+
+//         return renderApp();
+//         } 
+//     } else {
+//         // store.dispatch(logout());
+//         history.push('/');
+
+//         return renderApp();
+//     }
+// }
+
+// firebase.auth().onAuthStateChanged((user) => {
+//     if (user) {
+//         // store.dispatch(login(user.uid));
+//         renderApp();
+//         // if (history.location.pathname === '/') {
+//         //     history.push('/dashboard')
+//         // }
+//     } else {
+//         // store.dispatch(logout());
+//         renderApp();
+//         // history.push('/');
+//     }
+// });
+
+
 

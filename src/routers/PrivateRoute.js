@@ -1,27 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import Header from '../components/Header';
+import FirebaseContext from '../../context/firebase-context'
 
 export const PrivateRoute = ({
-    isAuthenticated,
     component: Component,
     ...rest
-}) => (
-    <Route {...rest} component={(props) => (
-        isAuthenticated ? (
-            <div>
-                <Header />
-                <Component {...props}/>
-            </div>
-        ) : (
-            <Redirect to='/' />
-        )
-    )}/>
-);
+}) => {
+    const { user } = useContext(FirebaseContext)
 
-const mapStateToProps = (state) => ({
-    isAuthenticated: !!state.auth.uid
-});
+    return (
+        <Route {...rest} component={(props) => (
+            !!user ? (
+                <div>
+                    <Header />
+                    <Component {...props}/>
+                </div>
+            ) : (
+                <Redirect to='/' />
+            )
+        )}/>
+    )
+    }
 
-export default connect(mapStateToProps)(PrivateRoute);
+export default PrivateRoute;

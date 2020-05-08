@@ -1,22 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
+import FirebaseContext from '../../context/firebase-context'
+
 export const PublicRoute = ({
-    isAuthenticated,
     component: Component,
     ...rest
-}) => (
-    <Route {...rest} component={(props) => (
-        isAuthenticated ? (
-            <Redirect to='/dashboard' />
-        ) : (
-            <Component {...props}/>
-        )
-    )}/>
-);
+}) => {
+    const { user } = useContext(FirebaseContext)
 
-const mapStateToProps = (state) => ({
-    isAuthenticated: !!state.auth.uid
-});
+    return (
+        <Route {...rest} component={(props) => (
+            !!user ? (
+                <Redirect to='/dashboard' />
+            ) : (
+                <Component {...props}/>
+            )
+        )}/>
+    )
+}
 
-export default connect(mapStateToProps)(PublicRoute);
+export default PublicRoute;
