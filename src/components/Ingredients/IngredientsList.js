@@ -4,6 +4,7 @@ import IngredientListItem from './IngredientListItem'
 import IngredientListHeader from './IngredientListHeader'
 import IngredientsContext from '../../../context/ingredients-context'
 import PantryContext from '../../../context/pantry-context'
+import FirebaseContext from '../../../context/firebase-context'
 import database from '../../firebase/firebase'
 
 const useIngredients = () => {
@@ -27,22 +28,57 @@ const useIngredients = () => {
 }
 
 const usePantryIngredients = () => {
+    const { user } = useContext(FirebaseContext)
     const { pantryIngredients, pantryDispatch } = useContext(PantryContext)
 
-    useEffect(() => {
-        pantryDispatch({ type: 'SET_PANTRY_INGREDIENTS', pantryIngredients})
+    const uid = user.uid
 
-        console.log(pantryIngredients)
-    }, [pantryIngredients])
+    useEffect(() => {
+        database.collection('users').doc(uid).collection('pantry').get()
+        .then((snapshot) => {
+            const pantryIngredients = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data()
+                }))
+        
+            pantryDispatch({ type: 'SET_PANTRY_INGREDIENTS', pantryIngredients})
+        })
+
+    }, [])
 
     return pantryIngredients
+}
+
+const syncIngredientsWithPantry = (ings, pIngs) => {
+    // const merged = [...ings, ...pIngs]
+    const isPantryIngredients = []
+    ings.forEach((ing) => {
+        let isPantry = false
+        
+        pIngs.forEach((pIng) => {
+            if (ing.id === pIng.id) {
+                isPantry = true
+            } else {
+                isPantry
+            }
+        })
+
+        return isPantryIngredients.push({ ...ing, isPantry })
+    })
+
+    return isPantryIngredients
 }
 
 export const IngredientsList = () => {
     const ingredients = useIngredients()
     const pantryIngredients = usePantryIngredients()
+    const isPantryIngredients = syncIngredientsWithPantry(ingredients, pantryIngredients)
 
-    const groupedIngredients = _.groupBy(ingredients, 'category')
+    console.log(ingredients)
+    console.log(pantryIngredients)
+    console.log(isPantryIngredients)
+    
+    const groupedIngredients = _.groupBy(isPantryIngredients, 'category')
 
     return (
         <div>
