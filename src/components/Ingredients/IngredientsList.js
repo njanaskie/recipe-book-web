@@ -12,8 +12,7 @@ const useIngredients = () => {
 
     useEffect(() => {
         database.collection('ingredients')
-        .get()
-        .then((snapshot) => {
+        .onSnapshot((snapshot) => {
             const ingredients = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data()
@@ -34,8 +33,8 @@ const usePantryIngredients = () => {
     const uid = user.uid
 
     useEffect(() => {
-        database.collection('users').doc(uid).collection('pantry').get()
-        .then((snapshot) => {
+        const unsubscribe = database.collection('users').doc(uid).collection('pantry')
+        .onSnapshot((snapshot) => {
             const pantryIngredients = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data()
@@ -44,6 +43,8 @@ const usePantryIngredients = () => {
             pantryDispatch({ type: 'SET_PANTRY_INGREDIENTS', pantryIngredients})
         })
 
+        return () => unsubscribe()
+
     }, [])
 
     return pantryIngredients
@@ -51,7 +52,7 @@ const usePantryIngredients = () => {
 
 const syncIngredientsWithPantry = (ings, pIngs) => {
     // const merged = [...ings, ...pIngs]
-    const isPantryIngredients = []
+    const syncedIngredients = []
     ings.forEach((ing) => {
         let isPantry = false
         
@@ -63,22 +64,22 @@ const syncIngredientsWithPantry = (ings, pIngs) => {
             }
         })
 
-        return isPantryIngredients.push({ ...ing, isPantry })
+        return syncedIngredients.push({ ...ing, isPantry })
     })
 
-    return isPantryIngredients
+    return syncedIngredients
 }
 
 export const IngredientsList = () => {
     const ingredients = useIngredients()
     const pantryIngredients = usePantryIngredients()
-    const isPantryIngredients = syncIngredientsWithPantry(ingredients, pantryIngredients)
+    const syncedIngredients = syncIngredientsWithPantry(ingredients, pantryIngredients)
 
     console.log(ingredients)
     console.log(pantryIngredients)
-    console.log(isPantryIngredients)
+    console.log(syncedIngredients)
     
-    const groupedIngredients = _.groupBy(isPantryIngredients, 'category')
+    const groupedIngredients = _.groupBy(syncedIngredients, 'category')
 
     return (
         <div>

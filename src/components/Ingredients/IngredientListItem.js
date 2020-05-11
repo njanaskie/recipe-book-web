@@ -20,7 +20,7 @@ const IngredientListItem = ({ ingredient } ) => {
   const addPantryIngredient = () => {
     const uid = user.uid
 
-    database.collection('users').doc(uid).collection('pantry').add(ingredient).then(() => {
+    database.collection('users').doc(uid).collection('pantry').doc(ingredient.id).set(ingredient).then(() => {
       pantryDispatch(({ type: 'ADD_PANTRY_INGREDIENT', pantryIngredient: {...ingredient} }))
     })
   }
