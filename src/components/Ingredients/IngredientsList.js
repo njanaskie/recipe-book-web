@@ -11,17 +11,18 @@ const useIngredients = () => {
     const { ingredients, dispatch } = useContext(IngredientsContext)
 
     useEffect(() => {
-        database.collection('ingredients')
-        .onSnapshot((snapshot) => {
+        database.collection('ingredients').orderBy("category", "asc")
+        .get()
+        .then((snapshot) => {
             const ingredients = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data()
                 }))
 
             dispatch({ type: 'SET_INGREDIENTS', ingredients})
-            });
+        });
         
-        }, [])
+    }, [])
 
     return ingredients
 }
@@ -57,7 +58,7 @@ const syncIngredientsWithPantry = (ings, pIngs) => {
         let isPantry = false
         
         pIngs.forEach((pIng) => {
-            if (ing.id === pIng.id) {
+            if (ing.name === pIng.name) {
                 isPantry = true
             } else {
                 isPantry

@@ -7,6 +7,7 @@ const AddIngredientForm = () => {
     const [name, setName] = useState('')
     const [category, setCategory] = useState('dairy')
     const [price, setPrice] = useState('1')
+    const [error, setError] = useState('')
     const { dispatch } = useContext(IngredientsContext)
 
     const addIngredient = (e) => {
@@ -17,29 +18,55 @@ const AddIngredientForm = () => {
             price
         }
 
-        database.collection('ingredients').add(ingredient).then((ref) => {
-            dispatch(({ type: 'ADD_INGREDIENT', ingredient: {id: ref.key, ...ingredient} }))
-        })
+        if (!name || !category || !price) {
+            setError('Please provide name, category, and price')
+        } else {
+            database.collection('ingredients').add(ingredient).then((ref) => {
+                dispatch(({ type: 'ADD_INGREDIENT', ingredient: {id: ref.key, ...ingredient} }))
+            })
+    
+            setName('')
+            setCategory('')
+            setPrice('')
+        }
+    }
 
-        setName('')
-        setCategory('')
-        setPrice('')
+    const onNameChange = (e) => {
+        const name = e.target.value
+        if (name) {
+            setName(name)
+        }
+    }
+
+    const onCategoryChange = (e) => {
+        const category = e.target.value
+        if (category) {
+            setCategory(category)
+        }
+    }
+
+    const onPriceChange = (e) => {
+        const price = e.target.value
+        if (price) {
+            setPrice(price)
+        }
     }
 
     return (
         <div>
             <p>Add Ingredient</p>
             <form onSubmit={addIngredient}>
+                {error && <p>{error}</p>}
                 <input
                     type='text'
                     placeholder='Name'
                     autoFocus
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={onNameChange}
                 />
                 <select
                     value={category}
-                    onChange={(e) => setCategory(e.target.value)}
+                    onChange={onCategoryChange}
                 >
                     <option value='dairy'>Dairy</option>
                     <option value='meats'>Meats</option>
@@ -64,7 +91,7 @@ const AddIngredientForm = () => {
                 </select> 
                 <select
                     value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    onChange={onPriceChange}
                 >
                     <option value='1'>1</option>
                     <option value='2'>2</option>

@@ -37,19 +37,22 @@ const IngredientListItem = ({ ingredient } ) => {
     <div className='list-item' >
 
       <h3>{ingredient.name}</h3>
-      <p>{ingredient.category}</p>
+      {/* <p>{ingredient.category}</p> */}
       <p>{ingredient.price}</p>
       {pathname === '/pantry' ?
         <div>
-          {ingredient.isPantry &&
-            <span>P</span>
+          {ingredient.isPantry ?
+            <div>
+              <span>Pantry</span>
+              <button onClick={removePantryIngredient}>
+                Remove from Pantry
+              </button>
+            </div>
+            :
+            <button onClick={addPantryIngredient}>
+              Add to Pantry
+            </button> 
           }
-          <button onClick={addPantryIngredient}>
-            Add to Pantry
-          </button> 
-          <button onClick={removePantryIngredient}>
-            Remove from Pantry
-          </button>
         </div>
         :
         <button onClick={removeIngredient}>Remove</button>}
