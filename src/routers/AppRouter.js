@@ -9,6 +9,7 @@ import PrivateRoute from '../routers/PrivateRoute';
 import PublicRoute from '../routers/PublicRoute';
 import IngredientsPage from '../components/Ingredients/IngredientsPage';
 import PantryPage from '../components/Pantry/PantryPage'
+import AddDishPage from '../components/Dishes/AddDishPage'
 
 export const history = createHistory();
 
@@ -21,6 +22,7 @@ const AppRouter = () => (
                     <PrivateRoute path='/dashboard' component={DashboardPage} />
                     <PrivateRoute path='/ingredients' component={IngredientsPage} />
                     <PrivateRoute path='/pantry' component={PantryPage} />
+                    <PrivateRoute path='/add-dish' component={AddDishPage} />
                     <Route component={NotFoundPage}/>
                 </Switch>
             </div>
