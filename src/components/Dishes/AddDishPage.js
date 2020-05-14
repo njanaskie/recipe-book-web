@@ -2,15 +2,20 @@ import React, { useReducer } from 'react'
 import DishForm from './DishForm'
 import IngredientsContext from '../../../context/ingredients-context'
 import ingredientsReducer from '../../reducers/ingredients'
+import DishesContext from '../../../context/dishes-context'
+import dishesReducer from '../../reducers/dishes'
 
 const AddDishPage = () => {
     const [ingredients, dispatch] = useReducer(ingredientsReducer, [])
+    const [dishes, dishDispatch] = useReducer(dishesReducer, [])
 
     return (
-        <IngredientsContext.Provider value={{ ingredients, dispatch }}>
-            <h1>Add Dish</h1>
-            <DishForm />
-        </IngredientsContext.Provider>
+        <DishesContext.Provider value={{ dishes, dishDispatch }} >
+            <IngredientsContext.Provider value={{ ingredients, dispatch }}>
+                <h1>Add Dish</h1>
+                <DishForm />
+            </IngredientsContext.Provider>
+        </DishesContext.Provider>
     )
 }
 

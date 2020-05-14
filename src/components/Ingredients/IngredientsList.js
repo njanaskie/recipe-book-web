@@ -6,26 +6,7 @@ import IngredientsContext from '../../../context/ingredients-context'
 import PantryContext from '../../../context/pantry-context'
 import FirebaseContext from '../../../context/firebase-context'
 import database from '../../firebase/firebase'
-
-const useIngredients = () => {
-    const { ingredients, dispatch } = useContext(IngredientsContext)
-
-    useEffect(() => {
-        database.collection('ingredients').orderBy("category", "asc")
-        .get()
-        .then((snapshot) => {
-            const ingredients = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data()
-                }))
-
-            dispatch({ type: 'SET_INGREDIENTS', ingredients})
-        });
-        
-    }, [])
-
-    return ingredients
-}
+import useIngredients from '../../hooks/useIngredients'
 
 const usePantryIngredients = () => {
     const { user } = useContext(FirebaseContext)
