@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import DishesContext from '../../../context/dishes-context'
 import useIngredients from '../../hooks/useIngredients'
+import { Dropdown } from 'semantic-ui-react'
 
 const DishForm = () => {
     const { dishDispatch } = useContext(DishesContext)
@@ -39,6 +40,14 @@ const DishForm = () => {
         setCuisine('')
         setRecipes('')
     }
+
+    const onKeyIngredientChange = (e, result) => {
+        const { name, value } = result || e.target
+        console.log('e: ', e)
+        console.log('result: ', result)
+        console.log('value: ', value)
+        setKeyIngredients({ ...keyIngredients, [name]: value.toString() })
+    }
     
     return (
         <form onSubmit={addDish}>
@@ -48,26 +57,32 @@ const DishForm = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
             />
-            <select
+            <Dropdown
+                placeholder='Select key ingredients'
+                name='keyIngredients'
+                fluid search selection
                 multiple={true}
-                required={true}
                 value={keyIngredients}
-                onChange={(e) => setKeyIngredients(e.target.value)}
-            >
-                {ingredients.map((ingredient) =>
-                        <option key={ingredient.id} value={ingredient.name}>{ingredient.name}</option>
-                )}
-            </select>
-            <select
+                onChange={onKeyIngredientChange}
+                options={ingredients.map(ingredient => {
+                    return {
+                        key: ingredient.id,
+                        text: ingredient.name,
+                        value: ingredient.name
+                    }
+                })}
+            />
+            {/* <Dropdown
+                placeholder='Select optional ingredients'
+                name='optionalIngredients'
+                selection
                 multiple={true}
-                required={true}
                 value={optionalIngredients}
                 onChange={(e) => setOptionalIngredients(e.target.value)}
-            >
-                {ingredients.map((ingredient) =>
-                        <option key={ingredient.id} value={ingredient.name}>{ingredient.name}</option>
-                )}
-            </select>
+                options={ingredients.map((ingredient) =>
+                            <option key={ingredient.id} value={ingredient.name}>{ingredient.name}</option>
+                        )}
+            /> */}
             <textarea
                 placeholder='Description'
                 value={description}
