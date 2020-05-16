@@ -2,20 +2,22 @@ import React, { useState, useContext } from 'react'
 import DishesContext from '../../../context/dishes-context'
 import useIngredients from '../../hooks/useIngredients'
 import { Dropdown } from 'semantic-ui-react'
+import database from '../../firebase/firebase'
 
 const DishForm = () => {
     const { dishDispatch } = useContext(DishesContext)
+    const [error, setError] = useState('')
     const [name, setName] = useState('')
     const [keyIngredients, setKeyIngredients] = useState([])
     const [optionalIngredients, setOptionalIngredients] = useState([])
     const [description, setDescription] = useState('')
-    const [type, setType] = useState('')
+    const [type, setType] = useState('Breakfast')
     const [cuisine, setCuisine] = useState('')
     const [recipes, setRecipes] = useState('')
 
     const ingredients = useIngredients()
 
-    const addDish = () => {
+    const addDish = (e) => {
         e.preventDefault()
         const dish = {
             name,
@@ -26,11 +28,15 @@ const DishForm = () => {
             cuisine,
             recipes
         }
-        console.log('add dish')
 
-        database.collection('dishes').add(dish).then((ref) => {
-            dishDispatch(({ type: 'ADD_DISH', dish: {id: ref.key, ...dish} }))
-        })
+        if (!name || !keyIngredients || !type) {
+            setError('Please provide dish, key ingredients, type')
+        } else {
+            console.log('add dish')
+            database.collection('dishes').add(dish).then((ref) => {
+                dishDispatch(({ type: 'ADD_DISH', dish: {id: ref.key, ...dish} }))
+            })
+        }
 
         setName('')
         setKeyIngredients([])
@@ -41,28 +47,52 @@ const DishForm = () => {
         setRecipes('')
     }
 
+    const onNameChange = (e) => {
+        const name = e.target.value
+        if (name) {
+            setName(name)
+        }
+    }
+
     const onKeyIngredientChange = (e, result) => {
         const { name, value } = result || e.target
-        console.log('e: ', e)
-        console.log('result: ', result)
-        console.log('value: ', value)
         setKeyIngredients({ ...keyIngredients, [name]: value.toString() })
+    }
+
+    const onOptionalIngredientChange = (e, result) => {
+        const { name, value } = result || e.target
+        setOptionalIngredients({ ...optionalIngredients, [name]: value.toString() })
+    }
+
+    const onTypeChange = (e) => {
+        const type = e.target.value
+        if (type) {
+            setType(type)
+        }
+    }
+
+    const onCuisineChange = (e) => {
+        const cuisine = e.target.value
+        if (cuisine) {
+            setCuisine(cuisine)
+        }
     }
     
     return (
         <form onSubmit={addDish}>
+            {error && <p>{error}</p>}
             <input
                 type='text'
                 placeholder='Name'
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={onNameChange}
             />
             <Dropdown
                 placeholder='Select key ingredients'
                 name='keyIngredients'
                 fluid search selection
                 multiple={true}
-                value={keyIngredients}
+                defaultValue={keyIngredients.toString()}
                 onChange={onKeyIngredientChange}
                 options={ingredients.map(ingredient => {
                     return {
@@ -72,17 +102,21 @@ const DishForm = () => {
                     }
                 })}
             />
-            {/* <Dropdown
+            <Dropdown
                 placeholder='Select optional ingredients'
                 name='optionalIngredients'
-                selection
+                fluid search selection
                 multiple={true}
-                value={optionalIngredients}
-                onChange={(e) => setOptionalIngredients(e.target.value)}
-                options={ingredients.map((ingredient) =>
-                            <option key={ingredient.id} value={ingredient.name}>{ingredient.name}</option>
-                        )}
-            /> */}
+                defaultValue={optionalIngredients.toString()}
+                onChange={onOptionalIngredientChange}
+                options={ingredients.map(ingredient => {
+                    return {
+                        key: ingredient.id,
+                        text: ingredient.name,
+                        value: ingredient.name
+                    }
+                })}
+            />
             <textarea
                 placeholder='Description'
                 value={description}
@@ -90,7 +124,7 @@ const DishForm = () => {
             />
             <select
                 value={type}
-                onChange={(e) => setType(e.target.value)}
+                onChange={onTypeChange}
             >
                 <option value='Breakfast'>Breakfast</option>
                 <option value='Lunch'>Lunch</option>
@@ -100,8 +134,9 @@ const DishForm = () => {
             </select>            
             <select
                 value={cuisine}
-                onChange={(e) => setCuisine(e.target.value)}
+                onChange={onCuisineChange}
             >
+                <option value=''>--</option>
                 <option value='Mexican'>Mexican</option>
                 <option value='Italian'>Italian</option>
                 <option value='Asian'>Asian</option>
