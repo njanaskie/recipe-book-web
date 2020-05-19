@@ -11,6 +11,7 @@ import IngredientsPage from '../components/Ingredients/IngredientsPage';
 import PantryPage from '../components/Pantry/PantryPage'
 import AddDishPage from '../components/Dishes/AddDishPage'
 import DishesPage from '../components/Dishes/DishesPage'
+import DishDetailPage from '../components/Dishes/DishDetails/DishDetailPage';
 
 export const history = createHistory();
 
@@ -24,6 +25,7 @@ const AppRouter = () => (
                     <PrivateRoute path='/ingredients' component={IngredientsPage} />
                     <PrivateRoute path='/pantry' component={PantryPage} />
                     <PrivateRoute path='/dishes' component={DishesPage} />
+                    <PrivateRoute path='/dish/:id' component={DishDetailPage} />
                     <PrivateRoute path='/add-dish' component={AddDishPage} />
                     <Route component={NotFoundPage}/>
                 </Switch>

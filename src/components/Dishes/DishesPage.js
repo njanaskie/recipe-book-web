@@ -6,6 +6,8 @@ import DishesList from '../Dishes/DishesList'
 const DishesPage = () => {
     const [dishes, dishDispatch] = useReducer(dishesReducer, [])
 
+    console.log(dishes)
+
     return (
         <DishesContext.Provider value={{ dishes, dishDispatch }}>
             <h3>Dishes Page</h3>

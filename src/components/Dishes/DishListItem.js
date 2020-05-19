@@ -7,7 +7,7 @@ const DishListItem = ({ dish }) => {
     return (
         <div>
             {pathname === '/dishes' ?
-                <Link to={`/edit/${dish.id}`}> 
+                <Link to={`/dish/${dish.id}`}> 
                     {dish.name}
                 </Link>
             :
