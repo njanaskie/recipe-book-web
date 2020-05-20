@@ -25,6 +25,8 @@ const dishesReducer = (state = dishesReducerDefaultState, action) => {
             });
         case 'SET_DISHES':
             return action.dishes;
+        // case 'SET_DISH':
+        //     return action.dish;
         default:
             return state;
     }

@@ -8,7 +8,7 @@ const DishDetailPage = () => {
 
     return (
         <DishesContext.Provider value={{ dishes, dishDispatch }}>
-            <h3>Dishes Details</h3>
+            <h1>Dishes Details</h1>
             <DetailView />
         </DishesContext.Provider>
     )
