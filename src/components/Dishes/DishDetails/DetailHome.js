@@ -10,12 +10,8 @@ const DetailHome = () => {
     const { id } = useParams()
     const dish = dishes.find((dish) => dish.id === id)
 
-    console.log(dishes)
-    console.log(dish)
-
     return (
         <div>
-            <h3>Details</h3>
             <DetailContent {...dish} />
         </div>
     )

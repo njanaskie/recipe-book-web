@@ -4,10 +4,10 @@ import useIngredients from '../../hooks/useIngredients'
 import { Dropdown } from 'semantic-ui-react'
 import database from '../../firebase/firebase'
 
-const DishForm = () => {
+const DishForm = (dish) => {
     const { dishDispatch } = useContext(DishesContext)
     const [error, setError] = useState('')
-    const [name, setName] = useState('')
+    const [name, setName] = useState(dish.name)
     const [keyIngredients, setKeyIngredients] = useState([])
     const [optionalIngredients, setOptionalIngredients] = useState([])
     const [description, setDescription] = useState('')
