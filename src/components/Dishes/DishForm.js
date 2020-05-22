@@ -55,13 +55,13 @@ const DishForm = () => {
     }
 
     const onKeyIngredientChange = (e, result) => {
-        const { name, value } = result || e.target
-        setKeyIngredients({ ...keyIngredients, [name]: value.toString() })
+        const { value } = result || e.target
+        setKeyIngredients(value)
     }
 
     const onOptionalIngredientChange = (e, result) => {
-        const { name, value } = result || e.target
-        setOptionalIngredients({ ...optionalIngredients, [name]: value.toString() })
+        const { value } = result || e.target
+        setOptionalIngredients(value)
     }
 
     const onTypeChange = (e) => {
@@ -90,7 +90,7 @@ const DishForm = () => {
             <Dropdown
                 placeholder='Select key ingredients'
                 name='keyIngredients'
-                fluid search selection
+                fluid multiple selection
                 multiple={true}
                 defaultValue={keyIngredients.toString()}
                 onChange={onKeyIngredientChange}
@@ -105,7 +105,7 @@ const DishForm = () => {
             <Dropdown
                 placeholder='Select optional ingredients'
                 name='optionalIngredients'
-                fluid search selection
+                fluid multiple selection
                 multiple={true}
                 defaultValue={optionalIngredients.toString()}
                 onChange={onOptionalIngredientChange}
