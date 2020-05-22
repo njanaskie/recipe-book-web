@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import DishesContext from '../../../context/dishes-context'
 import useIngredients from '../../hooks/useIngredients'
 import { Dropdown } from 'semantic-ui-react'
@@ -7,15 +7,24 @@ import database from '../../firebase/firebase'
 const DishForm = (dish) => {
     const { dishDispatch } = useContext(DishesContext)
     const [error, setError] = useState('')
-    const [name, setName] = useState(dish.name)
+    const [name, setName] = useState('')
     const [keyIngredients, setKeyIngredients] = useState([])
     const [optionalIngredients, setOptionalIngredients] = useState([])
     const [description, setDescription] = useState('')
     const [type, setType] = useState('Breakfast')
     const [cuisine, setCuisine] = useState('')
     const [recipes, setRecipes] = useState('')
-
     const ingredients = useIngredients()
+    
+    useEffect(() => {
+        setName(dish.name || '')
+        setKeyIngredients([])
+        setOptionalIngredients([])
+        setDescription(dish.description || '')
+        setType(dish.type || '')
+        setCuisine(dish.cuisine || '')
+        setRecipes(dish.recipes || '')
+    }, [dish])
 
     const addDish = (e) => {
         e.preventDefault()
@@ -34,7 +43,7 @@ const DishForm = (dish) => {
         } else {
             console.log('add dish')
             database.collection('dishes').add(dish).then((ref) => {
-                dishDispatch(({ type: 'ADD_DISH', dish: {id: ref.key, ...dish} }))
+                dishDispatch({ type: 'ADD_DISH', dish: {id: ref.key, ...dish} })
             })
         }
 
@@ -153,7 +162,7 @@ const DishForm = (dish) => {
                 value={recipes}
                 onChange={(e) => setRecipes(e.target.value)}
             />
-            <button>Add Dish</button>
+            <button>Save Dish</button>
         </form>
     )
 }
