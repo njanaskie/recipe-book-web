@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import DishesContext from '../../../context/dishes-context'
 import DishForm from '../Dishes/DishForm'
 import useDishes from '../../hooks/useDishes'
+import database from '../../firebase/firebase'
 
 const EditDishHome = () => {
     const { dishDispatch } = useContext(DishesContext)
@@ -15,10 +16,13 @@ const EditDishHome = () => {
     console.log(dish)
 
     const onSubmit = (dish) => {
-        database.collection('dishes').doc(dish.id).update(dish).then(() => {
+
+        const unsubscribe = database.collection('dishes').doc(id).update(dish).then(() => {
             dishDispatch({ type: 'EDIT_DISH', id: dish.id, dish })
         })
         history.push('/dishes')
+
+        return () => unsubscribe()
     }
 
     return (

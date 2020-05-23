@@ -4,96 +4,109 @@ import useIngredients from '../../hooks/useIngredients'
 import { Dropdown } from 'semantic-ui-react'
 import database from '../../firebase/firebase'
 
-const DishForm = (dish) => {
+const DishForm = (props) => {
     const { dishDispatch } = useContext(DishesContext)
-    const [error, setError] = useState('')
-    const [name, setName] = useState('')
-    const [keyIngredients, setKeyIngredients] = useState([])
-    const [optionalIngredients, setOptionalIngredients] = useState([])
-    const [description, setDescription] = useState('')
-    const [type, setType] = useState('Breakfast')
-    const [cuisine, setCuisine] = useState('')
-    const [recipes, setRecipes] = useState('')
+    const initialFormState = {
+        name: '',
+        keyIngredients: [],
+        optionalIngredients: [],
+        description: '',
+        type: 'Breakfast',
+        cuisine: '',
+        recipes: '',
+        error: '',
+    }
+    const [state, setState] = useState(initialFormState)
     const ingredients = useIngredients()
+
+    console.log(state)
     
     useEffect(() => {
-        setName(dish.name || '')
-        setKeyIngredients([])
-        setOptionalIngredients([])
-        setDescription(dish.description || '')
-        setType(dish.type || '')
-        setCuisine(dish.cuisine || '')
-        setRecipes(dish.recipes || '')
-    }, [dish])
+        setState({
+            name: props.name || '',
+            keyIngredients: props.keyIngredients || [],
+            optionalIngredients: props.optionalIngredients || [],
+            description: props.description || '',
+            type: props.type || '',
+            cuisine: props.cuisine || '',
+            recipes: props.recipes || '',
+            error: ''
+        })
+    }, [props])
 
-    const addDish = (e) => {
+    const onSubmit = (e) => {
         e.preventDefault()
         const dish = {
-            name,
-            keyIngredients,
-            optionalIngredients,
-            description,
-            type,
-            cuisine,
-            recipes
+            name: state.name,
+            keyIngredients: state.keyIngredients,
+            optionalIngredients: state.optionalIngredients,
+            description: state.description,
+            type: state.type,
+            cuisine: state.cuisine,
+            recipes: state.recipes
         }
 
-        if (!name || !keyIngredients || !type) {
-            setError('Please provide dish, key ingredients, type')
+        if (!state.name || !state.keyIngredients || !state.type) {
+            setState({error: 'Please provide dish, key ingredients, type'})
         } else {
             console.log('add dish')
-            database.collection('dishes').add(dish).then((ref) => {
-                dishDispatch({ type: 'ADD_DISH', dish: {id: ref.key, ...dish} })
-            })
+            props.onSubmit(dish)
+            // database.collection('dishes').add(dish).then((ref) => {
+            //     dishDispatch({ type: 'ADD_DISH', dish: {id: ref.key, ...dish} })
+            // })
         }
 
-        setName('')
-        setKeyIngredients([])
-        setOptionalIngredients([])
-        setDescription('')
-        setType('')
-        setCuisine('')
-        setRecipes('')
+        setState(initialFormState)
     }
 
     const onNameChange = (e) => {
         const name = e.target.value
         if (name) {
-            setName(name)
+            setState({ ...state, name })
         }
     }
 
     const onKeyIngredientChange = (e, result) => {
         const { value } = result || e.target
-        setKeyIngredients(value)
+        setState({ ...state, keyIngredients: value })
     }
 
     const onOptionalIngredientChange = (e, result) => {
         const { value } = result || e.target
-        setOptionalIngredients(value)
+        setState({ ...state, optionalIngredients: value })
     }
+
+    const onDescriptionChange = (e) => {
+        const description = e.target.value
+        setState({ ...state, description })
+    }  
 
     const onTypeChange = (e) => {
         const type = e.target.value
         if (type) {
-            setType(type)
+            setState({ ...state, type })
         }
     }
 
     const onCuisineChange = (e) => {
         const cuisine = e.target.value
         if (cuisine) {
-            setCuisine(cuisine)
+            setState({ ...state, cuisine })
         }
+    }
+
+    const onRecipeChange = (e) => {
+        const recipe = e.target.value
+        setState({ ...state, recipe })
     }
     
     return (
-        <form onSubmit={addDish}>
-            {error && <p>{error}</p>}
+        <form onSubmit={onSubmit}>
+            {state.error && <p>{state.error}</p>}
             <input
                 type='text'
                 placeholder='Name'
-                value={name}
+                value={state.name || ''}
                 onChange={onNameChange}
             />
             <Dropdown
@@ -101,7 +114,7 @@ const DishForm = (dish) => {
                 name='keyIngredients'
                 fluid multiple selection
                 multiple={true}
-                defaultValue={keyIngredients.toString()}
+                value={state.keyIngredients}
                 onChange={onKeyIngredientChange}
                 options={ingredients.map(ingredient => {
                     return {
@@ -116,7 +129,7 @@ const DishForm = (dish) => {
                 name='optionalIngredients'
                 fluid multiple selection
                 multiple={true}
-                defaultValue={optionalIngredients.toString()}
+                value={state.optionalIngredients}
                 onChange={onOptionalIngredientChange}
                 options={ingredients.map(ingredient => {
                     return {
@@ -128,11 +141,11 @@ const DishForm = (dish) => {
             />
             <textarea
                 placeholder='Description'
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                value={state.description}
+                onChange={onDescriptionChange}
             />
             <select
-                value={type}
+                value={state.type}
                 onChange={onTypeChange}
             >
                 <option value='Breakfast'>Breakfast</option>
@@ -142,7 +155,7 @@ const DishForm = (dish) => {
                 <option value='Dessert'>Dessert</option>
             </select>            
             <select
-                value={cuisine}
+                value={state.cuisine}
                 onChange={onCuisineChange}
             >
                 <option value=''>--</option>
@@ -159,8 +172,8 @@ const DishForm = (dish) => {
             <input
                 type='url'
                 placeholder='Recipe links'
-                value={recipes}
-                onChange={(e) => setRecipes(e.target.value)}
+                value={state.recipes}
+                onChange={onRecipeChange}
             />
             <button>Save Dish</button>
         </form>
