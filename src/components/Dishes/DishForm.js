@@ -43,20 +43,16 @@ const DishForm = (props) => {
             description: state.description,
             type: state.type,
             cuisine: state.cuisine,
-            recipes: state.recipes
+            recipes: state.recipes,
         }
 
         if (!state.name || !state.keyIngredients || !state.type) {
-            setState({error: 'Please provide dish, key ingredients, type'})
+            setState({ ...state, error: 'Please provide dish, key ingredients, type' })
         } else {
             console.log('add dish')
             props.onSubmit(dish)
-            // database.collection('dishes').add(dish).then((ref) => {
-            //     dishDispatch({ type: 'ADD_DISH', dish: {id: ref.key, ...dish} })
-            // })
+            setState(initialFormState)
         }
-
-        setState(initialFormState)
     }
 
     const onNameChange = (e) => {
@@ -96,8 +92,8 @@ const DishForm = (props) => {
     }
 
     const onRecipeChange = (e) => {
-        const recipe = e.target.value
-        setState({ ...state, recipe })
+        const recipes = e.target.value
+        setState({ ...state, recipes })
     }
     
     return (
@@ -170,9 +166,9 @@ const DishForm = (props) => {
                 <option value='Carribbean'>Carribbean</option>
             </select>
             <input
-                type='url'
+                type='text'
                 placeholder='Recipe links'
-                value={state.recipes}
+                value={state.recipes || ''}
                 onChange={onRecipeChange}
             />
             <button>Save Dish</button>

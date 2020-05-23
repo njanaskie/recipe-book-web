@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react'
-import DishForm from './DishForm'
+import AddDishHome from './AddDishHome'
 import IngredientsContext from '../../../context/ingredients-context'
 import ingredientsReducer from '../../reducers/ingredients'
 import DishesContext from '../../../context/dishes-context'
@@ -13,7 +13,7 @@ const AddDishPage = () => {
         <DishesContext.Provider value={{ dishes, dishDispatch }} >
             <IngredientsContext.Provider value={{ ingredients, dispatch }}>
                 <h1>Add Dish</h1>
-                <DishForm />
+                <AddDishHome />
             </IngredientsContext.Provider>
         </DishesContext.Provider>
     )
