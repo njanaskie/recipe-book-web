@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import DishesContext from '../../../context/dishes-context'
 import DishForm from '../Dishes/DishForm'
@@ -16,14 +16,19 @@ const EditDishHome = () => {
     console.log(dish)
 
     const onSubmit = (dish) => {
-
-        const unsubscribe = database.collection('dishes').doc(id).update(dish).then(() => {
+        database.collection('dishes').doc(id).update(dish).then(() => {
             dishDispatch({ type: 'EDIT_DISH', id: dish.id, dish })
+            history.push('/dishes')
         })
-        history.push('/dishes')
-
-        return () => unsubscribe()
     }
+
+    const onRemove = () => {
+        database.collection('dishes').doc(id).delete().then(() => {
+            dishDispatch({ type: 'REMOVE_DISH', id })
+            history.push('/dishes')
+          })
+    }
+
 
     return (
         <div>
@@ -31,7 +36,7 @@ const EditDishHome = () => {
                 {...dish}
                 onSubmit={onSubmit}
             />
-            <button>Remove Dish</button>
+            <button onClick={onRemove}>Remove Dish</button>
         </div>
 
         
