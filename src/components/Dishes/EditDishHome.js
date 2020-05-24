@@ -12,9 +12,6 @@ const EditDishHome = () => {
     const history = useHistory()
     const dish = dishes.find((dish) => dish.id === id)
 
-    console.log(id)
-    console.log(dish)
-
     const onSubmit = (dish) => {
         database.collection('dishes').doc(id).update(dish).then(() => {
             dishDispatch({ type: 'EDIT_DISH', id: dish.id, dish })

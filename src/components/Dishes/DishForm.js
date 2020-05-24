@@ -18,8 +18,6 @@ const DishForm = (props) => {
     }
     const [state, setState] = useState(initialFormState)
     const ingredients = useIngredients()
-
-    console.log(state)
     
     useEffect(() => {
         setState({

@@ -56,10 +56,6 @@ export const IngredientsList = () => {
     const ingredients = useIngredients()
     const pantryIngredients = usePantryIngredients()
     const syncedIngredients = syncIngredientsWithPantry(ingredients, pantryIngredients)
-
-    console.log(ingredients)
-    console.log(pantryIngredients)
-    console.log(syncedIngredients)
     
     const groupedIngredients = _.groupBy(syncedIngredients, 'category')
 
