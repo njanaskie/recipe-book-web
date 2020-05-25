@@ -1,21 +1,21 @@
 import React, { useContext } from 'react'
 import DishesContext from '../../../context/dishes-context'
-import DishListItem from './DishListItem'
+import DishListItem from '../Dishes/DishListItem'
 import useDishes from '../../hooks/useDishes'
 import usePantryDishes from '../../hooks/usePantryDishes'
 
-const DishesList = () => {
-    const dishes = useDishes()
+const DashboardList = () => {
+    const pantryDishes = usePantryDishes()
     
     return (
         <div>
             {
-                dishes.length === 0 ? (
+                pantryDishes.length === 0 ? (
                     <div>
                         <span>No dishes</span>
                     </div>
                 ) : (
-                    dishes.map((dish) => 
+                    pantryDishes.map((dish) => 
                         <DishListItem key={dish.id} dish={dish} />
                     )
                 )
@@ -24,4 +24,4 @@ const DishesList = () => {
     )
 }
 
-export default DishesList
+export default DashboardList

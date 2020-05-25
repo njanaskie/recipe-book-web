@@ -7,30 +7,7 @@ import PantryContext from '../../../context/pantry-context'
 import FirebaseContext from '../../../context/firebase-context'
 import database from '../../firebase/firebase'
 import useIngredients from '../../hooks/useIngredients'
-
-const usePantryIngredients = () => {
-    const { user } = useContext(FirebaseContext)
-    const { pantryIngredients, pantryDispatch } = useContext(PantryContext)
-
-    const uid = user.uid
-
-    useEffect(() => {
-        const unsubscribe = database.collection('users').doc(uid).collection('pantry')
-        .onSnapshot((snapshot) => {
-            const pantryIngredients = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data()
-                }))
-        
-            pantryDispatch({ type: 'SET_PANTRY_INGREDIENTS', pantryIngredients})
-        })
-
-        return () => unsubscribe()
-
-    }, [])
-
-    return pantryIngredients
-}
+import usePantryIngredients from '../../hooks/usePantryIngredients'
 
 const syncIngredientsWithPantry = (ings, pIngs) => {
     // const merged = [...ings, ...pIngs]

@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route, Switch, Link, NavLink } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
 import { FirebaseProvider } from '../../context/firebase-context'
-import DashboardPage from '../components/DashboardPage';
+import DashboardPage from '../components/Dashboard/DashboardPage';
 import NotFoundPage from '../components/NotFoundPage';
 import LoginPage from '../components/LoginPage';
 import PrivateRoute from '../routers/PrivateRoute';
