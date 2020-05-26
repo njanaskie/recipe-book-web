@@ -4,7 +4,6 @@ import PantryContext from '../../context/pantry-context'
 import useDishes from '../hooks/useDishes'
 import usePantryIngredients from './usePantryIngredients'
 
-
 const usePantryDishes = () => {
     const dishes = useDishes()
     const pantryIngredients = usePantryIngredients()
