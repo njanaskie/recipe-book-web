@@ -26,6 +26,7 @@ const usePantryIngredients = () => {
                     }))
             
                 pantryDispatch({ type: 'SET_PANTRY_INGREDIENTS', pantryIngredients})
+                console.log('usePantryIngredients current')
             }
         })
 

@@ -1,59 +1,59 @@
-import React, { useCallback, useState, useEffect, useMemo } from 'react'
+import React, { useCallback, useState, useEffect, useMemo, useContext, useRef } from 'react'
 import DishesContext from '../../../context/dishes-context'
 import DishListItem from '../Dishes/DishListItem'
 import useDishes from '../../hooks/useDishes'
 import usePantryDishes from '../../hooks/usePantryDishes'
 import { Input } from 'semantic-ui-react'
 import DashboardListFilters from './DashboardListFilters'
+import FiltersContext from '../../../context/filters-context'
 
 const DashboardList = () => {
+    const isCurrent = useRef(true)
+    const { filters } = useContext(FiltersContext)
     const pantryDishes = usePantryDishes()
-    const [textFilter, setTextFilter] = useState('')
     const [filteredList, setFilteredList] = useState([])
+
+    // console.log(pantryDishes)
+    // useEffect(() => {
+    //     return () => {
+    //         isCurrent.current = false
+    //     }
+    // }, [])
     
-    useEffect(() => {
-        if (!filteredList) {
-            setFilteredList(pantryDishes)
-        } else {
-        }
-        
-        // const timer = setTimeout(() => {
-        //     setFilteredList(pantryDishes)
-        //     console.log('should set filtered list: ', filteredList)
-        // }, 3000)
+    // useEffect(() => {
+    //     if (!isCurrent.current) {
+    //         setFilteredList(pantryDishes)
+    //         console.log('DashboardList current', isCurrent)
+    //     }
+    // }, [])
 
-        // return () => clearTimeout(timer)
-    }, [])
+    // useMemo(() => {
+    //     const list = pantryDishes.filter(dish => dish.name.toLowerCase().includes(filters.text.toLowerCase()))
+    //     setFilteredList(list)
+    // }, [filters])
 
-    useEffect(() => {
-        const list = pantryDishes.filter(dish => dish.name.toLowerCase().includes(textFilter.toLowerCase()))
-        setFilteredList(list)
-    }, [textFilter])
+    // // const onTextChange = useCallback((e) => {
+    // //     setTextFilter(e.target.value)
+    // // }, [])
 
-    const onTextChange = useCallback((e) => {
-        setTextFilter(e.target.value)
-    }, [])
+    // // console.log(textFilter)
+    // // console.log(pantryDishes)
+    // // console.log(filteredList)
+    // // const data = filteredList
+    // // console.log(filteredList)
+    // // console.log(unfilteredList)
+    // console.log(pantryDishes)
 
-    console.log(textFilter)
-    console.log(pantryDishes)
-    console.log(filteredList)
-    const data = filteredList
-    
     return (
         <div>
-            <Input
-                placeholder='Search...'
-                size='big'
-                value={textFilter}
-                onChange={onTextChange}
-            />
+            <DashboardListFilters filters={filters}/>
             {
-                data.length === 0 ? (
+                pantryDishes.length === 0 ? (
                     <div>
                         <span>No dishes</span>
                     </div>
                 ) : (
-                    data.map((dish) => 
+                    pantryDishes.map((dish) => 
                         <DishListItem key={dish.id} dish={dish} />
                     )
                 )

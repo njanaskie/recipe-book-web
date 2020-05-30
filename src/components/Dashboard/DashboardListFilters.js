@@ -1,29 +1,22 @@
-// import React, { useState, useEffect } from 'react'
-// import { Input } from 'semantic-ui-react'
-// import DishesContext from '../../../context/dishes-context'
+import React, { useState, useEffect, useContext } from 'react'
+import { Input } from 'semantic-ui-react'
+import FiltersContext from '../../../context/filters-context'
 
-// const DashboardListFilters = ({ dishes }) => {
-//     const [textFilter, setTextFilter] = useState('')
-//     const [filteredList, setFilteredList] = useState([])
+const DashboardListFilters = () => {
+    const { filters, filtersDispatch } = useContext(FiltersContext)
 
-//     useEffect(() => {
-//         const list = dishes.filter(dish => dish.name.toLowerCase().includes(textFilter.toLowerCase()))
-//         setFilteredList(list)
-//     }, [textFilter])
+    const onTextChange = (e) => {
+        filtersDispatch({ type: 'SET_TEXT_FILTER', text: e.target.value })
+    }
+    
+    return (
+        <Input
+            placeholder='Search...'
+            size='big'
+            value={filters ? filters.text : ''}
+            onChange={onTextChange}
+        />
+    )
+}
 
-//     const onTextChange = (e) => {
-//         setTextFilter(e.target.value)
-//         console.log('dishes', dishes, ' and text', textFilter)
-//     }
-
-//     return (
-//         <Input
-//             placeholder='Search...'
-//             size='big'
-//             value={textFilter}
-//             onChange={onTextChange}
-//         />
-//     )
-// }
-
-// export default DashboardListFilters
+export default DashboardListFilters
