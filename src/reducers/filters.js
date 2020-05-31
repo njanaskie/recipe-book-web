@@ -3,6 +3,7 @@
 
 const filtersReducerDefaultState = {
     text: '',
+    keyIngredients: [],
 };
 
 const filtersReducer = (state = filtersReducerDefaultState, action) => {
@@ -12,8 +13,13 @@ const filtersReducer = (state = filtersReducerDefaultState, action) => {
                 ...state,
                 text: action.text
             }
-            default:
-                return state;
+        case 'SET_KEY_INGREDIENT_FILTER':
+            return {
+                ...state,
+                keyIngredients: action.keyIngredients
+            }
+        default:
+            return state;
         }
     }
     

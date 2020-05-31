@@ -29,8 +29,16 @@ const useDishes = () => {
             }
         });
     }, [])
-    
-    const filteredDishes = filters ? dishes.filter(dish => dish.name.toLowerCase().includes(filters.text.toLowerCase())) : dishes
+    if (filters) {
+        console.log(filters)
+    }
+    const filteredDishes = filters ? dishes
+        .filter(dish => 
+            dish.name.toLowerCase().includes(filters.text.toLowerCase()) &&
+            dish.keyIngredients.some(keyIngredient => keyIngredient.includes(filters.keyIngredients))
+        )
+        :
+            dishes
 
     return filteredDishes
 }
