@@ -3,6 +3,8 @@ import DishesContext from '../../../context/dishes-context'
 import useIngredients from '../../hooks/useIngredients'
 import { Dropdown } from 'semantic-ui-react'
 import database from '../../firebase/firebase'
+import dishTypes from '../../fixtures/dishTypes'
+import dishCuisines from '../../fixtures/dishCuisines'
 
 const DishForm = (props) => {
     const { dishDispatch } = useContext(DishesContext)
@@ -142,26 +144,13 @@ const DishForm = (props) => {
                 value={state.type}
                 onChange={onTypeChange}
             >
-                <option value='Breakfast'>Breakfast</option>
-                <option value='Lunch'>Lunch</option>
-                <option value='Dinner'>Dinner</option>
-                <option value='Snack'>Snack</option>
-                <option value='Dessert'>Dessert</option>
+                {dishTypes.map(dishType => <option key={dishType} value={dishType}>{dishType}</option>)}
             </select>            
             <select
                 value={state.cuisine}
                 onChange={onCuisineChange}
             >
-                <option value=''>--</option>
-                <option value='Mexican'>Mexican</option>
-                <option value='Italian'>Italian</option>
-                <option value='Asian'>Asian</option>
-                <option value='Indian'>Indian</option>
-                <option value='Mediterranean'>Mediterranean</option>
-                <option value='Thai'>Thai</option>
-                <option value='French'>French</option>
-                <option value='German'>German</option>
-                <option value='Carribbean'>Carribbean</option>
+                {dishCuisines.map(dishCuisine => <option key={dishCuisine} value={dishCuisine}>{dishCuisine}</option>)}
             </select>
             <input
                 type='text'
