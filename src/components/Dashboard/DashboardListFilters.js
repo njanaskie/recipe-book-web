@@ -41,6 +41,7 @@ const DashboardListFilters = () => {
             <Dropdown
                 placeholder='Select key ingredient'
                 name='keyIngredient'
+                clearable={true}
                 fluid multiple selection
                 multiple={true}
                 value={filters ? filters.keyIngredients : []}
@@ -56,6 +57,7 @@ const DashboardListFilters = () => {
             <Dropdown
                 placeholder='Select cuisine'
                 name='cuisine'
+                clearable={true}
                 fluid selection
                 value={filters ? filters.cuisine : ''}
                 onChange={onCuisineChange}
@@ -70,6 +72,7 @@ const DashboardListFilters = () => {
             <Dropdown
                 placeholder='Select type'
                 name='type'
+                clearable={true}
                 fluid selection
                 value={filters ? filters.dishType : ''}
                 onChange={onTypeChange}

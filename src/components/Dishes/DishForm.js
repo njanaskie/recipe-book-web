@@ -13,7 +13,7 @@ const DishForm = (props) => {
         keyIngredients: [],
         optionalIngredients: [],
         description: '',
-        type: 'Breakfast',
+        type: '',
         cuisine: '',
         recipes: '',
         error: '',
@@ -77,17 +77,17 @@ const DishForm = (props) => {
         setState({ ...state, description })
     }  
 
-    const onTypeChange = (e) => {
-        const type = e.target.value
-        if (type) {
-            setState({ ...state, type })
+    const onTypeChange = (e, result) => {
+        const { value } = result || e.target
+        if (value) {
+            setState({ ...state, type: value })
         }
     }
 
-    const onCuisineChange = (e) => {
-        const cuisine = e.target.value
-        if (cuisine) {
-            setState({ ...state, cuisine })
+    const onCuisineChange = (e, result) => {
+        const { value } = result || e.target
+        if (value) {
+            setState({ ...state, cuisine: value })
         }
     }
 
@@ -140,18 +140,36 @@ const DishForm = (props) => {
                 value={state.description}
                 onChange={onDescriptionChange}
             />
-            <select
+            <Dropdown
+                placeholder='Select dish type'
+                name='type'
+                fluid selection
+                clearable={true}
                 value={state.type}
                 onChange={onTypeChange}
-            >
-                {dishTypes.map(dishType => <option key={dishType} value={dishType}>{dishType}</option>)}
-            </select>            
-            <select
+                options={dishTypes.map(dishType => {
+                    return {
+                        key: dishType,
+                        text: dishType,
+                        value: dishType
+                    }
+                })}
+            />
+            <Dropdown
+                placeholder='Select cuisine'
+                name='cuisine'
+                fluid selection
+                clearable={true}
                 value={state.cuisine}
                 onChange={onCuisineChange}
-            >
-                {dishCuisines.map(dishCuisine => <option key={dishCuisine} value={dishCuisine}>{dishCuisine}</option>)}
-            </select>
+                options={dishCuisines.map(dishCuisine => {
+                    return {
+                        key: dishCuisine,
+                        text: dishCuisine,
+                        value: dishCuisine
+                    }
+                })}
+            />
             <input
                 type='text'
                 placeholder='Recipe links'
