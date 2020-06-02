@@ -7,15 +7,12 @@ import filtersReducer from '../../reducers/filters'
 
 const DishesPage = () => {
     const [dishes, dishDispatch] = useReducer(dishesReducer, [])
-    const [filters, filtersDispatch] = useReducer(filtersReducer)
 
     return (
-        <FiltersContext.Provider value={{ filters, filtersDispatch }}>
-            <DishesContext.Provider value={{ dishes, dishDispatch }}>
-                <h3>Dishes Page</h3>
-                <DishesList />
-            </DishesContext.Provider>
-        </FiltersContext.Provider>
+        <DishesContext.Provider value={{ dishes, dishDispatch }}>
+            <h3>Dishes Page</h3>
+            <DishesList />
+        </DishesContext.Provider>
     )
 
 };

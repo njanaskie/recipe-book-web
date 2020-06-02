@@ -5,7 +5,6 @@ import FiltersContext from '../../context/filters-context'
 
 const useDishes = () => {
     const isCurrent = useRef(true)
-    const { filters } = useContext(FiltersContext)
     const { dishes, dishDispatch } = useContext(DishesContext)
 
     useEffect(() => {
@@ -29,21 +28,8 @@ const useDishes = () => {
             }
         });
     }, [])
-    if (filters) {
-        console.log(filters)
-        console.log(dishes)
-    }
-    const filteredDishes = filters ? dishes
-        .filter(dish => 
-            dish.name.toLowerCase().includes(filters.text.toLowerCase()) &&
-            dish.keyIngredients.some(keyIngredient => keyIngredient.includes(filters.keyIngredients)) &&
-            dish.cuisine.toLowerCase().includes(filters.cuisine.toLowerCase()) &&
-            dish.type.toLowerCase().includes(filters.dishType.toLowerCase())
-        )
-        :
-            dishes
 
-    return filteredDishes
+    return dishes
 }
 
 export default useDishes

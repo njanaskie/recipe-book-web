@@ -7,15 +7,12 @@ import DetailHome from './DetailHome'
 
 const DishDetailPage = () => {
     const [dishes, dishDispatch] = useReducer(dishesReducer, [])
-    const [filters, filtersDispatch] = useReducer(filtersReducer, [])
 
     return (
-        <FiltersContext.Provider value={{ filters, filtersDispatch }}>
-            <DishesContext.Provider value={{ dishes, dishDispatch }}>
-                <h1>Dishes Details</h1>
-                <DetailHome />
-            </DishesContext.Provider>
-        </FiltersContext.Provider>
+        <DishesContext.Provider value={{ dishes, dishDispatch }}>
+            <h1>Dishes Details</h1>
+            <DetailHome />
+        </DishesContext.Provider>
     )
 
 };
