@@ -1,20 +1,21 @@
-import React, { useContext } from 'react';
-import { connect } from 'react-redux';
+import React, { useContext } from 'react'
 import { Route, Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import SubHeader from '../components/SubHeader'
-import FirebaseContext from '../../context/firebase-context'
 import Admin from '../components/Admin'
+import useAdmin from '../hooks/useAdmin'
+import FirebaseContext from '../../context/firebase-context'
 
-export const PrivateRoute = ({
+export const AdminRoute = ({
     component: Component,
     ...rest
 }) => {
     const { user } = useContext(FirebaseContext)
+    const isAdmin = useAdmin()
 
     return (
         <Route {...rest} component={(props) => (
-            !!user ? (
+            (!!isAdmin && !!user) ? (
                 <div>
                     <Header />
                     <SubHeader />
@@ -28,4 +29,4 @@ export const PrivateRoute = ({
     )
     }
 
-export default PrivateRoute;
+export default AdminRoute;

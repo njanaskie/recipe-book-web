@@ -28,8 +28,6 @@ const DashboardListFilters = () => {
         filtersDispatch({ type: 'SET_TYPE_FILTER', dishType: value })
     }
 
-    console.log(filters)
-
     return (
         <div>
             <Input

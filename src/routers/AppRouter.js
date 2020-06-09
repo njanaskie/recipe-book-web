@@ -7,6 +7,7 @@ import NotFoundPage from '../components/NotFoundPage';
 import LoginPage from '../components/LoginPage';
 import PrivateRoute from '../routers/PrivateRoute';
 import PublicRoute from '../routers/PublicRoute';
+import AdminRoute from './AdminRoute'
 import IngredientsPage from '../components/Ingredients/IngredientsPage';
 import PantryPage from '../components/Pantry/PantryPage'
 import AddDishPage from '../components/Dishes/AddDishPage'
@@ -23,12 +24,12 @@ const AppRouter = () => (
                 <Switch>
                     <PublicRoute path='/' component={LoginPage} exact={true}/>
                     <PrivateRoute path='/dashboard' component={DashboardPage} />
-                    <PrivateRoute path='/ingredients' component={IngredientsPage} />
+                    <AdminRoute path='/ingredients' component={IngredientsPage} />
                     <PrivateRoute path='/pantry' component={PantryPage} />
-                    <PrivateRoute path='/dishes' component={DishesPage} />
+                    <AdminRoute path='/dishes' component={DishesPage} />
                     <PrivateRoute path='/dish/:id' component={DishDetailPage} />
-                    <PrivateRoute path='/add-dish' component={AddDishPage} />
-                    <PrivateRoute path='/edit/dish/:id' component={EditDishPage} />
+                    <AdminRoute path='/add-dish' component={AddDishPage} />
+                    <AdminRoute path='/edit/dish/:id' component={EditDishPage} />
                     <Route component={NotFoundPage}/>
                 </Switch>
             </div>

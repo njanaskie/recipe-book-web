@@ -1,14 +1,19 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import useAdmin from '../hooks/useAdmin'
 
-const SubHeader = () => (
-    <header>
-        <NavLink to='/dashboard' activeClassName='is-active'>Dashboard</NavLink>
-        <NavLink to='/pantry' activeClassName='is-active'>Pantry</NavLink>
-        <NavLink to='/ingredients' activeClassName='is-active'>Ingredients</NavLink>
-        <NavLink to='/dishes' activeClassName='is-active'>Dishes</NavLink>
-        <NavLink to='/add-dish' activeClassName='is-active'>Add Dish</NavLink>
-    </header>
-)
+const SubHeader = () => {
+    const isAdmin = useAdmin()
+
+    return (
+        <header>
+            <NavLink to='/dashboard' activeClassName='is-active'>Dashboard</NavLink>
+            <NavLink to='/pantry' activeClassName='is-active'>Pantry</NavLink>
+            {isAdmin && <NavLink to='/ingredients' activeClassName='is-active'>Ingredients</NavLink>}
+            {isAdmin && <NavLink to='/dishes' activeClassName='is-active'>Dishes</NavLink>}
+            {isAdmin && <NavLink to='/add-dish' activeClassName='is-active'>Add Dish</NavLink>}
+        </header>
+    )
+}
 
 export default SubHeader;

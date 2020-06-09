@@ -24,7 +24,6 @@ const useDishes = () => {
                     }))
     
                 dishDispatch({ type: 'SET_DISHES', dishes})
-                console.log('useDishes current')
             }
         });
     }, [])
