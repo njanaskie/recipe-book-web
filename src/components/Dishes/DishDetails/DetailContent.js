@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import useAdmin from '../../../hooks/useAdmin'
 
 const DetailContent = (dish) => {
-    const isAdmin = useAdmin()
+    const { isAdmin } = useContext(FirebaseContext)
+    // const isAdmin = useAdmin()
 
     return (
         <div>

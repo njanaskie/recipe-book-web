@@ -10,8 +10,8 @@ export const AdminRoute = ({
     component: Component,
     ...rest
 }) => {
-    const { user } = useContext(FirebaseContext)
-    const isAdmin = useAdmin()
+    const { user, isAdmin } = useContext(FirebaseContext)
+    // const isAdmin = useAdmin()
 
     return (
         <Route {...rest} component={(props) => (
