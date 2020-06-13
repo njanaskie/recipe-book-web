@@ -1,15 +1,13 @@
 import React, { useContext } from 'react';
 import FirebaseContext from '../../context/firebase-context'
-import useAdmin from '../hooks/useAdmin'
 
 const Admin = () => {
-    const { isAdmin } = useContext(FirebaseContext)
-    // const isAdmin = useAdmin()
+    const { user, isAdmin } = useContext(FirebaseContext)
 
-    console.log(isAdmin)
     return (
         <div>
             {isAdmin && <p>Admin User</p>}
+            <p>{user.uid}</p>
         </div>
     )
 }

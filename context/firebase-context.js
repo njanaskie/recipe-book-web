@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { firebase } from '../src/firebase/firebase';
 import { history } from '../src/routers/AppRouter';
 import LoadingPage from '../src/components/LoadingPage'
@@ -12,10 +12,13 @@ const FirebaseProvider = ({ children }) => {
     const [isAdmin, setIsAdmin] = useState()
 
     useEffect(() => {
-        firebase.auth().onAuthStateChanged((user) => {
+        const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
             setUser(user)
             setLoading(false)
+            setIsAdmin()
         })
+
+        return () => unsubscribe()
     }, [])
 
     useEffect(() => {
@@ -24,9 +27,11 @@ const FirebaseProvider = ({ children }) => {
             .then((doc) => {
                 const userData = doc.data()
                 if (userData) {
-                    const isAdmin = userData.isAdmin
-                    setIsAdmin(isAdmin)
-                    console.log('setting isAdmin')
+                    if (userData.isAdmin === true) {
+                        const isAdmin = userData.isAdmin
+                        setIsAdmin(isAdmin)
+                        console.log('setting isAdmin: ', isAdmin)
+                    }
                 }
             })
         }
@@ -42,7 +47,6 @@ const FirebaseProvider = ({ children }) => {
     // } else {
     //     history.push('/');
     // }
-
 
     return (
         <FirebaseContext.Provider value={{ user, isAdmin }}>

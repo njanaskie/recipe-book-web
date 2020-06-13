@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom';
-import useAdmin from '../../../hooks/useAdmin'
+import FirebaseContext from '../../../../context/firebase-context'
 
 const DetailContent = (dish) => {
     const { isAdmin } = useContext(FirebaseContext)
-    // const isAdmin = useAdmin()
 
     return (
         <div>
