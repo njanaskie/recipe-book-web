@@ -7,7 +7,6 @@ const Admin = () => {
     return (
         <div>
             {isAdmin && <p>Admin User</p>}
-            <p>{user.uid}</p>
         </div>
     )
 }
