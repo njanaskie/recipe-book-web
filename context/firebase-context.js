@@ -30,7 +30,6 @@ const FirebaseProvider = ({ children }) => {
                     if (userData.isAdmin === true) {
                         const isAdmin = userData.isAdmin
                         setIsAdmin(isAdmin)
-                        console.log('setting isAdmin: ', isAdmin)
                     }
                 }
             })

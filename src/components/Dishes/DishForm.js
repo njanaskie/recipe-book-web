@@ -15,7 +15,7 @@ const DishForm = (props) => {
         description: '',
         type: '',
         cuisine: '',
-        recipes: '',
+        recipes: [],
         error: '',
     }
     const [state, setState] = useState(initialFormState)
@@ -29,7 +29,7 @@ const DishForm = (props) => {
             description: props.description || '',
             type: props.type || '',
             cuisine: props.cuisine || '',
-            recipes: props.recipes || '',
+            recipes: props.recipes || [''],
             error: ''
         })
     }, [props])
@@ -54,6 +54,17 @@ const DishForm = (props) => {
             setState(initialFormState)
         }
     }
+
+    const handleAddRecipeField = () => {
+        setState({...state, recipes: [...state.recipes, '']})
+    }
+
+    const handleRemoveRecipeField = (i) => {
+        const recipes = [...state.recipes.filter((r, rindx) => i !== rindx)]
+        setState({...state, recipes: recipes })
+    }
+
+    console.log(state.recipes)
 
     const onNameChange = (e) => {
         const name = e.target.value
@@ -91,9 +102,10 @@ const DishForm = (props) => {
         }
     }
 
-    const onRecipeChange = (e) => {
-        const recipes = e.target.value
-        setState({ ...state, recipes })
+    const onRecipeChange = (e, i) => {
+        const recipes = [...state.recipes]
+        recipes[i] = e.target.value
+        setState({ ...state, recipes: recipes })
     }
     
     return (
@@ -170,12 +182,20 @@ const DishForm = (props) => {
                     }
                 })}
             />
-            <input
-                type='text'
-                placeholder='Recipe links'
-                value={state.recipes || ''}
-                onChange={onRecipeChange}
-            />
+            {
+                state.recipes && state.recipes.map((recipe, index) => (
+                    <div key={index}>
+                        <input
+                            type='url'
+                            placeholder='Recipe links'
+                            value={recipe}
+                            onChange={e => onRecipeChange(e, index)}
+                        />
+                        <button type='button' onClick={() => handleAddRecipeField()}>+</button>
+                        <button type='button' onClick={() => handleRemoveRecipeField(index)}>-</button>
+                    </div>
+                ))
+            }
             <button>Save Dish</button>
         </form>
     )
