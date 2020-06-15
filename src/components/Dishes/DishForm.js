@@ -15,7 +15,7 @@ const DishForm = (props) => {
         description: '',
         type: '',
         cuisine: '',
-        recipes: [],
+        recipes: [''],
         error: '',
     }
     const [state, setState] = useState(initialFormState)
@@ -188,7 +188,7 @@ const DishForm = (props) => {
                         <input
                             type='url'
                             placeholder='Recipe links'
-                            value={recipe}
+                            value={recipe || ''}
                             onChange={e => onRecipeChange(e, index)}
                         />
                         <button type='button' onClick={() => handleAddRecipeField()}>+</button>

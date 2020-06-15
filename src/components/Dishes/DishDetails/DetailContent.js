@@ -16,7 +16,7 @@ const DetailContent = (dish) => {
             <h4>Optional Ingredients</h4>
             {dish.optionalIngredients && dish.optionalIngredients.map(optionalIngredient => <li key={optionalIngredient}>{optionalIngredient}</li>)}
             <h3>Recipes</h3>
-            <p>{dish.recipes}</p>
+            {dish.recipes && dish.recipes.map(recipe => <p key={recipe}><a href={recipe} target="_blank" rel="noopener noreferrer">{recipe}</a></p>)}
             {isAdmin && <Link to={`/edit/dish/${dish.id}`}>Edit Dish</Link>}
         </div>
     )
