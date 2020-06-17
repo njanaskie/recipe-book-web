@@ -1,9 +1,37 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import FirebaseContext from '../../../../context/firebase-context'
 
 const DetailContent = (dish) => {
     const { isAdmin } = useContext(FirebaseContext)
+
+    // useEffect(() => {
+    const getDataFromURL = (dish) => {
+        if (dish) {
+            console.log('fetching ', dish.recipes)
+            return dish.recipes.map(recipe =>
+                fetch(`${recipe}`)
+                    .then((response) => response.json())
+                    .then((responseJson) => {
+                    //   return responseJson.movies;
+                        console.log(responseJson)
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    })
+                );
+        } else {
+            console.log('not fetching')
+        }
+    }
+
+
+    // }, [])
+
+    if (dish.id) {
+        console.log(dish)
+        getDataFromURL(dish)
+    }
 
     return (
         <div>
