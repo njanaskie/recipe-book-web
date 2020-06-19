@@ -1,22 +1,27 @@
 import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { ReactTinyLink } from 'react-tiny-link'
-import { Tab, Button, Modal, Dropdown } from 'semantic-ui-react'
+import { Tab, Button, Modal, Dropdown, Form } from 'semantic-ui-react'
 import FirebaseContext from '../../../../context/firebase-context'
 import RecipesContext from '../../../../context/recipes-context'
 import useIngredients from '../../../hooks/useIngredients'
+import database from '../../../firebase/firebase'
 
 const DetailContent = (dish) => {
     const initialFormState = {
         url: '',
-        additionalIngredients: []
+        additionalIngredients: [],
+        error: ''
     }
     const [state, setState] = useState(initialFormState)
     const { isAdmin } = useContext(FirebaseContext)
     const { recipeDispatch } = useContext(RecipesContext)
+    const { user } = useContext(FirebaseContext)
     const ingredients = useIngredients()
 
-    const handleAddMyRecipe = (e) => {
+    console.log(state)
+
+    const onSubmit = (e) => {
         e.preventDefault()
 
         const recipe = {
@@ -28,7 +33,7 @@ const DetailContent = (dish) => {
             setState({ ...state, error: 'Please provide recipe URL' })
         } else {
             console.log('add recipe: ', recipe)
-            database.collection('users').doc(uid).collection('recipes').add(recipe).then((ref) => {
+            database.collection('users').doc(user.uid).collection('recipes').add(recipe).then((ref) => {
                 recipeDispatch({ type: 'ADD_RECIPE', recipe: {id: ref.key, ...recipe} })
             })
             setState(initialFormState)
@@ -55,10 +60,13 @@ const DetailContent = (dish) => {
         },
         {
             menuItem: 'My Saved Recipes',
-            render: () => <Tab.Pane>My Saved Recipes</Tab.Pane>
+            render: () => <Tab.Pane></Tab.Pane>
         },
     ]
 
+    // const additionalIngredients = dish.keyIngredients && dish.keyIngredients.filter((keyIngredient) => {
+    //     !ingredients.includes(keyIngredient)
+    // })
     return (
         <div>
             <p>{dish.name}</p>
@@ -71,34 +79,33 @@ const DetailContent = (dish) => {
             {dish.optionalIngredients && dish.optionalIngredients.map(optionalIngredient => <li key={optionalIngredient}>{optionalIngredient}</li>)}
             <div>
                 <h3>Recipes</h3>
-                <Modal trigger={<Button color='green'>Add Recipe</Button>}>
+                <Modal as={Form} onSubmit={onSubmit} trigger={<Button color='green'>Add Recipe</Button>}>
                     <Modal.Header>Add Recipe</Modal.Header>
                     <Modal.Content>
-                        <form onSubmit={handleAddMyRecipe}>
-                            <input
-                                type='url'
-                                name='url'
-                                placeholder='Insert URL'
-                                value={state.url}
-                                onChange={onURLChange}
-                            />
-                            <Dropdown
-                                placeholder='Add additional ingredients'
-                                name='additionalIngredients'
-                                fluid multiple selection
-                                multiple={true}
-                                value={state.additionalIngredients}
-                                onChange={onAdditionalIngredientChange}
-                                options={ingredients.map(ingredient => {
-                                    return {
-                                        key: ingredient.id,
-                                        text: ingredient.name,
-                                        value: ingredient.name
-                                    }
-                                })}
-                            />
-                            <button type='button'>+</button>
-                        </form>
+                        {state.error && <p>{state.error}</p>}
+                        <Form.Input
+                            type='url'
+                            name='url'
+                            placeholder='Insert URL'
+                            value={state.url}
+                            onChange={onURLChange}
+                        />
+                        <Dropdown
+                            placeholder='Add additional ingredients'
+                            name='additionalIngredients'
+                            fluid multiple selection
+                            multiple={true}
+                            value={state.additionalIngredients}
+                            onChange={onAdditionalIngredientChange}
+                            options={ingredients.map(ingredient => {
+                                return {
+                                    key: ingredient.id,
+                                    text: ingredient.name,
+                                    value: ingredient.name
+                                }
+                            })}
+                        />
+                        <Button type='submit'>+</Button>
                     </Modal.Content>
                 </Modal>
                 <Tab panes={panes}/>

@@ -6,9 +6,8 @@ const useIngredients = () => {
     const { ingredients, dispatch } = useContext(IngredientsContext)
 
     useEffect(() => {
-        database.collection('ingredients').orderBy("category", "asc")
-        .get()
-        .then((snapshot) => {
+        const unsubscribe = database.collection('ingredients').orderBy("category", "asc")
+        .onSnapshot((snapshot) => {
             const ingredients = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data()
@@ -16,6 +15,8 @@ const useIngredients = () => {
 
             dispatch({ type: 'SET_INGREDIENTS', ingredients})
         });
+
+        return () => unsubscribe()
         
     }, [])
 
