@@ -1,13 +1,14 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { ReactTinyLink } from 'react-tiny-link'
 import { Tab, Button, Modal, Dropdown, Form } from 'semantic-ui-react'
 import FirebaseContext from '../../../../context/firebase-context'
 import RecipesContext from '../../../../context/recipes-context'
 import useIngredients from '../../../hooks/useIngredients'
+import useUserRecipes from '../../../hooks/useUserRecipes'
 import database from '../../../firebase/firebase'
 
-const DetailContent = (dish) => {
+const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
     const initialFormState = {
         url: '',
         additionalIngredients: [],
@@ -17,9 +18,6 @@ const DetailContent = (dish) => {
     const { isAdmin } = useContext(FirebaseContext)
     const { recipeDispatch } = useContext(RecipesContext)
     const { user } = useContext(FirebaseContext)
-    const ingredients = useIngredients()
-
-    console.log(state)
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -60,7 +58,7 @@ const DetailContent = (dish) => {
         },
         {
             menuItem: 'My Saved Recipes',
-            render: () => <Tab.Pane></Tab.Pane>
+        render: () => <Tab.Pane>{userRecipes ? userRecipes.map(recipe => <ReactTinyLink key={recipe.id} url={recipe.url}>{recipe.url}</ReactTinyLink>) : <p>No Saved Recipes</p>}</Tab.Pane>
         },
     ]
 
