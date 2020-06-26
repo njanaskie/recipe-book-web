@@ -7,48 +7,27 @@ import RecipesContext from '../../../../context/recipes-context'
 import useIngredients from '../../../hooks/useIngredients'
 import useUserRecipes from '../../../hooks/useUserRecipes'
 import database from '../../../firebase/firebase'
+import UserRecipeItem from './UserRecipes/UserRecipeItem';
+import UserRecipeForm from './UserRecipes/UserRecipeForm';
+import AddUserRecipe from './UserRecipes/AddUserRecipe';
+import EditUserRecipe from './UserRecipes/EditUserRecipe'
 
 const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
     const initialFormState = {
-        url: '',
-        additionalIngredients: [],
-        error: ''
+        isModalOpen: false,
     }
     const [state, setState] = useState(initialFormState)
     const { isAdmin } = useContext(FirebaseContext)
     const { recipeDispatch } = useContext(RecipesContext)
     const { user } = useContext(FirebaseContext)
 
-    const onSubmit = (e) => {
-        e.preventDefault()
+    console.log(state)
 
-        const recipe = {
-            url: state.url,
-            additionalIngredients: state.additionalIngredients
-        }
-
-        if (!state.url) {
-            setState({ ...state, error: 'Please provide recipe URL' })
-        } else {
-            console.log('add recipe: ', recipe)
-            database.collection('users').doc(user.uid).collection('recipes').add(recipe).then((ref) => {
-                recipeDispatch({ type: 'ADD_RECIPE', recipe: {id: ref.key, ...recipe} })
-            })
-            setState(initialFormState)
-            
-        }
-    }
-
-    const onURLChange = (e) => {
-        const url = e.target.value
-        if (url) {
-            setState({ ...state, url })
-        }
-    }
-
-    const onAdditionalIngredientChange = (e, result) => {
-        const { value } = result || e.target
-        setState({ ...state, additionalIngredients: value })
+    const handleModalOpen = () => {
+        setState({
+            ...state,
+            isModalOpen: true
+        })
     }
 
     const panes = [
@@ -58,7 +37,7 @@ const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
         },
         {
             menuItem: 'My Saved Recipes',
-        render: () => <Tab.Pane>{userRecipes ? userRecipes.map(recipe => <ReactTinyLink key={recipe.id} url={recipe.url}>{recipe.url}</ReactTinyLink>) : <p>No Saved Recipes</p>}</Tab.Pane>
+            render: () => <Tab.Pane>{userRecipes ? userRecipes.map((recipe, id) => <UserRecipeItem key={id} recipe={recipe} />) : <p>No Saved Recipes</p>}</Tab.Pane>
         },
     ]
 
@@ -77,35 +56,13 @@ const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
             {dish.optionalIngredients && dish.optionalIngredients.map(optionalIngredient => <li key={optionalIngredient}>{optionalIngredient}</li>)}
             <div>
                 <h3>Recipes</h3>
-                <Modal as={Form} onSubmit={onSubmit} trigger={<Button color='green'>Add Recipe</Button>}>
+                <Modal open={state.isModalOpen} onClose={() => setState({ ...state, isModalOpen: false }) }>
                     <Modal.Header>Add Recipe</Modal.Header>
                     <Modal.Content>
-                        {state.error && <p>{state.error}</p>}
-                        <Form.Input
-                            type='url'
-                            name='url'
-                            placeholder='Insert URL'
-                            value={state.url}
-                            onChange={onURLChange}
-                        />
-                        <Dropdown
-                            placeholder='Add additional ingredients'
-                            name='additionalIngredients'
-                            fluid multiple selection
-                            multiple={true}
-                            value={state.additionalIngredients}
-                            onChange={onAdditionalIngredientChange}
-                            options={ingredients.map(ingredient => {
-                                return {
-                                    key: ingredient.id,
-                                    text: ingredient.name,
-                                    value: ingredient.name
-                                }
-                            })}
-                        />
-                        <Button type='submit'>+</Button>
+                        <AddUserRecipe dish={dish} />
                     </Modal.Content>
                 </Modal>
+                <Button color='green' onClick={handleModalOpen}>Add Recipe</Button>
                 <Tab panes={panes}/>
             </div>
             {isAdmin && <Link to={`/edit/dish/${dish.id}`}>Edit Dish</Link>}

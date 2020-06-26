@@ -7,17 +7,17 @@ import useUserRecipes from '../../../hooks/useUserRecipes'
 
 const DetailHome = () => {
     const dishes = useDishes()
-    const userRecipes = useUserRecipes()
-    const ingredients = useIngredients()
     const { id } = useParams()
     const dish = dishes.find((dish) => dish.id === id)
+    const userRecipes = useUserRecipes(dish)
+
+    console.log(userRecipes)
 
     return (
         <div>
             <DetailContent
                 dish={dish}
                 userRecipes={userRecipes}
-                ingredients={ingredients}
             />
         </div>
     )

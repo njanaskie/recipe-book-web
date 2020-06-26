@@ -3,11 +3,10 @@ import database from '../firebase/firebase'
 import FirebaseContext from '../../context/firebase-context'
 import RecipesContext from '../../context/recipes-context'
 
-const useUserRecipes = () => {
+const useUserRecipes = (dish = {}) => {
     const isCurrent = useRef(true)
     const { user } = useContext(FirebaseContext)
     const { recipes, recipeDispatch } = useContext(RecipesContext)
-
 
     useEffect(() => {
         return () => {
@@ -15,21 +14,26 @@ const useUserRecipes = () => {
         }
     }, [])
 
-    useEffect(() => {
-        const unsubscribe = database.collection('users').doc(user.uid).collection('recipes')
-        .onSnapshot((snapshot) => {
-            if (isCurrent.current) {
-                const userRecipes = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data()
-                    }))
-            
-                recipeDispatch({ type: 'SET_RECIPES', recipes: userRecipes})
-            }
-        })
+    console.log(dish)
 
-        return () => unsubscribe()
-
+    useEffect((dish) => {
+        if (dish !== undefined) {
+            console.log(dish)
+            const unsubscribe = database.collection('users').doc(user.uid).collection('recipes').where('recipeDish', '==', `${dish.name}`)
+            .onSnapshot((snapshot) => {
+                if (isCurrent.current) {
+                    const userRecipes = snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        ...doc.data()
+                        }))
+                    console.log(userRecipes)
+                
+                    recipeDispatch({ type: 'SET_RECIPES', recipes: userRecipes})
+                }
+            })
+    
+            return () => unsubscribe()
+        }
     }, [])
 
     return recipes
