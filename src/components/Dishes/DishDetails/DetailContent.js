@@ -21,8 +21,6 @@ const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
     const { recipeDispatch } = useContext(RecipesContext)
     const { user } = useContext(FirebaseContext)
 
-    console.log(state)
-
     const handleModalOpen = () => {
         setState({
             ...state,
