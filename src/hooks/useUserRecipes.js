@@ -14,15 +14,19 @@ const useUserRecipes = (dish = {}) => {
         }
     }, [])
 
-    useEffect(() => {
-        if (dish.name) {
-            const unsubscribe = database.collection('users').doc(user.uid).collection('recipes').where('recipeDish', '==', dish.name)
+    console.log(dish)
+
+    useEffect((dish) => {
+        if (dish !== undefined) {
+            console.log(dish)
+            const unsubscribe = database.collection('users').doc(user.uid).collection('recipes').where('recipeDish', '==', `${dish.name}`)
             .onSnapshot((snapshot) => {
                 if (isCurrent.current) {
                     const userRecipes = snapshot.docs.map((doc) => ({
                         id: doc.id,
                         ...doc.data()
                         }))
+                    console.log(userRecipes)
                 
                     recipeDispatch({ type: 'SET_RECIPES', recipes: userRecipes})
                 }
@@ -30,7 +34,7 @@ const useUserRecipes = (dish = {}) => {
     
             return () => unsubscribe()
         }
-    }, [dish])
+    }, [])
 
     return recipes
 }

@@ -11,6 +11,8 @@ const DetailHome = () => {
     const dish = dishes.find((dish) => dish.id === id)
     const userRecipes = useUserRecipes(dish)
 
+    console.log(userRecipes)
+
     return (
         <div>
             <DetailContent
