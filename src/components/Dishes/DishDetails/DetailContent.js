@@ -21,8 +21,6 @@ const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
     const { recipeDispatch } = useContext(RecipesContext)
     const { user } = useContext(FirebaseContext)
 
-    console.log(state)
-
     const handleModalOpen = () => {
         setState({
             ...state,
@@ -33,7 +31,7 @@ const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
     const panes = [
         {
             menuItem: 'Suggested Recipes',
-            render: () => <Tab.Pane>{dish.recipes && dish.recipes.map(recipe => <ReactTinyLink key={recipe} url={recipe}>{recipe}</ReactTinyLink>)}</Tab.Pane>
+            render: () => <Tab.Pane>{dish.recipes ? dish.recipes.map(recipe => <ReactTinyLink key={recipe} url={recipe}>{recipe}</ReactTinyLink>) : <p>No Suggested Recipes</p>}</Tab.Pane>
         },
         {
             menuItem: 'My Saved Recipes',
