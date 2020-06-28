@@ -28,14 +28,17 @@ const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
         })
     }
 
+    console.log(dish.recipes)
+    console.log(userRecipes)
+
     const panes = [
         {
             menuItem: 'Suggested Recipes',
-            render: () => <Tab.Pane>{dish.recipes && dish.recipes.map(recipe => <ReactTinyLink key={recipe} url={recipe}>{recipe}</ReactTinyLink>)}</Tab.Pane>
+            render: () => <Tab.Pane>{dish.recipes && dish.recipes.map(recipe => recipe ? <ReactTinyLink key={recipe} url={recipe}>{recipe}</ReactTinyLink> : <p key={recipe}>No Suggested Recipes</p>)}</Tab.Pane>
         },
         {
             menuItem: 'My Saved Recipes',
-            render: () => <Tab.Pane>{userRecipes ? userRecipes.map((recipe, id) => <UserRecipeItem key={id} recipe={recipe} />) : <p>No Saved Recipes</p>}</Tab.Pane>
+            render: () => <Tab.Pane>{userRecipes && userRecipes.map((recipe, id) => recipe ? <UserRecipeItem key={id} recipe={recipe} dish={dish}/> : <p>No Saved Recipes</p>)}</Tab.Pane>
         },
     ]
 

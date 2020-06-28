@@ -6,17 +6,20 @@ const UserRecipeForm = (props) => {
     const initialFormState = {
         url: '',
         additionalIngredients: [],
-        recipeDish: props.dish.name,
+        recipeDish: props.recipeDish ? props.recipeDish : props.dish.name,
         error: ''
     }
     const [state, setState] = useState(initialFormState)
     const ingredients = useIngredients()
 
+    console.log(props)
+    console.log(state)
+
     useEffect(() => {
         setState({
             url: props.url || '',
             additionalIngredients: props.additionalIngredients || [],
-            recipeDish: props.dish.name || '',
+            recipeDish: props.recipeDish ? props.recipeDish : props.dish.name,
             error: ''
         })
     }, [props])

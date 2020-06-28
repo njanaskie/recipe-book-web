@@ -17,7 +17,6 @@ const EditUserRecipe = ({ recipe }) => {
     }
 
     console.log('edit user recipe')
-    console.log(recipe)
 
     return (
         <div>

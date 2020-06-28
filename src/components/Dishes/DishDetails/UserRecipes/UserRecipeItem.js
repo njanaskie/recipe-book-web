@@ -6,7 +6,7 @@ import FirebaseContext from '../../../../../context/firebase-context'
 import RecipesContext from '../../../../../context/recipes-context'
 import database from '../../../../firebase/firebase'
 
-const UserRecipeItem = ({ recipe }) => {
+const UserRecipeItem = ({ recipe, dish }) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const { user } = useContext(FirebaseContext)
     const { recipeDispatch } = useContext(RecipesContext)
@@ -31,7 +31,7 @@ const UserRecipeItem = ({ recipe }) => {
             <Modal open={isModalOpen} onClose={() => setIsModalOpen(false) }>
                 <Modal.Header>Add Recipe</Modal.Header>
                 <Modal.Content>
-                    <EditUserRecipe recipe={recipe} />
+                    <EditUserRecipe recipe={recipe} dish={dish}/>
                 </Modal.Content>
             </Modal>
             <button onClick={handleModalOpen}>Edit</button>
