@@ -38,7 +38,7 @@ const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
         },
         {
             menuItem: 'My Saved Recipes',
-            render: () => <Tab.Pane>{userRecipes && userRecipes.map((recipe, id) => recipe ? <UserRecipeItem key={id} recipe={recipe} dish={dish}/> : <p>No Saved Recipes</p>)}</Tab.Pane>
+            render: () => <Tab.Pane>{userRecipes.length > 0 ? userRecipes.map((recipe) => <UserRecipeItem key={recipe.id} recipe={recipe} dish={dish}/>) : <p>No Saved Recipes</p>}</Tab.Pane>
         },
     ]
 

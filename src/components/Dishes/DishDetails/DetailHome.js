@@ -15,7 +15,7 @@ const DetailHome = () => {
         <div>
             <DetailContent
                 dish={dish}
-                userRecipes={userRecipes}
+                userRecipes={userRecipes.filter(recipe => recipe.id !== undefined )}
             />
         </div>
     )
