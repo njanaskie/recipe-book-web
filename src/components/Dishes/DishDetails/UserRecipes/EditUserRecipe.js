@@ -4,19 +4,21 @@ import database from '../../../../firebase/firebase'
 import FirebaseContext from '../../../../../context/firebase-context'
 import RecipesContext from '../../../../../context/recipes-context'
 
-const EditUserRecipe = ({ recipe }) => {
+const EditUserRecipe = ({ recipe, handleModalClose }) => {
     const { recipeDispatch } = useContext(RecipesContext)
     const { user } = useContext(FirebaseContext)
     // const recipe = recipes.find((recipe) => recipe.id === )
 
-    const onSubmit = (recipe) => {
-        // database.collection('dishes').doc(id).update(dish).then(() => {
-        //     dishDispatch({ type: 'EDIT_DISH', id: dish.id, dish })
-        //     history.push('/dishes')
-        // })
+    const onSubmit = (editRecipe) => {
+        database.collection('users').doc(user.uid).collection('recipes').doc(recipe.id).update(editRecipe).then(() => {
+            recipeDispatch({ type: 'EDIT_RECIPE', id: editRecipe.id, editRecipe })
+
+            handleModalClose()
+            console.log('edit user recipe', editRecipe)
+        })
     }
 
-    console.log('edit user recipe')
+    
 
     return (
         <div>

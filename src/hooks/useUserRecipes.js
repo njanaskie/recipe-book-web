@@ -32,8 +32,6 @@ const useUserRecipes = (dish = {}) => {
         }
     }, [dish])
 
-    recipes.filter(recipe => recipe.id !== undefined )
-
     return recipes
 }
 

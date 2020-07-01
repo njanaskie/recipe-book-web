@@ -2,12 +2,12 @@ import React, { useContext, useState } from 'react'
 import { ReactTinyLink } from 'react-tiny-link'
 import {  Modal } from 'semantic-ui-react'
 import EditUserRecipe from '../UserRecipes/EditUserRecipe'
+import UserRecipeModal from '../UserRecipes/UserRecipeModal'
 import FirebaseContext from '../../../../../context/firebase-context'
 import RecipesContext from '../../../../../context/recipes-context'
 import database from '../../../../firebase/firebase'
 
-const UserRecipeItem = ({ recipe, dish }) => {
-    const [isModalOpen, setIsModalOpen] = useState(false)
+const UserRecipeItem = ({ recipe, dish, isModalOpen, handleModalOpen, handleModalClose }) => {
     const { user } = useContext(FirebaseContext)
     const { recipeDispatch } = useContext(RecipesContext)
 
@@ -17,9 +17,9 @@ const UserRecipeItem = ({ recipe, dish }) => {
         })
     }
 
-    const handleModalOpen = () => {
-        setIsModalOpen(true)
-    }
+    // const handleModalOpen = () => {
+    //     setIsModalOpen(true)
+    // }
     
     return (
         <div>
@@ -28,12 +28,9 @@ const UserRecipeItem = ({ recipe, dish }) => {
             >
                 {recipe.url}
             </ReactTinyLink>
-            <Modal open={isModalOpen} onClose={() => setIsModalOpen(false) }>
-                <Modal.Header>Add Recipe</Modal.Header>
-                <Modal.Content>
-                    <EditUserRecipe recipe={recipe} dish={dish}/>
-                </Modal.Content>
-            </Modal>
+            <UserRecipeModal isModalOpen={isModalOpen} handleModalClose={handleModalClose}>
+                <EditUserRecipe recipe={recipe} dish={dish} handleModalClose={handleModalClose}/>
+            </UserRecipeModal>
             <button onClick={handleModalOpen}>Edit</button>
             <button onClick={removeUserRecipe}>Remove</button>
         </div>

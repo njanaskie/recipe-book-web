@@ -11,21 +11,20 @@ import UserRecipeItem from './UserRecipes/UserRecipeItem';
 import UserRecipeForm from './UserRecipes/UserRecipeForm';
 import AddUserRecipe from './UserRecipes/AddUserRecipe';
 import EditUserRecipe from './UserRecipes/EditUserRecipe'
+import UserRecipeModal from './UserRecipes/UserRecipeModal'
 
 const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
-    const initialFormState = {
-        isModalOpen: false,
-    }
-    const [state, setState] = useState(initialFormState)
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const { isAdmin } = useContext(FirebaseContext)
     const { recipeDispatch } = useContext(RecipesContext)
     const { user } = useContext(FirebaseContext)
 
     const handleModalOpen = () => {
-        setState({
-            ...state,
-            isModalOpen: true
-        })
+        setIsModalOpen(true)
+    }
+
+    const handleModalClose = () => {
+        setIsModalOpen(false)
     }
 
     console.log(dish.recipes)
@@ -38,7 +37,7 @@ const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
         },
         {
             menuItem: 'My Saved Recipes',
-            render: () => <Tab.Pane>{userRecipes.length > 0 ? userRecipes.map((recipe) => <UserRecipeItem key={recipe.id} recipe={recipe} dish={dish}/>) : <p>No Saved Recipes</p>}</Tab.Pane>
+            render: () => <Tab.Pane>{userRecipes.length > 0 ? userRecipes.map((recipe) => <UserRecipeItem key={recipe.id} recipe={recipe} dish={dish} isModalOpen={isModalOpen} handleModalOpen={handleModalOpen} handleModalClose={handleModalClose}/>) : <p>No Saved Recipes</p>}</Tab.Pane>
         },
     ]
 
@@ -57,12 +56,9 @@ const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
             {dish.optionalIngredients && dish.optionalIngredients.map(optionalIngredient => <li key={optionalIngredient}>{optionalIngredient}</li>)}
             <div>
                 <h3>Recipes</h3>
-                <Modal open={state.isModalOpen} onClose={() => setState({ ...state, isModalOpen: false }) }>
-                    <Modal.Header>Add Recipe</Modal.Header>
-                    <Modal.Content>
-                        <AddUserRecipe dish={dish} />
-                    </Modal.Content>
-                </Modal>
+                <UserRecipeModal isModalOpen={isModalOpen} handleModalClose={handleModalClose}>
+                    <AddUserRecipe dish={dish} handleModalClose={handleModalClose}/>
+                </UserRecipeModal>
                 <Button color='green' onClick={handleModalOpen}>Add Recipe</Button>
                 <Tab panes={panes}/>
             </div>

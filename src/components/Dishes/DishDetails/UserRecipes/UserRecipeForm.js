@@ -36,7 +36,6 @@ const UserRecipeForm = (props) => {
         if (!state.url) {
             setState({ ...state, error: 'Please provide recipe URL' })
         } else {
-            console.log('add recipe: ', recipe)
             props.onSubmit(recipe)
             setState(initialFormState)
         }
