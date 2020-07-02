@@ -4,7 +4,7 @@ import database from '../../../../firebase/firebase'
 import FirebaseContext from '../../../../../context/firebase-context'
 import RecipesContext from '../../../../../context/recipes-context'
 
-const EditUserRecipe = ({ recipe, handleModalClose }) => {
+const EditUserRecipe = ({ dish, recipe, handleModalClose }) => {
     const { recipeDispatch } = useContext(RecipesContext)
     const { user } = useContext(FirebaseContext)
     // const recipe = recipes.find((recipe) => recipe.id === )
@@ -25,6 +25,7 @@ const EditUserRecipe = ({ recipe, handleModalClose }) => {
             <UserRecipeForm
                 {...recipe}
                 onSubmit={onSubmit}
+                dish={dish}
             />
         </div>
     )
