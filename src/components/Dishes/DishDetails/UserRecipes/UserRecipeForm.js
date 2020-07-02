@@ -11,9 +11,7 @@ const UserRecipeForm = (props) => {
     }
     const [state, setState] = useState(initialFormState)
     const ingredients = useIngredients()
-
-    console.log(props)
-    console.log(state)
+    const additionalIngredients = ingredients && Object.values(ingredients).filter((ingredient) => !(props.dish.keyIngredients.includes(ingredient['name'])))
 
     useEffect(() => {
         setState({
@@ -70,7 +68,7 @@ const UserRecipeForm = (props) => {
                 multiple={true}
                 value={state.additionalIngredients}
                 onChange={onAdditionalIngredientChange}
-                options={ingredients.map(ingredient => {
+                options={additionalIngredients.map(ingredient => {
                     return {
                         key: ingredient.id,
                         text: ingredient.name,

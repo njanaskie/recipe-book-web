@@ -41,9 +41,6 @@ const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
         },
     ]
 
-    // const additionalIngredients = dish.keyIngredients && dish.keyIngredients.filter((keyIngredient) => {
-    //     !ingredients.includes(keyIngredient)
-    // })
     return (
         <div>
             <p>{dish.name}</p>
