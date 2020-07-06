@@ -5,5 +5,11 @@
     ],
     "snapshotSerializers": [
         "enzyme-to-json/serializer"
+    ],
+    "modulePaths": [
+        "<rootDir>"
+    ],
+    "moduleDirectories": [
+        "node_modules"
     ]
 }

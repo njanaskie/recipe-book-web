@@ -5,11 +5,3 @@ exports[`should render IngredientListHeader correctly 1`] = `
   <h3 />
 </div>
 `;
-
-exports[`should render IngredientListHeader with category 1`] = `
-<div>
-  <h3>
-    Spices
-  </h3>
-</div>
-`;

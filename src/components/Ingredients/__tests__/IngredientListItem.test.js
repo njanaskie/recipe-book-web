@@ -1,8 +1,8 @@
 import React from 'react'
-import IngredientsContext from '../../../context/ingredients-context'
+import IngredientsContext from '../../../../context/ingredients-context'
 import { shallow } from 'enzyme'
-import IngredientListItem from '../../components/Ingredients/IngredientListItem'
-import ingredients from '../fixtures/ingredients'
+import IngredientListItem from '../IngredientListItem'
+import ingredients from '../../../tests/fixtures/ingredients'
 
 test('should render IngredientListItem with ingredient',() => {
     const wrapper = shallow(

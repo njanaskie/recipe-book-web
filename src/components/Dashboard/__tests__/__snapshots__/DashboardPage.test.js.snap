@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render DashboardPage correctly 1`] = `
+<[object Object]
+  value={
+    Object {
+      "filters": undefined,
+      "filtersDispatch": [Function],
+    }
+  }
+>
+  <[object Object]
+    value={
+      Object {
+        "dishDispatch": [Function],
+        "dishes": Array [],
+      }
+    }
+  >
+    <[object Object]
+      value={
+        Object {
+          "pantryDispatch": [Function],
+          "pantryIngredients": Array [],
+        }
+      }
+    >
+      <h3>
+        Dashboard Page
+      </h3>
+      <DashboardList />
+    </[object Object]>
+  </[object Object]>
+</[object Object]>
+`;

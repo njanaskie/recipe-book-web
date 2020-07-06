@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import DashboardPage from '../../components/DashboardPage'
+import DashboardPage from '../../Dashboard/DashboardPage'
 
 test('should render DashboardPage correctly',() => {
     const wrapper = shallow(<DashboardPage />)

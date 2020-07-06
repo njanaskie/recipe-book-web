@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import AddIngredientForm from '../../components/Ingredients/AddIngredientForm'
-import ingredients from '../fixtures/ingredients'
-import IngredientsContext from '../../../context/ingredients-context'
+import AddIngredientForm from '../AddIngredientForm'
+import ingredients from '../../../tests/fixtures/ingredients'
+import IngredientsContext from '../../../../context/ingredients-context'
 
 test('should render AddIngredientForm correctly',() => {
     jest.spyOn(React, 'useContext').mockImplementation(() => ingredients)
