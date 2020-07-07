@@ -10,7 +10,6 @@ import useIngredients from '../../hooks/useIngredients'
 import usePantryIngredients from '../../hooks/usePantryIngredients'
 
 const syncIngredientsWithPantry = (ings, pIngs) => {
-    // const merged = [...ings, ...pIngs]
     const syncedIngredients = []
     ings.forEach((ing) => {
         let isPantry = false

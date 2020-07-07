@@ -1,14 +1,13 @@
 import React, { useState, useContext } from 'react'
-import IngredientsContext from '../../../context/ingredients-context'
+import IngredientsContext, { useIngredientsContext } from '../../../context/ingredients-context'
 import database from '../../firebase/firebase'
-
 
 const AddIngredientForm = () => {
     const [name, setName] = useState('')
     const [category, setCategory] = useState('dairy')
     const [price, setPrice] = useState('1')
     const [error, setError] = useState('')
-    const { dispatch } = useContext(IngredientsContext)
+    const { dispatch } = useIngredientsContext()
 
     const addIngredient = (e) => {
         e.preventDefault()

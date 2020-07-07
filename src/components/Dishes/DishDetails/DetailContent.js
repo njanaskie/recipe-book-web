@@ -1,23 +1,15 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { ReactTinyLink } from 'react-tiny-link'
-import { Tab, Button, Modal, Dropdown, Form } from 'semantic-ui-react'
-import FirebaseContext from '../../../../context/firebase-context'
-import RecipesContext from '../../../../context/recipes-context'
-import useIngredients from '../../../hooks/useIngredients'
-import useUserRecipes from '../../../hooks/useUserRecipes'
-import database from '../../../firebase/firebase'
+import { Tab, Button } from 'semantic-ui-react'
+import { useFirebaseContext } from '../../../../context/firebase-context'
 import UserRecipeItem from './UserRecipes/UserRecipeItem';
-import UserRecipeForm from './UserRecipes/UserRecipeForm';
 import AddUserRecipe from './UserRecipes/AddUserRecipe';
-import EditUserRecipe from './UserRecipes/EditUserRecipe'
 import UserRecipeModal from './UserRecipes/UserRecipeModal'
 
 const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const { isAdmin } = useContext(FirebaseContext)
-    const { recipeDispatch } = useContext(RecipesContext)
-    const { user } = useContext(FirebaseContext)
+    const { isAdmin } = useFirebaseContext()
 
     const handleModalOpen = () => {
         setIsModalOpen(true)
@@ -26,9 +18,6 @@ const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
     const handleModalClose = () => {
         setIsModalOpen(false)
     }
-
-    console.log(dish.recipes)
-    console.log(userRecipes)
 
     const panes = [
         {

@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { firebase } from '../src/firebase/firebase';
 import { history } from '../src/routers/AppRouter';
 import LoadingPage from '../src/components/LoadingPage'
 import database from '../src/firebase/firebase'
 
 const FirebaseContext = React.createContext()
+
+export const useFirebaseContext = () => useContext(FirebaseContext)
 
 const FirebaseProvider = ({ children }) => {
     const [user, setUser] = useState('')

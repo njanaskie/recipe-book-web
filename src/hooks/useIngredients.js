@@ -1,9 +1,9 @@
 import { useContext, useEffect } from 'react'
 import database from '../firebase/firebase'
-import IngredientsContext from '../../context/ingredients-context'
+import { useIngredientsContext } from '../../context/ingredients-context'
 
 const useIngredients = () => {
-    const { ingredients, dispatch } = useContext(IngredientsContext)
+    const { ingredients, dispatch } = useIngredientsContext()
 
     useEffect(() => {
         const unsubscribe = database.collection('ingredients').orderBy("category", "asc")

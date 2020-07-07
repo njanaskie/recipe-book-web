@@ -2,10 +2,16 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import AddIngredientForm from '../AddIngredientForm'
 import ingredients from '../../../tests/fixtures/ingredients'
-import IngredientsContext from '../../../../context/ingredients-context'
+import * as IngredientsContext from '../../../../context/ingredients-context'
+
+let dispatch
+
+beforeEach(() => {
+    dispatch = jest.fn()
+})
 
 test('should render AddIngredientForm correctly',() => {
-    jest.spyOn(React, 'useContext').mockImplementation(() => ingredients)
+    jest.spyOn(IngredientsContext, 'useIngredientsContext').mockImplementation(() => dispatch)
     const wrapper = shallow(<AddIngredientForm />)
     expect(wrapper).toMatchSnapshot()
 });

@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render DetailContent correctly 1`] = `
+<div>
+  <p />
+  <p />
+  <p />
+  <p />
+  <h4>
+    Key Ingredients
+  </h4>
+  <h4>
+    Optional Ingredients
+  </h4>
+  <div>
+    <h3>
+      Recipes
+    </h3>
+    <UserRecipeModal
+      handleModalClose={[Function]}
+      isModalOpen={false}
+    >
+      <AddUserRecipe
+        dish={Object {}}
+        handleModalClose={[Function]}
+      />
+    </UserRecipeModal>
+    <Button
+      as="button"
+      color="green"
+      onClick={[Function]}
+    >
+      Add Recipe
+    </Button>
+    <Tab
+      grid={
+        Object {
+          "paneWidth": 12,
+          "tabWidth": 4,
+        }
+      }
+      menu={
+        Object {
+          "attached": true,
+          "tabular": true,
+        }
+      }
+      panes={
+        Array [
+          Object {
+            "menuItem": "Suggested Recipes",
+            "render": [Function],
+          },
+          Object {
+            "menuItem": "My Saved Recipes",
+            "render": [Function],
+          },
+        ]
+      }
+      renderActiveOnly={true}
+    />
+  </div>
+  <[object Object]
+    to="/edit/dish/undefined"
+  >
+    Edit Dish
+  </[object Object]>
+</div>
+`;
