@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render IngredientsList with ingredients 1`] = `
+<div>
+  <div>
+    <span>
+      No ingredients
+    </span>
+  </div>
+</div>
+`;

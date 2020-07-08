@@ -9,21 +9,24 @@ import database from '../../firebase/firebase'
 import useIngredients from '../../hooks/useIngredients'
 import usePantryIngredients from '../../hooks/usePantryIngredients'
 
-const syncIngredientsWithPantry = (ings, pIngs) => {
+export const syncIngredientsWithPantry = (ings, pIngs) => {
     const syncedIngredients = []
-    ings.forEach((ing) => {
-        let isPantry = false
-        
-        pIngs.forEach((pIng) => {
-            if (ing.name === pIng.name) {
-                isPantry = true
-            } else {
-                isPantry
-            }
-        })
 
-        return syncedIngredients.push({ ...ing, isPantry })
-    })
+    if (ings) {
+        ings && ings.forEach((ing) => {
+            let isPantry = false
+            
+            pIngs.forEach((pIng) => {
+                if (ing.name === pIng.name) {
+                    isPantry = true
+                } else {
+                    isPantry
+                }
+            })
+    
+            return syncedIngredients.push({ ...ing, isPantry })
+        })
+    }
 
     return syncedIngredients
 }
@@ -38,11 +41,7 @@ export const IngredientsList = () => {
     return (
         <div>
             {
-                ingredients.length === 0 ? (
-                    <div>
-                        <span>No ingredients</span>
-                    </div>
-                ) : (
+                ingredients ? (
                     Object.keys(groupedIngredients).map(category => {
                         return (
                             <div key={category} >
@@ -56,6 +55,10 @@ export const IngredientsList = () => {
   
                         )
                     })
+                ) : (
+                    <div>
+                        <span>No ingredients</span>
+                    </div>
                 )
             }
         </div>

@@ -7,9 +7,9 @@ test('should render Header correctly',() => {
     expect(wrapper).toMatchSnapshot()
 });
 
-// test('should call startLogout on button click', () => {
-//     const startLogout = jest.fn()
-//     const wrapper = shallow(<Header startLogout={startLogout}/>)
-//     wrapper.find('button').simulate('click')
-//     expect(startLogout).toHaveBeenCalled();
-// });
+test('should call signOut on button click', () => {
+    const wrapper = shallow(<Header />)
+    const signOut = jest.spyOn(wrapper, 'signOut')
+    wrapper.find('button').simulate('click')
+    expect(signOut).toHaveBeenCalled();
+});

@@ -4,21 +4,22 @@ import { connect } from 'react-redux';
 import { startLogout } from '../actions/auth';
 import { firebase } from '../firebase/firebase';
 
-export const Header = ({ startLogout }) => (
-    <header className="header">
-        <div className="content-container">
-            <div className="header__content">
-                <Link className="header__title" to='/dashboard' >
-                    <h1>Recipe App</h1>
-                </Link>
-                <button className="button button__link" onClick={() => firebase.auth().signOut()}>Logout</button>
+export const Header = () => {
+    
+    const signOut = () => firebase.auth().signOut()
+    
+    return (
+        <header className="header">
+            <div className="content-container">
+                <div className="header__content">
+                    <Link className="header__title" to='/dashboard' >
+                        <h1>Recipe App</h1>
+                    </Link>
+                    <button className="button button__link" onClick={signOut}>Logout</button>
+                </div>
             </div>
-        </div>
-    </header>
-);
+        </header>
+    )
+};
 
-const mapDispatchToProps = (dispatch) => ({
-    startLogout: () => dispatch(startLogout())
-});
-
-export default connect(undefined, mapDispatchToProps)(Header);
+export default Header;
