@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import { Header } from '../Header'
 
 test('should render Header correctly',() => {
@@ -8,8 +8,8 @@ test('should render Header correctly',() => {
 });
 
 test('should call signOut on button click', () => {
-    const wrapper = shallow(<Header />)
-    const signOut = jest.spyOn(wrapper, 'signOut')
+    const startLogoutSpy = jest.fn()
+    const wrapper = shallow(<Header startLogout={startLogoutSpy} />)
     wrapper.find('button').simulate('click')
-    expect(signOut).toHaveBeenCalled();
+    expect(startLogoutSpy).toHaveBeenCalled();
 });
