@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import FirebaseContext from '../../context/firebase-context'
+import { useFirebaseContext } from '../../context/firebase-context'
 
-const Admin = () => {
-    const { user, isAdmin } = useContext(FirebaseContext)
+export const Admin = () => {
+    const { user, isAdmin } = useFirebaseContext()
 
     return (
         <div>

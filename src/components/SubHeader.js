@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import FirebaseContext from '../../context/firebase-context'
+import { useFirebaseContext } from '../../context/firebase-context'
 
-const SubHeader = () => {
-    const { isAdmin } = useContext(FirebaseContext)
+export const SubHeader = () => {
+    const { isAdmin } = useFirebaseContext()
 
     return (
         <header>

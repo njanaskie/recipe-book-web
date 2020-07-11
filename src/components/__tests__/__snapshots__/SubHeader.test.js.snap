@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render SubHeader when admin does not exist 1`] = `
+<header>
+  <[object Object]
+    activeClassName="is-active"
+    to="/dashboard"
+  >
+    Dashboard
+  </[object Object]>
+  <[object Object]
+    activeClassName="is-active"
+    to="/pantry"
+  >
+    Pantry
+  </[object Object]>
+</header>
+`;
+
+exports[`should render SubHeader when admin exists 1`] = `
+<header>
+  <[object Object]
+    activeClassName="is-active"
+    to="/dashboard"
+  >
+    Dashboard
+  </[object Object]>
+  <[object Object]
+    activeClassName="is-active"
+    to="/pantry"
+  >
+    Pantry
+  </[object Object]>
+  <[object Object]
+    activeClassName="is-active"
+    to="/ingredients"
+  >
+    Ingredients
+  </[object Object]>
+  <[object Object]
+    activeClassName="is-active"
+    to="/dishes"
+  >
+    Dishes
+  </[object Object]>
+  <[object Object]
+    activeClassName="is-active"
+    to="/add-dish"
+  >
+    Add Dish
+  </[object Object]>
+</header>
+`;

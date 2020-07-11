@@ -5,10 +5,10 @@ import useDishes from '../../hooks/useDishes'
 import usePantryDishes from '../../hooks/usePantryDishes'
 import { Input } from 'semantic-ui-react'
 import DashboardListFilters from './DashboardListFilters'
-import FiltersContext from '../../../context/filters-context'
+import { useFiltersContext } from '../../../context/filters-context'
 
-const DashboardList = () => {
-    const { filters } = useContext(FiltersContext)
+export const DashboardList = () => {
+    const { filters } = useFiltersContext()
     const pantryDishes = usePantryDishes()
     
     return (
