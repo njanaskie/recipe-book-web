@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render DashboardPage correctly 1`] = `
-<[object Object]
+<ContextProvider
   value={
     Object {
       "filters": undefined,
@@ -9,7 +9,7 @@ exports[`should render DashboardPage correctly 1`] = `
     }
   }
 >
-  <[object Object]
+  <ContextProvider
     value={
       Object {
         "dishDispatch": [Function],
@@ -17,7 +17,7 @@ exports[`should render DashboardPage correctly 1`] = `
       }
     }
   >
-    <[object Object]
+    <ContextProvider
       value={
         Object {
           "pantryDispatch": [Function],
@@ -29,7 +29,7 @@ exports[`should render DashboardPage correctly 1`] = `
         Dashboard Page
       </h3>
       <DashboardList />
-    </[object Object]>
-  </[object Object]>
-</[object Object]>
+    </ContextProvider>
+  </ContextProvider>
+</ContextProvider>
 `;

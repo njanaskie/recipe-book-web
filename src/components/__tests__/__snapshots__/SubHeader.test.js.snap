@@ -2,52 +2,52 @@
 
 exports[`should render SubHeader when admin does not exist 1`] = `
 <header>
-  <[object Object]
+  <NavLink
     activeClassName="is-active"
     to="/dashboard"
   >
     Dashboard
-  </[object Object]>
-  <[object Object]
+  </NavLink>
+  <NavLink
     activeClassName="is-active"
     to="/pantry"
   >
     Pantry
-  </[object Object]>
+  </NavLink>
 </header>
 `;
 
 exports[`should render SubHeader when admin exists 1`] = `
 <header>
-  <[object Object]
+  <NavLink
     activeClassName="is-active"
     to="/dashboard"
   >
     Dashboard
-  </[object Object]>
-  <[object Object]
+  </NavLink>
+  <NavLink
     activeClassName="is-active"
     to="/pantry"
   >
     Pantry
-  </[object Object]>
-  <[object Object]
+  </NavLink>
+  <NavLink
     activeClassName="is-active"
     to="/ingredients"
   >
     Ingredients
-  </[object Object]>
-  <[object Object]
+  </NavLink>
+  <NavLink
     activeClassName="is-active"
     to="/dishes"
   >
     Dishes
-  </[object Object]>
-  <[object Object]
+  </NavLink>
+  <NavLink
     activeClassName="is-active"
     to="/add-dish"
   >
     Add Dish
-  </[object Object]>
+  </NavLink>
 </header>
 `;

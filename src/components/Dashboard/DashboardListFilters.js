@@ -5,7 +5,7 @@ import PantryContext from '../../../context/pantry-context'
 import dishCuisines from '../../fixtures/dishCuisines'
 import dishTypes from '../../fixtures/dishTypes'
 
-const DashboardListFilters = () => {
+export const DashboardListFilters = () => {
     const { filters, filtersDispatch } = useContext(FiltersContext)
     const { pantryIngredients } = useContext(PantryContext)
 

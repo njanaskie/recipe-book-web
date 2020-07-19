@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render DashbaordListFilters correctly 1`] = `
+<DashboardListFilters
+  filters={
+    Object {
+      "cuisine": "",
+      "dishType": "",
+      "keyIngredients": Array [],
+      "text": "",
+    }
+  }
+  setCuisineFilter={[MockFunction]}
+  setKeyIngredientFilter={[MockFunction]}
+  setTextFilter={[MockFunction]}
+  setTypeFilter={[MockFunction]}
+/>
+`;

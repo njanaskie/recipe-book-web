@@ -6,7 +6,7 @@ const filters = {
 };
 
 const altFilters = {
-    text: 'omelette',
+    text: 'toast',
     keyIngredients: [],
     cuisine: '',
     dishType: '',

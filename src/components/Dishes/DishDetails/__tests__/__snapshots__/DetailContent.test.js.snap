@@ -60,10 +60,10 @@ exports[`should render DetailContent correctly 1`] = `
       renderActiveOnly={true}
     />
   </div>
-  <[object Object]
+  <Link
     to="/edit/dish/undefined"
   >
     Edit Dish
-  </[object Object]>
+  </Link>
 </div>
 `;
