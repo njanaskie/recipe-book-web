@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Input, Dropdown } from 'semantic-ui-react'
-import FiltersContext from '../../../context/filters-context'
-import PantryContext from '../../../context/pantry-context'
+import { useFiltersContext } from '../../../context/filters-context'
+import { usePantryContext } from '../../../context/pantry-context'
 import dishCuisines from '../../fixtures/dishCuisines'
 import dishTypes from '../../fixtures/dishTypes'
 
 export const DashboardListFilters = () => {
-    const { filters, filtersDispatch } = useContext(FiltersContext)
-    const { pantryIngredients } = useContext(PantryContext)
+    const { filters, filtersDispatch } = useFiltersContext()
+    const { pantryIngredients } = usePantryContext()
 
     const onTextChange = (e) => {
         filtersDispatch({ type: 'SET_TEXT_FILTER', text: e.target.value })
