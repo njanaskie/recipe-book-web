@@ -50,21 +50,18 @@ test('should render DashbaordListFilters with alt filters', () => {
     expect(wrapper).toMatchSnapshot();
 })
 
+// use this test for full component snapshot testing
 test('should handle text change', () => {
-    // jest.spyOn(AllFiltersContext, 'useFiltersContext').mockImplementation(() => filters)
-    // jest.spyOn(AllPantryContext, 'usePantryContext').mockImplementation(() => ingredients)
     const value = 'eggs'
     const wrapper = mount(
         <FiltersContext.Provider value={{ filters, filtersDispatch: mockFiltersDispatch }}>
             <PantryContext.Provider value={{ pantryIngredients: ingredients }}>
                 <DashboardListFilters
                     filters={filters}
-                    filtersDispatch={mockFiltersDispatch}
                 />
             </PantryContext.Provider>
         </FiltersContext.Provider>
     )
-    wrapper.find('Input').simulate('change', { target: { value }})
-    expect(mockFiltersDispatch).toHaveBeenLastCalledWith(value)
-    // expect(wrapper).toMatchSnapshot();
+    wrapper.find('input').simulate('change', { target: { value }})
+    expect(mockFiltersDispatch).toHaveBeenLastCalledWith({ text: value, type: 'SET_TEXT_FILTER' })
 })
