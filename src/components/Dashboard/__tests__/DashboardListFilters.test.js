@@ -20,6 +20,14 @@ beforeEach(() => {
     // jest.spyOn(AllPantryContext, 'usePantryContext').mockImplementation(() => ingredients)
 })
 
+afterEach(() => {
+    setTextFilter.mockRestore()
+    setKeyIngredientFilter.mockRestore()
+    setCuisineFilter.mockRestore()
+    setTypeFilter.mockRestore()
+    mockFiltersDispatch.mockRestore()
+})
+
 test('should render DashbaordListFilters correctly', () => {
     const wrapper = shallow(
         <FiltersContext.Provider value={{ filters }}>
@@ -57,11 +65,52 @@ test('should handle text change', () => {
         <FiltersContext.Provider value={{ filters, filtersDispatch: mockFiltersDispatch }}>
             <PantryContext.Provider value={{ pantryIngredients: ingredients }}>
                 <DashboardListFilters
-                    filters={filters}
                 />
             </PantryContext.Provider>
         </FiltersContext.Provider>
     )
     wrapper.find('input').simulate('change', { target: { value }})
     expect(mockFiltersDispatch).toHaveBeenLastCalledWith({ text: value, type: 'SET_TEXT_FILTER' })
+})
+
+test('should handle key ingredient change', () => {
+    const value = 'salt'
+    const wrapper = mount(
+        <FiltersContext.Provider value={{ filters, filtersDispatch: setKeyIngredientFilter }}>
+            <PantryContext.Provider value={{ pantryIngredients: ingredients }}>
+                <DashboardListFilters
+                />
+            </PantryContext.Provider>
+        </FiltersContext.Provider>
+    )
+    wrapper.find('Dropdown').at(0).prop('onChange')({ target: { value }});
+    expect(setKeyIngredientFilter).toHaveBeenCalledWith({ keyIngredients: value, type: 'SET_KEY_INGREDIENT_FILTER' })
+})
+
+test('should handle cuisine change', () => {
+    const value = 'mexican'
+    const wrapper = mount(
+        <FiltersContext.Provider value={{ filters, filtersDispatch: setCuisineFilter }}>
+            <PantryContext.Provider value={{ pantryIngredients: ingredients }}>
+                <DashboardListFilters
+                />
+            </PantryContext.Provider>
+        </FiltersContext.Provider>
+    )
+    wrapper.find('Dropdown').at(1).prop('onChange')({ target: { value }});
+    expect(setCuisineFilter).toHaveBeenCalledWith({ cuisine: value, type: 'SET_CUISINE_FILTER' })
+})
+
+test('should handle type change', () => {
+    const value = 'dinner'
+    const wrapper = mount(
+        <FiltersContext.Provider value={{ filters, filtersDispatch: setTypeFilter }}>
+            <PantryContext.Provider value={{ pantryIngredients: ingredients }}>
+                <DashboardListFilters
+                />
+            </PantryContext.Provider>
+        </FiltersContext.Provider>
+    )
+    wrapper.find('Dropdown').at(2).prop('onChange')({ target: { value }});
+    expect(setTypeFilter).toHaveBeenCalledWith({ dishType: value, type: 'SET_TYPE_FILTER' })
 })
