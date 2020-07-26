@@ -10,12 +10,14 @@ exports[`should render AddIngredientForm correctly 1`] = `
   >
     <input
       autoFocus={true}
+      id="set-name"
       onChange={[Function]}
       placeholder="Name"
       type="text"
       value=""
     />
     <select
+      id="set-category"
       onChange={[Function]}
       value="dairy"
     >
@@ -121,6 +123,7 @@ exports[`should render AddIngredientForm correctly 1`] = `
       </option>
     </select>
     <select
+      id="set-price"
       onChange={[Function]}
       value="1"
     >
@@ -147,7 +150,7 @@ exports[`should render AddIngredientForm correctly 1`] = `
 </div>
 `;
 
-exports[`should set name on input change 1`] = `
+exports[`should render error message for invalid form submission 1`] = `
 <div>
   <p>
     Add Ingredient
@@ -155,14 +158,19 @@ exports[`should set name on input change 1`] = `
   <form
     onSubmit={[Function]}
   >
+    <p>
+      Please provide name, category, and price
+    </p>
     <input
       autoFocus={true}
+      id="set-name"
       onChange={[Function]}
       placeholder="Name"
       type="text"
-      value="New name"
+      value=""
     />
     <select
+      id="set-category"
       onChange={[Function]}
       value="dairy"
     >
@@ -268,6 +276,7 @@ exports[`should set name on input change 1`] = `
       </option>
     </select>
     <select
+      id="set-price"
       onChange={[Function]}
       value="1"
     >

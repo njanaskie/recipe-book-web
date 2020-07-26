@@ -2,11 +2,11 @@ import React, { useState, useContext } from 'react'
 import IngredientsContext, { useIngredientsContext } from '../../../context/ingredients-context'
 import database from '../../firebase/firebase'
 
-const AddIngredientForm = () => {
-    const [name, setName] = useState('')
-    const [category, setCategory] = useState('dairy')
-    const [price, setPrice] = useState('1')
-    const [error, setError] = useState('')
+const AddIngredientForm = (props) => {
+    const [name, setName] = React.useState('')
+    const [category, setCategory] = React.useState('dairy')
+    const [price, setPrice] = React.useState('1')
+    const [error, setError] = React.useState('')
     const { dispatch } = useIngredientsContext()
 
     const addIngredient = (e) => {
@@ -57,6 +57,7 @@ const AddIngredientForm = () => {
             <form onSubmit={addIngredient}>
                 {error && <p>{error}</p>}
                 <input
+                    id='set-name'
                     type='text'
                     placeholder='Name'
                     autoFocus
@@ -64,6 +65,7 @@ const AddIngredientForm = () => {
                     onChange={onNameChange}
                 />
                 <select
+                    id='set-category'
                     value={category}
                     onChange={onCategoryChange}
                 >
@@ -89,6 +91,7 @@ const AddIngredientForm = () => {
                     <option value='beverages'>Beverages</option>
                 </select> 
                 <select
+                    id='set-price'
                     value={price}
                     onChange={onPriceChange}
                 >
