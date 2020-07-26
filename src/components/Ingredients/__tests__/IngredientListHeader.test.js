@@ -3,12 +3,7 @@ import { shallow } from 'enzyme'
 import IngredientListHeader from '../IngredientListHeader'
 import ingredients from '../../../tests/fixtures/ingredients'
 
-test('should render IngredientListHeader correctly',() => {
-    const wrapper = shallow(<IngredientListHeader />)
+test('should render IngredientListHeader with category',() => {
+    const wrapper = shallow(<IngredientListHeader {...ingredients[0]}/>)
     expect(wrapper).toMatchSnapshot()
 });
-
-// test('should render IngredientListHeader with category',() => {
-//     const wrapper = shallow(<IngredientListHeader {...ingredients[0]}/>)
-//     expect(wrapper).toMatchSnapshot()
-// });

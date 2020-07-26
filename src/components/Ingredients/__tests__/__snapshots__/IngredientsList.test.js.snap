@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render IngredientsList with ingredients 1`] = `
+exports[`should render IngredientsList with empty message 1`] = `
 <div>
   <div>
     <span>
@@ -8,4 +8,31 @@ exports[`should render IngredientsList with ingredients 1`] = `
     </span>
   </div>
 </div>
+`;
+
+exports[`should render IngredientsList with ingredients 1`] = `
+<IngredientsList
+  ingredients={
+    Array [
+      Object {
+        "category": "Spices",
+        "id": "1",
+        "name": "Salt",
+        "price": 1,
+      },
+      Object {
+        "category": "Vegetables",
+        "id": "2",
+        "name": "Lettuce",
+        "price": 1,
+      },
+      Object {
+        "category": "Dairy",
+        "id": "3",
+        "name": "Yoghurt",
+        "price": 2,
+      },
+    ]
+  }
+/>
 `;

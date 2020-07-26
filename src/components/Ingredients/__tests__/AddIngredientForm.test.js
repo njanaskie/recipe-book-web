@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import AddIngredientForm from '../AddIngredientForm'
 import ingredients from '../../../tests/fixtures/ingredients'
 import * as IngredientsContext from '../../../../context/ingredients-context'
@@ -16,11 +16,14 @@ test('should render AddIngredientForm correctly',() => {
     expect(wrapper).toMatchSnapshot()
 });
 
-// test('should render AddIngredientForm with ingredient data',() => {
-//     const value = ingredients[1]
-//     const wrapper = shallow(
-//         <IngredientsContext.Provider value={value}>
-//             <AddIngredientForm {...value}/>
-//         </IngredientsContext.Provider >).dive()
-//     expect(wrapper.find('input').text()).toBe('Lettuce')
-// });
+test('should set name on input change', () => {
+    const value = 'New name'
+    jest.spyOn(React, "useState").mockImplementation((name) => [name=value, setName]);
+    const wrapper = shallow(<AddIngredientForm />)
+    wrapper.find('input').at(0).simulate('change', {
+        target: { value }
+    })
+    // wrapper.find('input').at(0).prop('onChange')({ target: { value }});
+    expect(wrapper.prop('onChange').state('name')).toBe(value)
+    // expect(wrapper).toMatchSnapshot()
+});

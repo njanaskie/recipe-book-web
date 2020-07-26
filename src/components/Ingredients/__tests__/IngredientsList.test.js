@@ -1,41 +1,58 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import { IngredientsList } from '../IngredientsList'
 import ingredients from '../../../tests/fixtures/ingredients'
-import * as IngredientsContext from '../../../../context/ingredients-context'
-import * as FirebaseContext from '../../../../context/firebase-context'
-import * as PantryContext from '../../../../context/pantry-context'
+import * as AllIngredientsContext from '../../../../context/ingredients-context'
+import IngredientsContext from '../../../../context/ingredients-context'
+import * as AllPantryContext from '../../../../context/pantry-context'
+import PantryContext from '../../../../context/pantry-context'
+import * as AllFirebaseContext from '../../../../context/firebase-context'
+import FirebaseContext from '../../../../context/firebase-context'
+import user from '../../../tests/fixtures/user'
 
-let user, pantryIngredients
+let userSpy, pantryIngredientsSpy
 
 beforeEach(() => {
-    user = jest.spyOn(FirebaseContext, 'useFirebaseContext').mockImplementation(() => user)
-    pantryIngredients = jest.spyOn(PantryContext, 'usePantryContext').mockImplementation(() => pantryIngredients)
+    userSpy = jest.spyOn(AllFirebaseContext, 'useFirebaseContext').mockImplementation(() => user)
+    pantryIngredientsSpy = jest.spyOn(AllPantryContext, 'usePantryContext').mockImplementation(() => [])
 })
 
 afterEach(() => {
-    user.mockRestore()
-    pantryIngredients.mockRestore()
+    userSpy.mockRestore()
+    pantryIngredientsSpy.mockRestore()
 })
 
-test('should render IngredientsList with ingredients',() => {
-    jest.spyOn(IngredientsContext, 'useIngredientsContext').mockImplementation(() => ingredients)
-    const wrapper = shallow(<IngredientsList />)
+test('should render IngredientsList with ingredients', () => {
+    const wrapper = shallow(
+        <IngredientsContext.Provider value={ingredients}>
+            <IngredientsList ingredients={ingredients}/>
+        </IngredientsContext.Provider>
+    )
+    expect(wrapper).toMatchSnapshot()
+})
+
+test('should render IngredientsList with empty message',() => {
+    jest.spyOn(AllIngredientsContext, 'useIngredientsContext').mockImplementation(() => [])
+    const wrapper = shallow(
+        <IngredientsContext.Provider value={{ ingredients }}>
+            <PantryContext.Provider value={{ pantryIngredients: pantryIngredientsSpy }}>
+                <IngredientsList ingredients={[]}/>
+            </PantryContext.Provider>
+        </IngredientsContext.Provider>
+    ).dive().dive()
     expect(wrapper).toMatchSnapshot()
 });
 
-// test('should render IngredientsList with ingredients', () => {
-//     const wrapper = shallow(
-//         <IngredientsContext.Provider value={ingredients}>
-//             <IngredientsList ingredients={ingredients}/>
-//         </IngredientsContext.Provider >)
+// test('should render IngredientsList with ingredients2',() => {
+//     jest.spyOn(AllIngredientsContext, 'useIngredientsContext').mockImplementation(() => ingredients)
+//     const wrapper = mount(
+//         <IngredientsContext.Provider value={{ ingredients }}>
+//             <PantryContext.Provider value={{ pantryIngredients: pantryIngredientsSpy }}>
+//                 <FirebaseContext.Provider value={{ user: userSpy }}>
+//                     <IngredientsList ingredients={ingredients}/>
+//                 </FirebaseContext.Provider>
+//             </PantryContext.Provider>
+//         </IngredientsContext.Provider>, { context: ingredients }
+//     ).dive().dive().dive()
 //     expect(wrapper).toMatchSnapshot()
-// })
-
-// test('should render IngredientsList with empty message', () => {
-//     const wrapper = shallow(
-//         <IngredientsContext.Provider value={[]}>
-//             <IngredientsList ingredients={[]}/>
-//         </IngredientsContext.Provider >)
-//     expect(wrapper).toMatchSnapshot()
-// })
+// });

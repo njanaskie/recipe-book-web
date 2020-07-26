@@ -31,7 +31,7 @@ export const syncIngredientsWithPantry = (ings, pIngs) => {
     return syncedIngredients
 }
 
-export const IngredientsList = () => {
+export const IngredientsList = (props) => {
     const ingredients = useIngredients()
     const pantryIngredients = usePantryIngredients()
     const syncedIngredients = syncIngredientsWithPantry(ingredients, pantryIngredients)
