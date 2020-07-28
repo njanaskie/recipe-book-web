@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import DishesContext from '../../../context/dishes-context'
+import { useDishesContext } from '../../../context/dishes-context'
 import DishForm from '../Dishes/DishForm'
 import useDishes from '../../hooks/useDishes'
 import database from '../../firebase/firebase'
 
-const AddDishHome = () => {
-    const { dishDispatch } = useContext(DishesContext)
+export const AddDishHome = (props) => {
+    const { dishDispatch } = useDishesContext()
     const history = useHistory()
 
     const onSubmit = (dish) => {

@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render DishesPage correctly 1`] = `
+<ContextProvider
+  value={
+    Object {
+      "dishDispatch": [Function],
+      "dishes": Array [],
+    }
+  }
+>
+  <h3>
+    Dishes Page
+  </h3>
+  <DishesList />
+</ContextProvider>
+`;

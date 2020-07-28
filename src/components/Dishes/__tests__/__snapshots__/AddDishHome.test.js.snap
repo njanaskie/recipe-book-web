@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render AddDishHome correctly 1`] = `
+<ContextProvider
+  value={
+    Object {
+      "history": Object {
+        "listen": [MockFunction] {
+          "calls": Array [
+            Array [
+              [Function],
+            ],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+          ],
+        },
+        "location": Object {},
+        "push": [MockFunction],
+      },
+      "location": Object {},
+      "match": Object {
+        "isExact": false,
+        "params": Object {},
+        "path": "/",
+        "url": "/",
+      },
+      "staticContext": undefined,
+    }
+  }
+>
+  <ContextProvider
+    value={
+      Object {
+        "dishDispatch": [MockFunction],
+      }
+    }
+  >
+    <ContextProvider
+      value={
+        Object {
+          "ingredients": Array [
+            Object {
+              "category": "Spices",
+              "id": "1",
+              "name": "Salt",
+              "price": 1,
+            },
+            Object {
+              "category": "Vegetables",
+              "id": "2",
+              "name": "Lettuce",
+              "price": 1,
+            },
+            Object {
+              "category": "Dairy",
+              "id": "3",
+              "name": "Yoghurt",
+              "price": 2,
+            },
+          ],
+        }
+      }
+    >
+      <AddDishHome />
+    </ContextProvider>
+  </ContextProvider>
+</ContextProvider>
+`;
