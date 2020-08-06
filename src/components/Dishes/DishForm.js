@@ -64,8 +64,6 @@ const DishForm = (props) => {
         setState({...state, recipes: recipes })
     }
 
-    console.log(state.recipes)
-
     const onNameChange = (e) => {
         const name = e.target.value
         if (name) {

@@ -1,6 +1,7 @@
 import Enzyme from 'enzyme';
 import DotEnv from 'dotenv';
 import Adapter from 'enzyme-adapter-react-16';
+import '@babel/polyfill';
 
 DotEnv.config({ path: '.env.test' });
 

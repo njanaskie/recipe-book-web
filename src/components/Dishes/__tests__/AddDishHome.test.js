@@ -1,46 +1,46 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
-import { Router } from 'react-router-dom';
+import { BrowserRouter, Route, Router, useHistory, MemoryRouter } from 'react-router-dom';
 import * as router from 'react-router';
+import ShallowRenderer from 'react-test-renderer/shallow'; // ES6
+import { history } from '../../../routers/AppRouter'
 import ingredients from '../../../tests/fixtures/ingredients'
 import { AddDishHome } from '../AddDishHome'
 import DishesContext from '../../../../context/dishes-context'
 import * as AllDishesContext from '../../../../context/dishes-context'
 import IngredientsContext from '../../../../context/ingredients-context'
 
-let mockDishDispatch, mockHistory;
-
-// mockHistory = jest.mock('react-router-dom', () => ({
-//     ...jest.requireActual('react-router-dom'),
-//     useHistory: () => ({
-//       push: jest.fn()
-//     })
-//   }));
+let mockDishDispatch, mockHistory, useHistoryMock;
   
 beforeEach(() => {
     mockDishDispatch = jest.fn()
     // mockHistory = { push: jest.fn() }
+    // useHistoryMock = jest.fn()
     mockHistory = { push: jest.fn(), location: {}, listen: jest.fn() };
     // mockHistory = jest.mock('react-router-dom', () => ({
     //     useHistory: () => ({
     //       push: jest.fn(),
-    //       history: { listen: jest.fn() },
     //       location: {},
     //       listen: jest.fn()
     //     })
     //   }));
+    // mockHistory = jest.mock('react-router-dom', () => ({
+    //     ...jest.requireActual('react-router-dom'),
+    //     useHistory: () => ({
+    //     push: jest.fn()
+    //     })
+    // }));
 
 })
 
 afterEach(() => {
-    jest.clearAllMocks();
+    // jest.clearAllMocks();
+    jest.restoreAllMocks();
 })
 
-
-test('should render AddDishHome correctly',() => {
-    jest.spyOn(AllDishesContext, 'useDishesContext').mockImplementation(() => mockDishDispatch)
-    jest.spyOn(router, 'useHistory').mockImplementation(() => mockHistory);
-    const wrapper = shallow(
+// causes force exit warning
+test('should render AddDishHome correctly', async () => {
+    const wrapper = await mount(
         <Router history={mockHistory}>
             <DishesContext.Provider value={{ dishDispatch: mockDishDispatch }}>
                 <IngredientsContext.Provider value={{ ingredients }}>
@@ -48,22 +48,22 @@ test('should render AddDishHome correctly',() => {
                 </IngredientsContext.Provider>
             </DishesContext.Provider>
         </Router>
-    )
-    // .find('AddDishHome').dive()
+    ).find('AddDishHome')
     expect(wrapper).toMatchSnapshot()
 })
 
-// test('should handle onSubmit',() => {
-//     const wrapper = mount(
-//         <Router history={mockHistory}>
-//             <DishesContext.Provider value={{ dishDispatch: mockDishDispatch }}>
-//                 <IngredientsContext.Provider value={{ ingredients }}>
-//                     <AddDishHome />
-//                 </IngredientsContext.Provider>
-//             </DishesContext.Provider>
-//         </Router>
-//     )
-//     wrapper.find('DishForm').prop('onSubmit')(ingredients[1])
-//     expect(mockHistory.push).toHaveBeenLastCalledWith('/dishes')
-//     // expect(startAddExpense).toHaveBeenLastCalledWith(ingredients[1])
-// })
+// consider creating dispatch actions
+test('should handle onSubmit', () => {
+    const wrapper = mount(
+        <Router history={mockHistory}>
+            <DishesContext.Provider value={{ dishDispatch: mockDishDispatch }}>
+                <IngredientsContext.Provider value={{ ingredients }}>
+                    <AddDishHome onSubmit={mockDishDispatch}/>
+                </IngredientsContext.Provider>
+            </DishesContext.Provider>
+        </Router>
+    ).find('AddDishHome')
+    wrapper.prop('onSubmit')(ingredients[1])
+    // expect(mockHistory.push).toHaveBeenLastCalledWith('/dishes')
+    expect(mockDishDispatch).toHaveBeenLastCalledWith(ingredients[1])
+})
