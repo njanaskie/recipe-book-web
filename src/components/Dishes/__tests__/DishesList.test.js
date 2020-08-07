@@ -29,24 +29,23 @@ const mockUseEffect = () => {
 // })
 
 test('should render DishesList with dishes', () => {
-    mockUseEffect()
-    jest.spyOn(AllDishesContext, 'useDishesContext').mockImplementation(() => {dishes})
+    jest.spyOn(AllDishesContext, 'useDishesContext').mockImplementation(() => dishes)
+    // mockUseEffect()
     const wrapper = shallow(
-        // <DishesContext.Provider value={dishes}>
+        <DishesContext.Provider value={dishes}>
             <DishesList dishes={dishes}/>
-        // </DishesContext.Provider>
+        </DishesContext.Provider>
     )
     expect(wrapper).toMatchSnapshot()
 })
 
-// test('should render IngredientsList with empty message',() => {
-//     jest.spyOn(AllIngredientsContext, 'useIngredientsContext').mockImplementation(() => [])
-//     const wrapper = shallow(
-//         <IngredientsContext.Provider value={{ ingredients }}>
-//             <PantryContext.Provider value={{ pantryIngredients: pantryIngredientsSpy }}>
-//                 <IngredientsList ingredients={[]}/>
-//             </PantryContext.Provider>
-//         </IngredientsContext.Provider>
-//     ).dive().dive()
-//     expect(wrapper).toMatchSnapshot()
-// });
+test('should render DishesList with no dishes', () => {
+    jest.spyOn(AllDishesContext, 'useDishesContext').mockImplementation(() => [])
+    // mockUseEffect()
+    const wrapper = shallow(
+        <DishesContext.Provider value={[]}>
+            <DishesList dishes={[]}/>
+        </DishesContext.Provider>
+    )
+    expect(wrapper).toMatchSnapshot()
+})

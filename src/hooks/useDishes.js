@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import database from '../firebase/firebase'
 import { useDishesContext } from '../../context/dishes-context'
 import FiltersContext from '../../context/filters-context'
@@ -7,13 +7,13 @@ const useDishes = () => {
     const isCurrent = useRef(true)
     const { dishes, dishDispatch } = useDishesContext()
 
-    useEffect(() => {
+    React.useEffect(() => {
         return () => {
             isCurrent.current = false
         }
     }, [])
 
-    useEffect(() => {
+    React.useEffect(() => {
         database.collection('dishes')
         .get()
         .then((snapshot) => {

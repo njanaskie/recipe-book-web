@@ -53,3 +53,9 @@ exports[`should render DishesList with dishes 1`] = `
   }
 />
 `;
+
+exports[`should render DishesList with no dishes 1`] = `
+<DishesList
+  dishes={Array []}
+/>
+`;
