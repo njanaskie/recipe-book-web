@@ -17,7 +17,7 @@ exports[`should render DashboardList with dishes 1`] = `
         Object {
           "cuisine": "dinner",
           "description": "test",
-          "id": "1",
+          "id": 1,
           "keyIngredients": Array [
             "meatballs",
             "roll",
@@ -33,7 +33,7 @@ exports[`should render DashboardList with dishes 1`] = `
         Object {
           "cuisine": "snack",
           "description": "test 2",
-          "id": "2",
+          "id": 2,
           "keyIngredients": Array [
             "bread",
             "butter",
@@ -46,7 +46,7 @@ exports[`should render DashboardList with dishes 1`] = `
         Object {
           "cuisine": "dinner",
           "description": "test 3",
-          "id": "3",
+          "id": 3,
           "keyIngredients": Array [
             "perogies",
           ],

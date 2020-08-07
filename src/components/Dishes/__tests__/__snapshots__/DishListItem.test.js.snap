@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render DishListItem with dish 1`] = `
+<div>
+  <Link
+    to="/dish/3"
+  >
+    Perogies
+  </Link>
+</div>
+`;

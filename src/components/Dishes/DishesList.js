@@ -4,7 +4,7 @@ import DishListItem from './DishListItem'
 import useDishes from '../../hooks/useDishes'
 import usePantryDishes from '../../hooks/usePantryDishes'
 
-const DishesList = () => {
+export const DishesList = (props) => {
     const dishes = useDishes()
     
     return (

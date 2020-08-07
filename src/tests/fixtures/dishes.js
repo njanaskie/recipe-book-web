@@ -1,5 +1,5 @@
 export default [{
-    id: '1',
+    id: 1,
     name: 'Meatball Sub',
     cuisine: 'dinner',
     type: '',
@@ -8,7 +8,7 @@ export default [{
     optionalIngredients: ['parmesan'],
     recipes: []
 }, {
-    id: '2',
+    id: 2,
     name: 'Butter Toast',
     cuisine: 'snack',
     type: '',
@@ -17,7 +17,7 @@ export default [{
     optionalIngredients: [],
     recipes: []
 }, {
-    id: '3',
+    id: 3,
     name: 'Perogies',
     cuisine: 'dinner',
     type: '',

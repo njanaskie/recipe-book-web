@@ -1,13 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react'
-import FirebaseContext from '../../../context/firebase-context'
-import IngredientsContext from '../../../context/ingredients-context'
-import PantryContext from '../../../context/pantry-context'
+import { useFirebaseContext } from '../../../context/firebase-context'
+import { useIngredientsContext } from '../../../context/ingredients-context'
+import { usePantryContext } from '../../../context/pantry-context'
 import database, { firebase } from '../../firebase/firebase'
 
 const IngredientListItem = ({ ingredient } ) => {
-  const { user } = useContext(FirebaseContext)
-  const { dispatch } = useContext(IngredientsContext)
-  const { pantryIngredients, pantryDispatch } = useContext(PantryContext)
+  const { user } = useFirebaseContext()
+  const { dispatch } = useIngredientsContext()
+  const { pantryIngredients, pantryDispatch } = usePantryContext()
 
   const pathname = window.location.pathname
 
