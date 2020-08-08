@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import DishesContext from '../../../context/dishes-context'
+import { useDishesContext } from '../../../context/dishes-context'
 import useIngredients from '../../hooks/useIngredients'
 import { Dropdown } from 'semantic-ui-react'
 import database from '../../firebase/firebase'
@@ -7,7 +7,7 @@ import dishTypes from '../../fixtures/dishTypes'
 import dishCuisines from '../../fixtures/dishCuisines'
 
 const DishForm = (props) => {
-    const { dishDispatch } = useContext(DishesContext)
+    const { dishDispatch } = useDishesContext()
     const initialFormState = {
         name: '',
         keyIngredients: [],

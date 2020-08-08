@@ -9,6 +9,7 @@ import { AddDishHome } from '../AddDishHome'
 import DishesContext from '../../../../context/dishes-context'
 import * as AllDishesContext from '../../../../context/dishes-context'
 import IngredientsContext from '../../../../context/ingredients-context'
+import dishes from '../../../tests/fixtures/dishes'
 
 let mockDishDispatch, mockHistory, useHistoryMock;
   
@@ -54,7 +55,7 @@ test('should render AddDishHome correctly', async () => {
 
 // consider creating dispatch actions
 test('should handle onSubmit', () => {
-    const wrapper = mount(
+    const wrapper = shallow(
         <Router history={mockHistory}>
             <DishesContext.Provider value={{ dishDispatch: mockDishDispatch }}>
                 <IngredientsContext.Provider value={{ ingredients }}>
@@ -63,7 +64,7 @@ test('should handle onSubmit', () => {
             </DishesContext.Provider>
         </Router>
     ).find('AddDishHome')
-    wrapper.prop('onSubmit')(ingredients[1])
+    wrapper.prop('onSubmit')(dishes[1])
     // expect(mockHistory.push).toHaveBeenLastCalledWith('/dishes')
-    expect(mockDishDispatch).toHaveBeenLastCalledWith(ingredients[1])
+    expect(mockDishDispatch).toHaveBeenLastCalledWith(dishes[1])
 })

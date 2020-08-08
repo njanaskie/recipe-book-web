@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
-import DishesContext from '../../../context/dishes-context'
+import { useDishesContext } from '../../../context/dishes-context'
 import DishForm from '../Dishes/DishForm'
 import useDishes from '../../hooks/useDishes'
 import database from '../../firebase/firebase'
 
-const EditDishHome = () => {
-    const { dishDispatch } = useContext(DishesContext)
+export const EditDishHome = (props) => {
+    const { dishDispatch } = useDishesContext()
     const dishes = useDishes()
     const { id } = useParams()
     const history = useHistory()
