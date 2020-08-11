@@ -29,59 +29,72 @@ export const DashboardListFilters = () => {
     }
 
     return (
-        <div>
-            <Input
-                placeholder='Search...'
-                size='big'
-                value={filters ? filters.text : ''}
-                onChange={onTextChange}
-            />
-            <Dropdown
-                placeholder='Select key ingredient'
-                name='keyIngredient'
-                clearable={true}
-                fluid multiple selection
-                multiple={true}
-                value={filters ? filters.keyIngredients : []}
-                onChange={onKeyIngredientChange}
-                options={pantryIngredients.map(ingredient => {
-                    return {
-                        key: ingredient.id,
-                        text: ingredient.name,
-                        value: ingredient.name
-                    }
-                })}
-            />
-            <Dropdown
-                placeholder='Select cuisine'
-                name='cuisine'
-                clearable={true}
-                fluid selection
-                value={filters ? filters.cuisine : ''}
-                onChange={onCuisineChange}
-                options={dishCuisines.map(dishCuisine => {
-                    return {
-                        key: dishCuisine,
-                        text: dishCuisine,
-                        value: dishCuisine
-                    }
-                })}
-            />
-            <Dropdown
-                placeholder='Select type'
-                name='type'
-                clearable={true}
-                fluid selection
-                value={filters ? filters.dishType : ''}
-                onChange={onTypeChange}
-                options={dishTypes.map(dishType => {
-                    return {
-                        key: dishType,
-                        text: dishType,
-                        value: dishType
-                    }
-                })}
-            />
+        <div className="content-container">
+            <div className="input-group">
+                <div className="input-group__input">                
+                    <Input
+                        placeholder='Search...'
+                        size='big'
+                        value={filters ? filters.text : ''}
+                        onChange={onTextChange}
+                        style={{ width:"100%" }}
+                    />
+                </div>
+                <div className="input-group__dropdowns">
+                    <div className="input-group__item">
+                        <Dropdown
+                            placeholder='Select key ingredient'
+                            name='keyIngredient'
+                            clearable={true}
+                            fluid multiple selection
+                            multiple={true}
+                            value={filters ? filters.keyIngredients : []}
+                            onChange={onKeyIngredientChange}
+                            options={pantryIngredients.map(ingredient => {
+                                return {
+                                    key: ingredient.id,
+                                    text: ingredient.name,
+                                    value: ingredient.name
+                                }
+                            })}
+                        />
+                    </div>
+                    <div className="input-group__item">
+                        <Dropdown
+                            placeholder='Select cuisine'
+                            name='cuisine'
+                            clearable={true}
+                            fluid selection
+                            value={filters ? filters.cuisine : ''}
+                            onChange={onCuisineChange}
+                            options={dishCuisines.map(dishCuisine => {
+                                return {
+                                    key: dishCuisine,
+                                    text: dishCuisine,
+                                    value: dishCuisine
+                                }
+                            })}
+                        />
+                    </div>
+                    <div className="input-group__item">
+                        <Dropdown
+                            placeholder='Select type'
+                            name='type'
+                            clearable={true}
+                            fluid selection
+                            value={filters ? filters.dishType : ''}
+                            onChange={onTypeChange}
+                            options={dishTypes.map(dishType => {
+                                return {
+                                    key: dishType,
+                                    text: dishType,
+                                    value: dishType
+                                }
+                            })}
+                        />
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

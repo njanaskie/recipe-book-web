@@ -1,11 +1,39 @@
 .input-group {
+    margin: auto;
     display: flex;
     flex-direction: column;
     margin-bottom: $m-size;
+    width: 100%;
+
+    @media (min-width: $desktop-breakpoint) {
+        margin-bottom: $l-size;
+        width: 70%
+    }
+}
+
+.input-group__dropdowns {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     @media (min-width: $desktop-breakpoint) {
         flex-direction: row;
-        margin-bottom: $l-size;
+    }
+}
+
+.ui.big.input {
+    margin-bottom: $s-size;
+}
+
+
+.input-group__input {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: $s-size;
+    flex-flow: row wrap;
+
+    @media (min-width: $desktop-breakpoint) {
+        margin: 0 $s-size 0 0;
     }
 }
 
