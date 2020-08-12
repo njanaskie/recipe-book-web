@@ -17,7 +17,6 @@ export const PrivateRoute = ({
             !!user ? (
                 <div>
                     <Header />
-                    <SubHeader />
                     <Admin />
                     <Component {...props}/>
                 </div>

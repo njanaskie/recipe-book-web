@@ -16,7 +16,6 @@ export const AdminRoute = ({
             (!!isAdmin && !!user) ? (
                 <div>
                     <Header />
-                    <SubHeader />
                     <Admin />
                     <Component {...props}/>
                 </div>

@@ -10,7 +10,17 @@
 
 .page-header__title {
     font-weight: 300;
-    margin: 0;
+    margin: $s-size;
+    span {
+        font-weight: 700;
+    }
+};
+
+.page-header__admin {
+    display: flex;
+    font-weight: 300;
+    margin: $s-size;
+    flex-direction: row-reverse;
     span {
         font-weight: 700;
     }

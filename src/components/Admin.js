@@ -5,8 +5,10 @@ export const Admin = () => {
     const { user, isAdmin } = useFirebaseContext()
 
     return (
-        <div>
-            {isAdmin && <p>Admin User</p>}
+        <div className="content-container">
+            <div className="page-header__admin">
+                {isAdmin && <span>You are logged in as an Admin</span>}
+            </div>
         </div>
     )
 }

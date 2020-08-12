@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { startLogout } from '../actions/auth';
 import { firebase } from '../firebase/firebase';
+import SubHeader from './SubHeader'
 
 // export const signOut = () => firebase.auth().signOut()
 
@@ -17,15 +18,12 @@ export const Header = ({ startLogout }) => {
                     <Link className="header__title" to='/dashboard' >
                         <h1>Recipe App</h1>
                     </Link>
-                    <button className="button button__link" onClick={startLogout}>Logout</button>
+                    <SubHeader />
                 </div>
             </div>
         </header>
     )
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    startLogout: () => dispatch(startLogout())
-});
 
-export default connect(undefined, mapDispatchToProps)(Header);
+export default Header;

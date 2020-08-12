@@ -21,9 +21,7 @@
     }
 }
 
-.ui.big.input {
-    margin-bottom: $s-size;
-}
+
 
 
 .input-group__input {
@@ -31,6 +29,9 @@
     justify-content: space-evenly;
     margin-bottom: $s-size;
     flex-flow: row wrap;
+    .ui.big.input {
+        margin-bottom: $s-size;
+    }
 
     @media (min-width: $desktop-breakpoint) {
         margin: 0 $s-size 0 0;
