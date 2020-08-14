@@ -12,19 +12,21 @@ export const DashboardList = () => {
     const pantryDishes = usePantryDishes()
     
     return (
-        <div>
+        <div className='content-container'>
             <DashboardListFilters filters={filters}/>
-            {
-                pantryDishes.length === 0 ? (
-                    <div>
-                        <span>No dishes</span>
-                    </div>
-                ) : (
-                    pantryDishes.map((dish) => 
-                        <DishListItem key={dish.id} dish={dish} />
+            <div className='dish-table'>
+                {
+                    pantryDishes.length === 0 ? (
+                        <div>
+                            <span>No dishes</span>
+                        </div>
+                    ) : (
+                        pantryDishes.map((dish) => 
+                            <DishListItem key={dish.id} dish={dish} />
+                        )
                     )
-                )
-            }
+                }
+            </div>
         </div>
     )
 }

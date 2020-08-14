@@ -6,21 +6,25 @@ import usePantryDishes from '../../hooks/usePantryDishes'
 
 export const DishesList = (props) => {
     const dishes = useDishes()
+
+    if (!dishes || !dishes.length) {
+        return <div><span>No Dishes</span></div>
+    }
+
+    const tableItems = dishes && dishes.map((dish) => {
+        return (
+            <DishListItem key={dish.id} dish={dish} />
+        )
+    }
+)
     
     return (
-        <div>
-            {
-                dishes.length === 0 ? (
-                    <div>
-                        <span>No dishes</span>
-                    </div>
-                ) : (
-                    dishes.map((dish) => 
-                        <DishListItem key={dish.id} dish={dish} />
-                    )
-                )
-            }
-        </div>
+            <div className="content-container">
+                <div className='dish-table'>
+                    {tableItems}
+                </div>
+            </div>
+
     )
 }
 
