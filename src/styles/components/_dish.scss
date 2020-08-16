@@ -1,42 +1,44 @@
 .dish-table {
   margin: auto;
   display: flex;
-  flex-wrap: column;
-  justify-content: center;
-  align-items: center;
+  // flex-wrap: column;
+  flex-direction: row;
+  justify-content: space-between;
   width: 100%;
 
   @media (min-width: $desktop-breakpoint) {
-      width: 70%
+      width: 75%
   }
 
-    & > * {
-      margin-left: 4px;
-      margin-bottom: 24px;
-    }
+    // & > * {
+    //   margin-left: 14px;
+    //   margin-bottom: 24px;
+    // }
 }
 
 .dish-preview {
-    display: grid;
-    grid: 118px auto / 210px;
-
-    //     /*
-    //     override grid settings to make VideoPreview horizontal.
-    //     Vertical is default
-    //     */
-    //     &.horizontal {
-    //     grid: auto / 210px auto;
-    
-    //     &.expanded {
-    //         grid: auto / 246px auto;
-    //     }
-    //     grid-column-gap: 4px;
-    //     .video-info {
-    //         grid-row: 1 / 2;
-    //         grid-column: 2 / 3;
-    //     }
-    // }
+  margin: 10px;
+    // display: grid;
+    // grid: 118px auto / 210px;
 }
+
+//         /*
+//         override grid settings to make VideoPreview horizontal.
+//         Vertical is default
+//         */
+//         // &.horizontal {
+//         // grid: auto / 210px auto;
+    
+//     //     &.expanded {
+//     //         grid: auto / 246px auto;
+//     //     }
+//     //     grid-column-gap: 4px;
+//     //     .video-info {
+//     //         grid-row: 1 / 2;
+//     //         grid-column: 2 / 3;
+//     //     }
+//     // }
+// }
 
 // .dish-info {
 //     grid-row: 2 / 3;
@@ -71,7 +73,7 @@
     position: relative;
     grid-row: 1 / 2;
     grid-column: 1 / 2;
-    width: 60%;
+    // width: 60%;
 
     /* Dish title label at bottom right */
     .dish-label {
