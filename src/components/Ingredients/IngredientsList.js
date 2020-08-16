@@ -39,28 +39,30 @@ export const IngredientsList = (props) => {
     const groupedIngredients = _.groupBy(syncedIngredients, 'category')
 
     return (
-        <div>
-            {
-                ingredients ? (
-                    Object.keys(groupedIngredients).map(category => {
-                        return (
-                            <div key={category} >
-                                <IngredientListHeader category={category} />
-                                {groupedIngredients[category].map((ingredient, id) => {
-                                    return (
-                                        <IngredientListItem key={id} ingredient={ingredient} />
-                                    )
-                                })}
-                            </div>
-  
-                        )
-                    })
-                ) : (
-                    <div>
-                        <span>No ingredients</span>
-                    </div>
-                )
-            }
+        <div className="content-container">
+            <div className='ingredient-table'>
+                {
+                    ingredients ? (
+                        Object.keys(groupedIngredients).map(category => {
+                            return (
+                                <div key={category} >
+                                    <IngredientListHeader category={category} />
+                                    {groupedIngredients[category].map((ingredient, id) => {
+                                        return (
+                                            <IngredientListItem key={id} ingredient={ingredient} />
+                                        )
+                                    })}
+                                </div>
+    
+                            )
+                        })
+                    ) : (
+                        <div>
+                            <span>No ingredients</span>
+                        </div>
+                    )
+                }
+            </div>
         </div>
     )
 }
