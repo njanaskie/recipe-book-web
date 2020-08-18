@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Checkbox } from 'semantic-ui-react'
+import { Checkbox, Button, Icon, Label } from 'semantic-ui-react'
 import { useFirebaseContext } from '../../../context/firebase-context'
 import { useIngredientsContext } from '../../../context/ingredients-context'
 import { usePantryContext } from '../../../context/pantry-context'
@@ -56,13 +56,12 @@ const IngredientListItem = ({ ingredient } ) => {
   return (
   <div>
     {pathname === '/pantry' ?
-      <div>
+      <div className='ingredient-pantry-item'>
         <Checkbox
           toggle
           label={ingredient.name}
           checked={ingredient.isPantry}
           onChange={toggle}
-          // onChange={ingredient.isPantry ? removePantryIngredient() : addPantryIngredient()}
         />
       </div>
           // ingredient.isPantry ?
@@ -74,7 +73,12 @@ const IngredientListItem = ({ ingredient } ) => {
           //   Add to Pantry
           // </button> 
       :
-      <button onClick={removeIngredient}>Remove</button>
+      <div className='ingredient-item' >
+        <Label size='medium'>
+          {ingredient.name}
+          <Icon onClick={removeIngredient} name='delete' />
+        </Label>
+      </div>
     }
   </div>
 

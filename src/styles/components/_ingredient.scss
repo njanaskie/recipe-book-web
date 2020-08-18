@@ -1,17 +1,18 @@
-.ingredient-table {
-    margin: auto;
+.ingredient-group-list {
     display: flex;
     flex-wrap: wrap;
-    // flex-direction: row;
-    // justify-content: space-between;
-    width: 100%;
-  
-    @media (min-width: $desktop-breakpoint) {
-        width: 75%
-    }
-  
-      // & > * {
-      //   margin-left: 14px;
-      //   margin-bottom: 24px;
-      // }
   }
+
+.ingredient-pantry-item {
+    padding: $m-size;
+    .ui.toggle.checkbox input:checked ~ .box:before,
+    .ui.toggle.checkbox input:checked ~ label:before,
+    .ui.toggle.checkbox input:focus:checked ~ .box:before,
+    .ui.toggle.checkbox input:focus:checked ~ label:before {
+      background-color: $mint !important;
+    }
+}
+
+.ingredient-item {
+  padding: $s-size;
+}

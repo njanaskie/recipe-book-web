@@ -12,7 +12,9 @@ const PantryPage = () => {
     return (
         <PantryContext.Provider value={{ pantryIngredients, pantryDispatch }}>
             <IngredientsContext.Provider value={{ ingredients, dispatch }}>
-                <h3 className='content-container'>My Pantry</h3>
+                <div className='content-container'>
+                    <h3 className='list-item__subtitle'>My Pantry</h3>
+                </div>
                 <IngredientsList />
             </IngredientsContext.Provider>
         </PantryContext.Provider>

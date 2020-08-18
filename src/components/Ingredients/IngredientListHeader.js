@@ -4,7 +4,7 @@ const IngredientListHeader= ({ category }) => {
 
   return (
     <div>
-      <h3>{category && category.toUpperCase()}</h3>
+      <h4>{category && category.toUpperCase()}</h4>
     </div>
   )
 }

@@ -40,20 +40,21 @@ export const IngredientsList = (props) => {
 
     return (
         <div className="content-container">
-            <div className='ingredient-table'>
+            <div>
                 {
                     ingredients ? (
                         Object.keys(groupedIngredients).map(category => {
                             return (
                                 <div key={category} >
                                     <IngredientListHeader category={category} />
-                                    {groupedIngredients[category].map((ingredient, id) => {
-                                        return (
-                                            <IngredientListItem key={id} ingredient={ingredient} />
-                                        )
-                                    })}
+                                    <div className='ingredient-group-list'>
+                                        {groupedIngredients[category].map((ingredient, id) => {
+                                            return (
+                                                <IngredientListItem key={id} ingredient={ingredient} />
+                                            )
+                                        })}
+                                    </div>
                                 </div>
-    
                             )
                         })
                     ) : (
