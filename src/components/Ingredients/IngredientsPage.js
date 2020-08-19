@@ -14,7 +14,6 @@ const IngredientsPage = () => {
     return (
         <PantryContext.Provider value={{ pantryIngredients, pantryDispatch }}>
             <IngredientsContext.Provider value={{ ingredients, dispatch }}>
-                <h3>Ingredients Page</h3>
                 <AddIngredientForm />
                 <IngredientsList />
             </IngredientsContext.Provider>

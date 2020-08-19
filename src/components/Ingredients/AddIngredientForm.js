@@ -1,106 +1,125 @@
 import React, { useState, useContext } from 'react'
+import { Form, Button, Dropdown } from 'semantic-ui-react'
 import IngredientsContext, { useIngredientsContext } from '../../../context/ingredients-context'
 import database from '../../firebase/firebase'
 
 const AddIngredientForm = (props) => {
-    const [name, setName] = React.useState('')
-    const [category, setCategory] = React.useState('dairy')
-    const [price, setPrice] = React.useState('1')
-    const [error, setError] = React.useState('')
+    const initialFormState = {
+        name: '',
+        category: '',
+        price: '',
+        error: ''
+    }
+    const [state, setState] = React.useState(initialFormState)
     const { dispatch } = useIngredientsContext()
+
+    console.log(state)
 
     const addIngredient = (e) => {
         e.preventDefault()
         const ingredient = {
-            name,
-            category,
-            price
+            name: state.name,
+            category: state.category,
+            price: state.price
         }
 
-        if (!name || !category || !price) {
+        if (!state.name || !state.category || !state.price) {
             setError('Please provide name, category, and price')
         } else {
             database.collection('ingredients').add(ingredient).then((ref) => {
                 dispatch(({ type: 'ADD_INGREDIENT', ingredient: {id: ref.key, ...ingredient} }))
             })
-    
-            setName('')
-            setCategory('')
-            setPrice('')
+            setState(initialFormState)
         }
     }
 
     const onNameChange = (e) => {
-        const name = e.target.value
-        if (name) {
-            setName(name)
-        }
+        const value = e.target.value
+        setState({ ...state, name: value })
     }
 
-    const onCategoryChange = (e) => {
-        const category = e.target.value
-        if (category) {
-            setCategory(category)
-        }
+    const onCategoryChange = (e, result) => {
+        const { value } = result || e.target
+        setState({ ...state, category: value })
     }
 
-    const onPriceChange = (e) => {
-        const price = e.target.value
-        if (price) {
-            setPrice(price)
-        }
+    const onPriceChange = (e, result) => {
+        const { value } = result || e.target
+        setState({ ...state, price: value })
     }
+
+    const categoryOptions = [
+        {key: 'dairy', text: 'Dairy', value: 'dairy'},
+        {key: 'meats', text: 'Meats', value: 'meats'},
+        {key: 'seafood', text: 'Seafood', value: 'seafood'},
+        {key: 'vegetables', text: 'Vegetables', value: 'vegetables'},
+        {key: 'baking and grains', text: 'Baking and Grains', value: 'baking and grains'},
+        {key: 'added sweeteners', text: 'Added Sweeteners', value: 'added sweeteners'},
+        {key: 'condiments', text: 'Condiments', value: 'condiments'},
+        {key: 'spices', text: 'Spices', value: 'spices'},
+        {key: 'fish', text: 'Fish', value: 'fish'},
+        {key: 'oils', text: 'Oils', value: 'oils'},
+        {key: 'seasonings', text: 'Seasonings', value: 'seasonings'},
+        {key: 'sauces', text: 'Sauces', value: 'sauces'},
+        {key: 'legumes', text: 'Legumes', value: 'legumes'},
+        {key: 'alcohol', text: 'Alcohol', value: 'alcohol'},
+        {key: 'soup', text: 'Soup', value: 'soup'},
+        {key: 'nuts', text: 'Nuts', value: 'nuts'},
+        {key: 'dairy alternatives', text: 'Dairy Alternatives', value: 'dairy alternatives'},
+        {key: 'desserts and snacks', text: 'Desserts and Snacks', value: 'desserts and snacks'},
+        {key: 'beverages', text: 'Beverages', value: 'beverages'},
+    ]
+
+    const priceOptions = [
+        {key: 1, text: 1, value: 1},
+        {key: 2, text: 2, value: 2},
+        {key: 3, text: 3, value: 3},
+    ]
 
     return (
-        <div>
-            <p>Add Ingredient</p>
-            <form onSubmit={addIngredient}>
-                {error && <p>{error}</p>}
-                <input
-                    id='set-name'
-                    type='text'
-                    placeholder='Name'
-                    autoFocus
-                    value={name}
-                    onChange={onNameChange}
-                />
-                <select
-                    id='set-category'
-                    value={category}
-                    onChange={onCategoryChange}
-                >
-                    <option value='dairy'>Dairy</option>
-                    <option value='meats'>Meats</option>
-                    <option value='seafood'>Seafood</option>
-                    <option value='vegetables'>Vegetables</option>
-                    <option value='fruit'>Fruit</option>
-                    <option value='baking and grains'>Baking and Grains</option>
-                    <option value='added sweeteners'>Added Sweeteners</option>
-                    <option value='condiments'>Condiments</option>
-                    <option value='spices'>Spices</option>
-                    <option value='fish'>Fish</option>
-                    <option value='oils'>Oils</option>
-                    <option value='seasonings'>Seasonings</option>
-                    <option value='sauces'>Sauces</option>
-                    <option value='legumes'>Legumes</option>
-                    <option value='alcohol'>Alcohol</option>
-                    <option value='soup'>Soup</option>
-                    <option value='nuts'>Nuts</option>
-                    <option value='dairy alternatives'>Dairy Alternatives</option>
-                    <option value='desserts and snacks'>Desserts and Snacks</option>
-                    <option value='beverages'>Beverages</option>
-                </select> 
-                <select
-                    id='set-price'
-                    value={price}
-                    onChange={onPriceChange}
-                >
-                    <option value='1'>1</option>
-                    <option value='2'>2</option>
-                    <option value='3'>3</option>
-                </select>
-                <button>Add Ingredient</button>
-            </form>
+        <div className='content-container'>
+            <h4>Add an ingredient to the site</h4>
+            <div className='form'>
+                <Form unstackable onSubmit={addIngredient}>
+                    {state.error && <p>{state.error}</p>}
+                    <Form.Group widths='equal'>
+                        <div className='form-item'>
+                            <Form.Input
+                                id='set-name'
+                                type='text'
+                                placeholder='Name'
+                                value={state.name || ''}
+                                onChange={onNameChange}
+                            />
+                        </div>
+                        <div className='form-item'>
+                            <Dropdown
+                                id='set-category'
+                                placeholder='Category'
+                                selection
+                                clearable
+                                value={state.category || ''}
+                                onChange={onCategoryChange}
+                                options={categoryOptions.map(category => category)}
+                            />
+                        </div>
+                        <div className='form-item'>
+                            <Dropdown
+                                id='set-price'
+                                placeholder='Price'
+                                fluid selection
+                                clearable
+                                value={state.price || ''}
+                                onChange={onPriceChange}
+                                options={priceOptions.map(price => price)}
+                            />
+                        </div>
+                        <div className='form-item'>
+                            <Form.Button>Add Ingredient</Form.Button>
+                        </div>
+                    </Form.Group>
+                </Form>
+            </div>
         </div>
 
     )
