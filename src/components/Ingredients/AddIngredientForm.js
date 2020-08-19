@@ -13,8 +13,6 @@ const AddIngredientForm = (props) => {
     const [state, setState] = React.useState(initialFormState)
     const { dispatch } = useIngredientsContext()
 
-    console.log(state)
-
     const addIngredient = (e) => {
         e.preventDefault()
         const ingredient = {

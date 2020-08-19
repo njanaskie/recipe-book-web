@@ -32,11 +32,13 @@ export const syncIngredientsWithPantry = (ings, pIngs) => {
 }
 
 export const IngredientsList = (props) => {
-    const ingredients = useIngredients()
+    const ingredients = useIngredients().filter(ingredient => ingredient.id !== undefined)
     const pantryIngredients = usePantryIngredients()
     const syncedIngredients = syncIngredientsWithPantry(ingredients, pantryIngredients)
     
     const groupedIngredients = _.groupBy(syncedIngredients, 'category')
+
+    console.log(ingredients)
 
     return (
         <div className="content-container">
