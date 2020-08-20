@@ -12,7 +12,6 @@ const AddDishPage = () => {
     return (
         <DishesContext.Provider value={{ dishes, dishDispatch }} >
             <IngredientsContext.Provider value={{ ingredients, dispatch }}>
-                <h1>Add Dish</h1>
                 <AddDishHome />
             </IngredientsContext.Provider>
         </DishesContext.Provider>

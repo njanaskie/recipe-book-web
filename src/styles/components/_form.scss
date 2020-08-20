@@ -1,13 +1,35 @@
-.ui.form form {
+.ui.form {
     display: flex;
     flex-direction: column;
-    > * {
-        margin-bottom: $l-size;
-    }
+
+    // > * {
+    //     margin-bottom: $m-size;
+    // }
+}
+
+.form-container {
+    align-self: center;
+    width: 60%
 }
 
 .form-item {
     margin-right: 1rem;
+    
+}
+
+.form-dropdown-group {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5em;
+}
+
+.form-recipes {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-textarea {
+    margin-bottom: 1.5em;
 }
 
 .form__error {
