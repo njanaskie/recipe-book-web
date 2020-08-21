@@ -20,6 +20,7 @@ const DishForm = (props) => {
     }
     const [state, setState] = useState(initialFormState)
     const ingredients = useIngredients()
+    const pathname = window.location.pathname
     
     useEffect(() => {
         setState({
@@ -103,7 +104,11 @@ const DishForm = (props) => {
     return (
         <div className='content-container'>
             <div className='form-container'>
-                <h4>Add a dish to the site</h4>
+                {pathname === '/add-dish' ? 
+                    <h4>Add a dish to the site</h4>
+                    :
+                    <h4>Edit dish details</h4>
+                }
                 <Form className='form' onSubmit={onSubmit}>
                     {state.error && <p>{state.error}</p>}
                     <Form.Input
@@ -214,6 +219,8 @@ const DishForm = (props) => {
                         ))
                     }
                     <Form.Button>Save Dish</Form.Button>
+                    {pathname !== '/add-dish' && <Form.Button onClick={props.onRemove}>Remove Dish</Form.Button>
+                    }
                 </Form>
             </div>
         </div>

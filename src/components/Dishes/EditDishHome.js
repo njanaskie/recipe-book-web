@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
+import { Button } from 'semantic-ui-react'
 import { useDishesContext } from '../../../context/dishes-context'
 import DishForm from '../Dishes/DishForm'
 import useDishes from '../../hooks/useDishes'
@@ -28,12 +29,12 @@ export const EditDishHome = (props) => {
 
 
     return (
-        <div>
+        <div className='content-container'>
             <DishForm
                 {...dish}
                 onSubmit={onSubmit}
+                onRemove={onRemove}
             />
-            <button onClick={onRemove}>Remove Dish</button>
         </div>
 
         

@@ -13,7 +13,6 @@ const EditDishPage = () => {
     return (
         <DishesContext.Provider value={{ dishes, dishDispatch }} >
             <IngredientsContext.Provider value={{ ingredients, dispatch }}>
-                <h1>Edit Dish</h1>
                 <EditDishHome />
             </IngredientsContext.Provider>
         </DishesContext.Provider>

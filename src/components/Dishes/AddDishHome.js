@@ -17,7 +17,7 @@ export const AddDishHome = (props) => {
     }
 
     return (
-        <div>
+        <div className='content-container'>
             <DishForm
                 onSubmit={onSubmit}
             />

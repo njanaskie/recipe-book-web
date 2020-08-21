@@ -10,8 +10,10 @@ const DishesPage = () => {
 
     return (
         <DishesContext.Provider value={{ dishes, dishDispatch }}>
-            <h3>Dishes Page</h3>
-            <DishesList />
+            <div className='content-container'>
+                <h4>Full list of dishes on the site</h4>
+                <DishesList />
+            </div>
         </DishesContext.Provider>
     )
 
