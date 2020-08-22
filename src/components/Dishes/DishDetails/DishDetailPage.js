@@ -16,7 +16,6 @@ const DishDetailPage = () => {
         <DishesContext.Provider value={{ dishes, dishDispatch }}>
             <RecipesContext.Provider value={{ recipes, recipeDispatch}}>
                 <IngredientsContext.Provider value={{ ingredients, dispatch }}>
-                    <h1>Dishes Details</h1>
                     <DetailHome />
                 </IngredientsContext.Provider>
             </RecipesContext.Provider>

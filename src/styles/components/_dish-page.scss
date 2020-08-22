@@ -1,0 +1,18 @@
+.dish-detail-container {
+    margin: auto;
+    width: 100%;
+
+    @media (min-width: $desktop-breakpoint) {
+        width: 75%
+    }
+}
+
+.dish-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.dish-ingredients-list {
+    float: right;
+}
