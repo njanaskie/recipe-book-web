@@ -9,7 +9,7 @@ const DishListItem = ({ dish }) => {
         <Link to={`/dish/${dish.id}`}>
             <div className='dish-preview'>
                 <div className='image-container'>
-                    <Image size='medium' rounded src="/images/image-placeholder.png" />
+                    <Image size='small' rounded src="/images/image-placeholder.png" />
                     <div className='dish-label'>
                         <span>{dish.name}</span>
                     </div>

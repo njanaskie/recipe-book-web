@@ -21,12 +21,28 @@ const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
 
     const panes = [
         {
-            menuItem: 'Suggested Recipes',
-            render: () => <Tab.Pane>{dish.recipes && dish.recipes.map(recipe => recipe ? <ReactTinyLink key={recipe} url={recipe}>{recipe}</ReactTinyLink> : <p key={recipe}>No Suggested Recipes</p>)}</Tab.Pane>
+            menuItem: 'Recommended Recipes',
+            render: () => 
+                <Tab.Pane>
+                    {dish.recipes && dish.recipes.map(recipe => recipe ? 
+                        <ReactTinyLink key={recipe} url={recipe} width='100%'>{recipe}</ReactTinyLink>
+                        :
+                        <p key={recipe}>No Recommended Recipes</p>
+                    )}
+                </Tab.Pane>
         },
         {
             menuItem: 'My Saved Recipes',
-            render: () => <Tab.Pane>{userRecipes.length > 0 ? userRecipes.map((recipe) => <UserRecipeItem key={recipe.id} recipe={recipe} dish={dish} isModalOpen={isModalOpen} handleModalOpen={handleModalOpen} handleModalClose={handleModalClose}/>) : <p>No Saved Recipes</p>}</Tab.Pane>
+            render: () => 
+                <Tab.Pane>
+                    {userRecipes.length > 0 ?
+                        userRecipes.map((recipe) => 
+                            <UserRecipeItem key={recipe.id} recipe={recipe} dish={dish} isModalOpen={isModalOpen} handleModalOpen={handleModalOpen} handleModalClose={handleModalClose}/>
+                            )
+                        :
+                        <p>No Saved Recipes</p>
+                    }
+                </Tab.Pane>
         },
     ]
 
@@ -38,6 +54,7 @@ const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
                         <Item.Image size='small' rounded src="/images/image-placeholder.png"/>
                         <Item.Content>
                             <Item.Header>{dish.name}</Item.Header>
+                            {isAdmin && <div><Link to={`/edit/dish/${dish.id}`}>Edit Dish</Link></div>}
                             <Item.Meta>Description</Item.Meta>
                             <Item.Description>{dish.description}</Item.Description>
                             <Item.Extra>
@@ -62,14 +79,19 @@ const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
                         </Item>
                 </Item.Group>
                 <div>
-                    <h3>Recipes</h3>
+                    <div className='recipes-header'>
+                        <div className='recipes-header__items'>
+                            <h4>Choose from our recommended recipes or add your own</h4>
+                        </div>
+                        <div className='recipes-header__items'>
+                            <Button color='green' onClick={handleModalOpen}>Add Recipe</Button>
+                        </div>
+                    </div>
                     <UserRecipeModal isModalOpen={isModalOpen} handleModalClose={handleModalClose}>
                         <AddUserRecipe dish={dish} handleModalClose={handleModalClose}/>
                     </UserRecipeModal>
-                    <Button color='green' onClick={handleModalOpen}>Add Recipe</Button>
                     <Tab panes={panes}/>
                 </div>
-                {isAdmin && <Link to={`/edit/dish/${dish.id}`}>Edit Dish</Link>}
             </div>
         </div>
     )

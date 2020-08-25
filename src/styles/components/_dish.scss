@@ -4,11 +4,11 @@
   // flex-wrap: column;
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
+  // width: 100%;
 
-  @media (min-width: $desktop-breakpoint) {
-      width: 75%
-  }
+  // @media (min-width: $desktop-breakpoint) {
+  //     width: 75%
+  // }
 
     // & > * {
     //   margin-left: 14px;

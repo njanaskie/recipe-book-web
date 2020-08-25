@@ -25,6 +25,7 @@ const UserRecipeItem = ({ recipe, dish, isModalOpen, handleModalOpen, handleModa
         <div>
             <ReactTinyLink
                 url={recipe.url}
+                width='100%'
             >
                 {recipe.url}
             </ReactTinyLink>
