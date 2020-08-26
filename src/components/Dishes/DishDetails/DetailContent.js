@@ -25,7 +25,9 @@ const DetailContent = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
             render: () => 
                 <Tab.Pane>
                     {dish.recipes && dish.recipes.map(recipe => recipe ? 
-                        <ReactTinyLink key={recipe} url={recipe} width='100%'>{recipe}</ReactTinyLink>
+                        <div className='recipe-group__link'>
+                            <ReactTinyLink key={recipe} url={recipe} width='100%'>{recipe}</ReactTinyLink>
+                        </div>
                         :
                         <p key={recipe}>No Recommended Recipes</p>
                     )}

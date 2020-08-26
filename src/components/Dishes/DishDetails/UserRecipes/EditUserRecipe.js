@@ -18,8 +18,6 @@ const EditUserRecipe = ({ dish, recipe, handleModalClose }) => {
         })
     }
 
-    
-
     return (
         <div>
             <UserRecipeForm

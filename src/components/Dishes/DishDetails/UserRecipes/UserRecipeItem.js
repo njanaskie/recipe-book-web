@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { ReactTinyLink } from 'react-tiny-link'
-import {  Modal } from 'semantic-ui-react'
+import {  Button } from 'semantic-ui-react'
 import EditUserRecipe from '../UserRecipes/EditUserRecipe'
 import UserRecipeModal from '../UserRecipes/UserRecipeModal'
 import FirebaseContext from '../../../../../context/firebase-context'
@@ -22,18 +22,22 @@ const UserRecipeItem = ({ recipe, dish, isModalOpen, handleModalOpen, handleModa
     // }
     
     return (
-        <div>
-            <ReactTinyLink
-                url={recipe.url}
-                width='100%'
-            >
-                {recipe.url}
-            </ReactTinyLink>
+        <div className='recipe-group__list'>
+            <div className='recipe-group__link'>
+                <ReactTinyLink
+                    url={recipe.url}
+                    width='100%'
+                >
+                    {recipe.url}
+                </ReactTinyLink>
+            </div>
             <UserRecipeModal isModalOpen={isModalOpen} handleModalClose={handleModalClose}>
                 <EditUserRecipe recipe={recipe} dish={dish} handleModalClose={handleModalClose}/>
             </UserRecipeModal>
-            <button onClick={handleModalOpen}>Edit</button>
-            <button onClick={removeUserRecipe}>Remove</button>
+            <div className='recipe-group__button'>
+                <Button basic onClick={handleModalOpen}>Edit</Button>
+                <Button basic color='red' onClick={removeUserRecipe}>Remove</Button>
+            </div>
         </div>
     )
 }

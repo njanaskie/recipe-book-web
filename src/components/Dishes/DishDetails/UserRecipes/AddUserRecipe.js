@@ -18,8 +18,6 @@ const AddUserRecipe = ({ dish, handleModalClose }) => {
         
     }
 
-    console.log('add user recipe')
-
     return (
         <div>
             <UserRecipeForm

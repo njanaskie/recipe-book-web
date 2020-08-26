@@ -52,32 +52,39 @@ const UserRecipeForm = (props) => {
     }
 
     return (
-        <Form onSubmit={onSubmit}>
-            {state.error && <p>{state.error}</p>}
-            <Form.Input
-                type='url'
-                name='url'
-                placeholder='Insert URL'
-                value={state.url}
-                onChange={onURLChange}
-            />
-            <Dropdown
-                placeholder='Add additional ingredients'
-                name='additionalIngredients'
-                fluid multiple selection
-                multiple={true}
-                value={state.additionalIngredients}
-                onChange={onAdditionalIngredientChange}
-                options={additionalIngredients.map(ingredient => {
-                    return {
-                        key: ingredient.id,
-                        text: ingredient.name,
-                        value: ingredient.name
-                    }
-                })}
-            />
-            <Button type='submit'>+</Button>
-        </Form>
+        <div className='form-container'>
+            <Form className='form' onSubmit={onSubmit}>
+                {state.error && <p>{state.error}</p>}
+                <Form.Group >
+                    <Form.Input
+                        type='url'
+                        name='url'
+                        placeholder='Insert URL'
+                        value={state.url}
+                        onChange={onURLChange}
+                        fluid
+                        width={8}
+                    />
+                    <Form.Dropdown
+                        placeholder='Add additional ingredients'
+                        name='additionalIngredients'
+                        fluid multiple selection
+                        multiple={true}
+                        value={state.additionalIngredients}
+                        onChange={onAdditionalIngredientChange}
+                        options={additionalIngredients.map(ingredient => {
+                            return {
+                                key: ingredient.id,
+                                text: ingredient.name,
+                                value: ingredient.name
+                            }
+                        })}
+                    />
+                    <Form.Button fluid basic color='green' type='submit'>Save Recipe</Form.Button>
+                </Form.Group>
+            </Form>
+        </div>
+        
     )
 }
 
