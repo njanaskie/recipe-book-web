@@ -50,7 +50,6 @@ const DishForm = (props) => {
         if (!state.name || !state.keyIngredients || !state.type) {
             setState({ ...state, error: 'Please provide dish, key ingredients, type' })
         } else {
-            console.log('add dish')
             props.onSubmit(dish)
             setState(initialFormState)
         }

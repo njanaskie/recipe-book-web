@@ -1,8 +1,8 @@
 .dish-table {
   margin: auto;
   display: flex;
-  // flex-wrap: column;
-  flex-direction: row;
+  flex-wrap: wrap;
+  // flex-direction: row;
   justify-content: flex-start;
   // width: 100%;
 

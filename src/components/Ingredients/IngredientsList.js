@@ -38,8 +38,6 @@ export const IngredientsList = (props) => {
     
     const groupedIngredients = _.groupBy(syncedIngredients, 'category')
 
-    console.log(ingredients)
-
     return (
         <div className="content-container">
             <div>
