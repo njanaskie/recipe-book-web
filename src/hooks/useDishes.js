@@ -13,8 +13,10 @@ const useDishes = () => {
         }
     }, [])
 
-    React.useEffect(() => {
+    React.useMemo(() => {
         database.collection('dishes')
+        .orderBy('name')
+        // .limitToLast(5)
         .get()
         .then((snapshot) => {
             if (isCurrent.current) {

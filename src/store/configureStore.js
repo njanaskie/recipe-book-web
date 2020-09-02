@@ -6,6 +6,7 @@ import pantryReducer from '../reducers/pantry'
 import dishesReducer from '../reducers/dishes'
 import filtersReducer from '../reducers/filters'
 import recipesReducer from '../reducers/recipes'
+import pantryDishesReducer from '../reducers/pantry-dishes'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -17,6 +18,7 @@ export default () => {
             dishes: dishesReducer,
             filters: filtersReducer,
             recipes: recipesReducer,
+            pantryDishes: pantryDishesReducer,
             auth: authReducer
         }),
         composeEnhancers(applyMiddleware(thunk))

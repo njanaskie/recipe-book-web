@@ -19,7 +19,6 @@ const useFilteredDishes = () => {
         :
             dishes
     
-
     return filteredDishes
 }
 

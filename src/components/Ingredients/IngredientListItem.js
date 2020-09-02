@@ -4,12 +4,18 @@ import { useFirebaseContext } from '../../../context/firebase-context'
 import { useIngredientsContext } from '../../../context/ingredients-context'
 import { usePantryContext } from '../../../context/pantry-context'
 import database, { firebase } from '../../firebase/firebase'
+import { useDishesContext } from '../../../context/dishes-context'
+import useDishes from '../../hooks/useDishes'
 
 const IngredientListItem = ({ ingredient } ) => {
   const [checked, setChecked] = useState(ingredient.isPantry)
   const { user } = useFirebaseContext()
   const { dispatch } = useIngredientsContext()
   const { pantryIngredients, pantryDispatch } = usePantryContext()
+  const { dishDispatch } = useDishesContext()
+  const dishes = useDishes()
+
+  console.log(pantryIngredients)
 
   const pathname = window.location.pathname
 
@@ -24,31 +30,48 @@ const IngredientListItem = ({ ingredient } ) => {
   // }
 
   // useEffect(() => {
-    const addPantryIngredient = () => {
-      const uid = user.uid
-  
-      database.collection('users').doc(uid).collection('pantry').doc(ingredient.id).set(ingredient).then(() => {
-        pantryDispatch(({ type: 'ADD_PANTRY_INGREDIENT', pantryIngredient: {...ingredient} }))
+  const addPantryIngredient = () => {
+    const uid = user.uid
+
+    database.collection('users').doc(uid).collection('pantry').doc(ingredient.id).set(ingredient).then(() => {
+      pantryDispatch(({ type: 'ADD_PANTRY_INGREDIENT', pantryIngredient: {...ingredient} }))
+    })
+  }
+
+  const addPantryDish = () => {
+    console.log('added', ingredient)
+    const pantryIngredientNames = pantryIngredients.map(ingredient => ingredient.name)
+    const pantryDishes = dishes.filter(dish => dish.keyIngredients.every(keyIngredient => pantryIngredientNames.includes(keyIngredient)))
+
+    pantryDishes.map(dish => {
+      database.collection('users').doc(user.uid).collection('dishes').add(dish).then(() => {
+        dishDispatch({ type: 'ADD_DISH', dish })
       })
-    }
-    const removePantryIngredient = () => {
-      const uid = user.uid
-  
-      database.collection('users').doc(uid).collection('pantry').doc(ingredient.id).delete().then(() => {
-        dispatch({ type: 'REMOVE_PANTRY_INGREDIENT', id: ingredient.id })
-      })
+    })
+  }
+
+  const removePantryIngredient = () => {
+    const uid = user.uid
+
+    database.collection('users').doc(uid).collection('pantry').doc(ingredient.id).delete().then(() => {
+      dispatch({ type: 'REMOVE_PANTRY_INGREDIENT', id: ingredient.id })
+    })
+  }
+
+  const removePantryDish = () => {
+    console.log('removed', ingredient)
+  }
+
+  const toggle = () => {
+    setChecked(!checked)
+
+    if (ingredient.isPantry === true) {
+      removePantryIngredient()
+    } else {
+      addPantryIngredient()
     }
 
-    const toggle = () => {
-      setChecked(!checked)
-
-      if (ingredient.isPantry === true) {
-        removePantryIngredient()
-      } else {
-        addPantryIngredient()
-      }
-
-    }
+  }
 
 
   // }, [checked])
