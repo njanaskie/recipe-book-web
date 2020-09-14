@@ -1,3 +1,9 @@
+# To Run Locally
+
+yarn run dev-server
+
+Go to http://localhost:8080/. 
+
 # Git Commands
 
 git init - Create a new git repo
