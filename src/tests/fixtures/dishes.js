@@ -25,4 +25,13 @@ export default [{
     keyIngredients: ['perogies'],
     optionalIngredients: ['spinach', 'chicken', 'garlic'],
     recipes: []
+}, {
+    id: 4,
+    name: 'Bread and Butter',
+    cuisine: '',
+    type: '',
+    description: 'test 4',
+    keyIngredients: ['bread'],
+    optionalIngredients: ['spinach', 'chicken', 'garlic'],
+    recipes: []
 }]
