@@ -2,14 +2,21 @@ import React, { useCallback, useState, useEffect, useMemo, useContext, useRef } 
 import DishesContext from '../../../context/dishes-context'
 import DishListItem from '../Dishes/DishListItem'
 import useDishes from '../../hooks/useDishes'
+import usePantryIngredients from '../../hooks/usePantryIngredients'
 import usePantryDishes from '../../hooks/usePantryDishes'
 import { Input } from 'semantic-ui-react'
 import DashboardListFilters from './DashboardListFilters'
 import { useFiltersContext } from '../../../context/filters-context'
+import pantryDishNamesTest from '../../selectors/pantry-dishes'
 
 export const DashboardList = () => {
     const { filters } = useFiltersContext()
-    const pantryDishes = usePantryDishes()
+    const dishes = useDishes()
+    const pantryIngredients = usePantryIngredients()
+    const pantryDishNames = pantryDishNamesTest(pantryIngredients, dishes)
+    const pantryDishes = usePantryDishes(pantryDishNames)
+
+    console.log(pantryDishes)
     
     return (
         <div className='content-container'>
