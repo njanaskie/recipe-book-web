@@ -13,7 +13,7 @@ const useDishes = () => {
         }
     }, [])
 
-    React.useMemo(() => {
+    React.useEffect(() => {
         database.collection('dishes')
         .orderBy('name')
         // .limitToLast(5)

@@ -11,12 +11,10 @@ import pantryDishNamesTest from '../../selectors/pantry-dishes'
 
 export const DashboardList = () => {
     const { filters } = useFiltersContext()
-    const dishes = useDishes()
-    const pantryIngredients = usePantryIngredients()
-    const pantryDishNames = pantryDishNamesTest(pantryIngredients, dishes)
-    const pantryDishes = usePantryDishes(pantryDishNames)
-
-    console.log(pantryDishes)
+    // const dishes = useDishes()
+    // const pantryIngredients = usePantryIngredients()
+    // const pantryDishNames = pantryDishNamesTest(pantryIngredients, dishes)
+    const pantryDishes = usePantryDishes()
     
     return (
         <div className='content-container'>

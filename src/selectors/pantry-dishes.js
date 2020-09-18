@@ -12,8 +12,8 @@ import testDishes from '../tests/fixtures/dishes'
 export default (pantryIngredients, dishes) => {
     const pantryIngredientNames = pantryIngredients.map(ingredient => ingredient.name)
     const pantryDishesList = dishes.filter(dish => dish.keyIngredients.every(keyIngredient => pantryIngredientNames.includes(keyIngredient)))
-    const pantryDishNames = pantryDishesList.map(dish => dish.name)
-    return pantryDishNames
+    // const pantryDishNames = pantryDishesList.map(dish => dish.name)
+    return pantryDishesList
 }
 
 // const usePantryDishNames = () => {
