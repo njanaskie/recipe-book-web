@@ -10,16 +10,21 @@ import useDishes from '../../hooks/useDishes'
 import useExistingPantryDishes from '../../hooks/useExistingPantryDishes'
 import selectPantryDishes from '../../selectors/pantry-dishes'
 
-const IngredientListItem = ({ ingredient } ) => {
+const IngredientListItem = ({ ingredient, existingPantryDishes, selectedPantryDishes }) => {
   const [checked, setChecked] = useState(ingredient.isPantry)
   const { user } = useFirebaseContext()
   const { dispatch } = useIngredientsContext()
   const { pantryIngredients, pantryDispatch } = usePantryContext()
   const { dishDispatch } = useDishesContext()
-  const { pantryDishes, pantryDishDispatch } = usePantryDishContext()
-  const dishes = useDishes()
-  const existingPantryDishes = useExistingPantryDishes()
-  const selectedPantryDishes = selectPantryDishes(pantryIngredients, dishes)
+  const { pantryDishDispatch } = usePantryDishContext()
+  // const dishes = useDishes()
+  const existingPantry = existingPantryDishes
+  const selectedPantry = selectedPantryDishes
+
+  // console.log(pantryIngredients)
+  // console.log(dishes)
+  console.log(existingPantry)
+  console.log(selectedPantry)
 
   const pathname = window.location.pathname
 
@@ -42,13 +47,15 @@ const IngredientListItem = ({ ingredient } ) => {
     })
   }
 
-  const addPantryDish = () => {
+  const addPantryDish = (selectedPantry, existingPantry) => {
     console.log('added', ingredient)
-    const dishesToAdd = selectedPantryDishes.filter((dish) => !existingPantryDishes.some((existingDish) => existingDish.id === dish.id));
+    console.log(selectedPantry)
+    const dishesToAdd = selectedPantry.filter((dish) => !existingPantry.some((existingDish) => existingDish.id === dish.id));
     console.log('dishesToAdd', dishesToAdd)
     dishesToAdd.map(dish => {
       database.collection('users').doc(user.uid).collection('dishes').add(dish).then(() => {
           pantryDishDispatch({ type: 'ADD_PANTRY_DISH', dish })
+          console.log('added pantry dish', dish)
       })
     })
   }
@@ -61,13 +68,14 @@ const IngredientListItem = ({ ingredient } ) => {
     })
   }
 
-  const removePantryDish = () => {
+  const removePantryDish = (selectedPantry, existingPantry) => {
     console.log('removed', ingredient)
-    const dishesToRemove = existingPantryDishes.filter((existingDish) => !selectedPantryDishes.some((dish) => dish.id === existingDish.id));
+    const dishesToRemove = existingPantry.filter((existingDish) => !selectedPantry.some((dish) => dish.id === existingDish.id));
     console.log('dishesToRemove', dishesToRemove)
     dishesToRemove.map(dish => {
       database.collection('users').doc(user.uid).collection('dishes').doc(dish.id).delete().then(() => {
           pantryDishDispatch({ type: 'REMOVE_PANTRY_DISH', id: dish.id })
+          console.log('removed pantry dish', dish)
       })
     })
   }
@@ -77,10 +85,10 @@ const IngredientListItem = ({ ingredient } ) => {
 
     if (ingredient.isPantry === true) {
       removePantryIngredient()
-      removePantryDish()
+      removePantryDish(selectedPantry, existingPantry)
     } else {
       addPantryIngredient()
-      addPantryDish()
+      addPantryDish(selectedPantry, existingPantry)
     }
 
   }
