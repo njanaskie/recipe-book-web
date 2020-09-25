@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { useDishesContext } from '../../context/dishes-context'
 import { useFirebaseContext } from '../../context/firebase-context'
 import { usePantryDishContext } from '../../context/pantry-dish-context'
-import PantryContext from '../../context/pantry-context'
+import PantryContext, { usePantryContext } from '../../context/pantry-context'
 import useDishes from '../hooks/useDishes'
 import usePantryIngredients from './usePantryIngredients'
 import useFilteredDishes from '../hooks/useFilteredDishes'
@@ -14,6 +14,7 @@ import { set } from 'lodash'
 
 const useExistingPantryDishes = () => {
     const [ existingPantryDishes, setExistingPantryDishes] = useState([])
+    const { pantryIngredients } = usePantryContext()
     const { user } = useFirebaseContext()
     const isCurrent = useRef(true)
 
@@ -42,7 +43,7 @@ const useExistingPantryDishes = () => {
         }
 
         fetchPantryDishes()
-    }, [])
+    }, [pantryIngredients])
 
     return existingPantryDishes
 }
