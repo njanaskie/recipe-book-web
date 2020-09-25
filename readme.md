@@ -10,5 +10,3 @@ git log - View recent commits
 # Test Commands
 
 watch - yarn test -- --watch
-
-this is a test
