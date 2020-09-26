@@ -12,7 +12,7 @@ import selectPantryDishes from '../../selectors/pantry-dishes'
 import useAddPantryDish from '../../hooks/useAddPantryDish'
 import useRemovePantryDish from '../../hooks/useRemovePantryDish'
 
-const IngredientListItem = ({ ingredient, existingPantryDishes, selectedPantryDishes }) => {
+const IngredientListItem = ({ ingredient }) => {
   const [checked, setChecked] = useState(ingredient.isPantry)
   const { user } = useFirebaseContext()
   const { dispatch } = useIngredientsContext()
@@ -20,15 +20,15 @@ const IngredientListItem = ({ ingredient, existingPantryDishes, selectedPantryDi
   const { dishDispatch } = useDishesContext()
   const { pantryDishDispatch } = usePantryDishContext()
   // const dishes = useDishes()
-  const existingPantry = existingPantryDishes
-  const selectedPantry = selectedPantryDishes
+  // const existingPantry = existingPantryDishes
+  // const selectedPantry = selectedPantryDishes
   // const addPantryDish = useAddPantryDish(ingredient)
   // const removePantryDish = useRemovePantryDish(ingredient)
 
   // console.log(pantryIngredients)
   // console.log(dishes)
-  console.log(existingPantry)
-  console.log(selectedPantry)
+  // console.log(existingPantry)
+  // console.log(selectedPantry)
 
   const pathname = window.location.pathname
 
@@ -64,33 +64,33 @@ const IngredientListItem = ({ ingredient, existingPantryDishes, selectedPantryDi
 // on pantry ingredient change, determine new selected pantry dishes 
 // and map through, only adding if id not found in existing pantry dishes
 
-  useEffect(() => {
-    console.log(existingPantry)
-    console.log(selectedPantry)
-    // const dishesToAdd = selectedPantry.filter((dish) => !existingPantry.some((existingDish) => existingDish.id === dish.id));
-    const dishesToAdd = selectedPantry
-    const dishesToRemove = existingPantry.filter(dish => dish.keyIngredients.includes(ingredient))
-    console.log(dishesToAdd)
-    console.log(dishesToRemove)
+  // useEffect(() => {
+  //   console.log(existingPantry)
+  //   console.log(selectedPantry)
+  //   // const dishesToAdd = selectedPantry.filter((dish) => !existingPantry.some((existingDish) => existingDish.id === dish.id));
+  //   const dishesToAdd = selectedPantry
+  //   const dishesToRemove = existingPantry.filter(dish => dish.keyIngredients.includes(ingredient))
+  //   console.log(dishesToAdd)
+  //   console.log(dishesToRemove)
 
-    if (dishesToAdd) {
-      dishesToAdd.map(dish => {
-        database.collection('users').doc(user.uid).collection('dishes').add(dish).then(() => {
-          pantryDishDispatch({ type: 'ADD_PANTRY_DISH', dish })
-          console.log('added pantry dish', dish)
-        })
-      })
-    }
+  //   if (dishesToAdd) {
+  //     dishesToAdd.map(dish => {
+  //       database.collection('users').doc(user.uid).collection('dishes').add(dish).then(() => {
+  //         pantryDishDispatch({ type: 'ADD_PANTRY_DISH', dish })
+  //         console.log('added pantry dish', dish)
+  //       })
+  //     })
+  //   }
 
-    if (dishesToRemove) {
-      dishesToRemove.map(dish => {
-        database.collection('users').doc(user.uid).collection('dishes').doc(dish.id).delete().then(() => {
-            pantryDishDispatch({ type: 'REMOVE_PANTRY_DISH', id: dish.id })
-            console.log('removed pantry dish', dish)
-        })
-      })
-    }
-  }, [checked])
+  //   if (dishesToRemove) {
+  //     dishesToRemove.map(dish => {
+  //       database.collection('users').doc(user.uid).collection('dishes').doc(dish.id).delete().then(() => {
+  //           pantryDishDispatch({ type: 'REMOVE_PANTRY_DISH', id: dish.id })
+  //           console.log('removed pantry dish', dish)
+  //       })
+  //     })
+  //   }
+  // }, [])
 
     // const addPantryDish = () => {
     //   console.log('added', ingredient)

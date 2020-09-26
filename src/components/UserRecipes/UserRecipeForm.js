@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Tab, Button, Modal, Dropdown, Form } from 'semantic-ui-react'
-import useIngredients from '../../../../hooks/useIngredients'
+import useIngredients from '../../hooks/useIngredients'
 
 const UserRecipeForm = (props) => {
     const initialFormState = {

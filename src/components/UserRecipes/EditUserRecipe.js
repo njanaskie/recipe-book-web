@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react'
 import UserRecipeForm from './UserRecipeForm'
-import database from '../../../../firebase/firebase'
-import FirebaseContext from '../../../../../context/firebase-context'
-import RecipesContext from '../../../../../context/recipes-context'
+import database from '../../firebase/firebase'
+import FirebaseContext from '../../../context/firebase-context'
+import RecipesContext from '../../../context/recipes-context'
 
 const EditUserRecipe = ({ dish, recipe, handleModalClose }) => {
     const { recipeDispatch } = useContext(RecipesContext)

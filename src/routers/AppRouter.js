@@ -14,8 +14,18 @@ import AddDishPage from '../components/Dishes/AddDishPage'
 import DishesPage from '../components/Dishes/DishesPage'
 import DishDetailPage from '../components/Dishes/DishDetails/DishDetailPage';
 import EditDishPage from '../components/Dishes/EditDishPage'
+import HomePage from '../components/HomePage'
+import AddRecipe from '../components/AddRecipe';
+import EditRecipe from '../components/EditRecipe'
 
 export const history = createHistory();
+
+
+// <PrivateRoute path='/dashboard' component={DashboardPage} />
+// <PrivateRoute path='/pantry' component={PantryPage} />
+// <AdminRoute path='/dishes' component={DishesPage} />
+// <PrivateRoute path='/dish/:id' component={DishDetailPage} />
+// <AdminRoute path='/add-dish' component={AddDishPage} />
 
 const AppRouter = () => (
     <FirebaseProvider >
@@ -23,13 +33,10 @@ const AppRouter = () => (
             <div>
                 <Switch>
                     <PublicRoute path='/' component={LoginPage} exact={true}/>
-                    <PrivateRoute path='/dashboard' component={DashboardPage} />
+                    <PrivateRoute path='/home' component={HomePage} />
+                    <PrivateRoute path='/add-recipe' component={AddRecipe} />
                     <AdminRoute path='/ingredients' component={IngredientsPage} />
-                    <PrivateRoute path='/pantry' component={PantryPage} />
-                    <AdminRoute path='/dishes' component={DishesPage} />
-                    <PrivateRoute path='/dish/:id' component={DishDetailPage} />
-                    <AdminRoute path='/add-dish' component={AddDishPage} />
-                    <AdminRoute path='/edit/dish/:id' component={EditDishPage} />
+                    <AdminRoute path='/edit-recipe/:id' component={EditRecipe} />
                     <Route component={NotFoundPage}/>
                 </Switch>
             </div>

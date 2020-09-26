@@ -42,14 +42,14 @@ export const IngredientsList = (props) => {
     const syncedIngredients = syncIngredientsWithPantry(ingredients, pantryIngredients)
     const { dishDispatch } = useDishesContext()
     const { pantryDishes, pantryDishDispatch } = usePantryDishContext()
-    const dishes = useDishes()
-    const existingPantryDishes = useExistingPantryDishes()
-    const selectedPantryDishes = selectPantryDishes(pantryIngredients, dishes)
+    // const dishes = useDishes()
+    // const existingPantryDishes = useExistingPantryDishes()
+    // const selectedPantryDishes = selectPantryDishes(pantryIngredients, dishes)
 
-    console.log(pantryIngredients)
-    console.log(dishes)
-    console.log(existingPantryDishes)
-    console.log(selectedPantryDishes)
+    // console.log(pantryIngredients)
+    // console.log(dishes)
+    // console.log(existingPantryDishes)
+    // console.log(selectedPantryDishes)
     
     const groupedIngredients = _.groupBy(syncedIngredients, 'category')
 
@@ -67,9 +67,7 @@ export const IngredientsList = (props) => {
                                             return (
                                                 <IngredientListItem
                                                     key={id}
-                                                    ingredient={ingredient} 
-                                                    existingPantryDishes={existingPantryDishes}
-                                                    selectedPantryDishes={selectedPantryDishes}
+                                                    ingredient={ingredient}
                                                 />
                                             )
                                         })}

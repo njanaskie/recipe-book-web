@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Input, Dropdown } from 'semantic-ui-react'
 import { useFiltersContext } from '../../../context/filters-context'
 import { usePantryContext } from '../../../context/pantry-context'
-import dishCuisines from '../../fixtures/dishCuisines'
-import dishTypes from '../../fixtures/dishTypes'
+import dishCuisines from '../../fixtures/recipeCuisines'
+import dishTypes from '../../fixtures/recipeTypes'
 
 export const DashboardListFilters = () => {
     const { filters, filtersDispatch } = useFiltersContext()

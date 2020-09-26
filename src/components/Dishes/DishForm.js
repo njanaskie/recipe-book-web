@@ -3,8 +3,8 @@ import { useDishesContext } from '../../../context/dishes-context'
 import useIngredients from '../../hooks/useIngredients'
 import { Form, Dropdown, TextArea } from 'semantic-ui-react'
 import database from '../../firebase/firebase'
-import dishTypes from '../../fixtures/dishTypes'
-import dishCuisines from '../../fixtures/dishCuisines'
+import dishTypes from '../../fixtures/recipeTypes'
+import dishCuisines from '../../fixtures/recipeCuisines'
 
 const DishForm = (props) => {
     const { dishDispatch } = useDishesContext()

@@ -12,7 +12,7 @@ export const PublicRoute = ({
     return (
         <Route {...rest} component={(props) => (
             !!user ? (
-                <Redirect to='/dashboard' />
+                <Redirect to='/home' />
             ) : (
                 <Component {...props}/>
             )

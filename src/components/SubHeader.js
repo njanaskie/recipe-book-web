@@ -10,11 +10,8 @@ export const SubHeader = ({ startLogout }) => {
 
     return (
         <Menu >
-            <Menu.Item as={NavLink} to='/dashboard' >Dashboard</Menu.Item>
-            <Menu.Item as={NavLink} to='/pantry'>Pantry</Menu.Item>
+            <Menu.Item as={NavLink} to='/add-recipe'>Add Recipe</Menu.Item>
             {isAdmin && <Menu.Item as={NavLink} to='/ingredients'>Ingredients</Menu.Item>}
-            {isAdmin && <Menu.Item as={NavLink} to='/dishes'>Dishes</Menu.Item>}
-            {isAdmin && <Menu.Item as={NavLink} to='/add-dish'>Add Dish</Menu.Item>}
             <Menu.Item><Button onClick={startLogout}>Logout</Button></Menu.Item>
         </Menu>
     )

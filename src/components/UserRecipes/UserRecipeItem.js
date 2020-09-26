@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { ReactTinyLink } from 'react-tiny-link'
 import {  Button } from 'semantic-ui-react'
-import EditUserRecipe from '../UserRecipes/EditUserRecipe'
-import UserRecipeModal from '../UserRecipes/UserRecipeModal'
-import FirebaseContext from '../../../../../context/firebase-context'
-import RecipesContext from '../../../../../context/recipes-context'
-import database from '../../../../firebase/firebase'
+import EditUserRecipe from './EditUserRecipe'
+import UserRecipeModal from './UserRecipeModal'
+import FirebaseContext from '../../../context/firebase-context'
+import RecipesContext from '../../../context/recipes-context'
+import database from '../../firebase/firebase'
 
 const UserRecipeItem = ({ recipe, dish, isModalOpen, handleModalOpen, handleModalClose }) => {
     const { user } = useContext(FirebaseContext)
