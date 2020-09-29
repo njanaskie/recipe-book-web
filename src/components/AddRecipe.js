@@ -9,9 +9,7 @@ import IngredientsContext from '../../context/ingredients-context'
 import ingredientsReducer from '../reducers/ingredients'
 
 const AddRecipe = ({ handleModalClose }) => {
-    // const { recipeDispatch } = useContext(useRecipesContext)
-    const [recipes, recipeDispatch] = useReducer(recipesReducer, [])
-    const [ingredients, dispatch ] = useReducer(ingredientsReducer, [])
+    const { recipeDispatch } = useContext(useRecipesContext)
     const { user } = useContext(FirebaseContext)
 
     const onSubmit = (recipe) => {
@@ -20,20 +18,13 @@ const AddRecipe = ({ handleModalClose }) => {
 
             // handleModalClose()
         })
-
-        
     }
 
     return (
         <div>
-            <IngredientsContext.Provider value={{ ingredients, dispatch }}>
-                <RecipesContext.Provider value={{ recipes, recipeDispatch }}>
-                    <RecipeForm
-                        onSubmit={onSubmit}
-                        // dish={dish}
-                    />
-                </RecipesContext.Provider>
-            </IngredientsContext.Provider>
+            <RecipeForm
+                onSubmit={onSubmit}
+            />
         </div>
     )
 }

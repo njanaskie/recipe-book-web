@@ -15,8 +15,8 @@ import DishesPage from '../components/Dishes/DishesPage'
 import DishDetailPage from '../components/Dishes/DishDetails/DishDetailPage';
 import EditDishPage from '../components/Dishes/EditDishPage'
 import HomePage from '../components/HomePage'
-import AddRecipe from '../components/AddRecipe';
-import EditRecipe from '../components/EditRecipe'
+import AddRecipeContext from '../components/AddRecipeContext';
+import EditRecipeContext from '../components/EditRecipeContext'
 
 export const history = createHistory();
 
@@ -34,9 +34,9 @@ const AppRouter = () => (
                 <Switch>
                     <PublicRoute path='/' component={LoginPage} exact={true}/>
                     <PrivateRoute path='/home' component={HomePage} />
-                    <PrivateRoute path='/add-recipe' component={AddRecipe} />
+                    <PrivateRoute path='/add-recipe' component={AddRecipeContext} />
                     <AdminRoute path='/ingredients' component={IngredientsPage} />
-                    <AdminRoute path='/edit-recipe/:id' component={EditRecipe} />
+                    <AdminRoute path='/edit-recipe/:id' component={EditRecipeContext} />
                     <Route component={NotFoundPage}/>
                 </Switch>
             </div>
