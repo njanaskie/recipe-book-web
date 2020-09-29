@@ -37,6 +37,8 @@
 }
 
 .list-item--message {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     color: $grey;
     justify-content: center;

@@ -6,7 +6,7 @@ export const RecipeList = (props) => {
     const recipes = useRecipes()
 
     if (!recipes || !recipes.length) {
-        return <div><span>No recipes</span></div>
+        return <div className='content-container'><span className="list-item--message">No recipes</span></div>
     }
 
     const tableItems = recipes && recipes.map((recipe) => {

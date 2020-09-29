@@ -21,6 +21,7 @@ const RecipeListItem = ({ recipe }) => {
         <div className='recipe-group__list'>
             <div className='recipe-group__link'>
                 <ReactTinyLink
+                    // cardSize="large"
                     url={recipe.url}
                     width='100%'
                 >
@@ -28,7 +29,7 @@ const RecipeListItem = ({ recipe }) => {
                 </ReactTinyLink>
             </div>
             <div className='recipe-group__button'>
-                <Link to={`/edit-recipe/${recipe.id}`}><Button basic>Edit</Button></Link>
+                <Button as={Link} to={`/edit-recipe/${recipe.id}`} basic>Edit</Button>
                 <Button basic color='red' onClick={removeRecipe}>Remove</Button>
             </div>
         </div>
