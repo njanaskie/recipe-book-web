@@ -14,7 +14,7 @@
 .input-group__dropdowns {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
 
     @media (min-width: $desktop-breakpoint) {
         flex-direction: row;

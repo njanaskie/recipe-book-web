@@ -12,6 +12,7 @@ import recipesReducer from '../reducers/recipes'
 import IngredientsContext from '../../context/ingredients-context'
 import ingredientsReducer from '../reducers/ingredients'
 import RecipeList from './RecipeList'
+import RecipeListFilters from './RecipeListFilters'
 
 
 const HomePage = () => {
@@ -26,6 +27,7 @@ const HomePage = () => {
         <IngredientsContext.Provider value={{ ingredients, dispatch }}>
             <FiltersContext.Provider value={{ filters, filtersDispatch }}>
                 <RecipesContext.Provider value={{ recipes, recipeDispatch }}>
+                    <RecipeListFilters />
                     <RecipeList />
                 </RecipesContext.Provider>
             </FiltersContext.Provider>

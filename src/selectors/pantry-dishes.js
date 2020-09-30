@@ -5,7 +5,7 @@ import { usePantryDishContext } from '../../context/pantry-dish-context'
 import PantryContext from '../../context/pantry-context'
 import useDishes from '../hooks/useDishes'
 import usePantryIngredients from '../hooks/usePantryIngredients'
-import useFilteredDishes from '../hooks/useFilteredDishes'
+import useFilteredDishes from '../hooks/useFilteredRecipes'
 import database, { firebase } from '../firebase/firebase'
 import testDishes from '../tests/fixtures/dishes'
 

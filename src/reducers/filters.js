@@ -3,9 +3,9 @@
 
 const filtersReducerDefaultState = {
     text: '',
-    keyIngredients: [],
+    ingredients: [],
     cuisine: '',
-    dishType: '',
+    recipeType: '',
 };
 
 const filtersReducer = (state = filtersReducerDefaultState, action) => {
@@ -15,20 +15,20 @@ const filtersReducer = (state = filtersReducerDefaultState, action) => {
                 ...state,
                 text: action.text
             }
-        case 'SET_KEY_INGREDIENT_FILTER':
+        case 'SET_INGREDIENT_FILTER':
             return {
                 ...state,
-                keyIngredients: action.keyIngredients
+                ingredients: action.ingredients
             }
         case 'SET_CUISINE_FILTER':
             return {
                 ...state,
                 cuisine: action.cuisine
             }
-        case 'SET_TYPE_FILTER':
+        case 'SET_RECIPE_TYPE_FILTER':
             return {
                 ...state,
-                dishType: action.dishType
+                recipeType: action.recipeType
             }
         default:
             return state;
