@@ -88,7 +88,7 @@ const RecipeForm = (props) => {
                     name='ingredients'
                     fluid multiple selection
                     multiple={true}
-                    value={state.ingredients}
+                    value={state.ingredients.sort((a,b) => a.localeCompare(b))}
                     onChange={onIngredientChange}
                     options={allIngredients.map(ingredient => {
                         return {

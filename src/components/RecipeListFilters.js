@@ -51,7 +51,7 @@ export const RecipeListFilters = () => {
                             clearable={true}
                             fluid multiple selection
                             multiple={true}
-                            value={filters ? filters.ingredients : []}
+                            value={filters ? filters.ingredients.sort((a,b) => a.localeCompare(b)) : []}
                             onChange={onIngredientChange}
                             options={allIngredients.map(ingredient => {
                                 return {

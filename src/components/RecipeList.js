@@ -4,8 +4,8 @@ import useRecipes from '../hooks/useRecipes'
 import useFilteredRecipes from '../hooks/useFilteredRecipes'
 
 export const RecipeList = (props) => {
-    // const recipes = useRecipes()
-    const recipes = useFilteredRecipes()
+    const recipes = useRecipes()
+    // const recipes = useFilteredRecipes()
 
     if (!recipes || !recipes.length) {
         return <div className='content-container'><span className="list-item--message">No recipes</span></div>
