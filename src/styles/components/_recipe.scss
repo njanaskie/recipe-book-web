@@ -1,8 +1,35 @@
 .recipe-group__list {
     display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    // justify-content: space-between;
+    width: 50%
+}
+
+.recipe-group__top {
+    width: 100%;
+    display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    width: 100%
+}
+
+.recipe-group__tag-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-top: 0.5rem;
+}
+
+.recipe-group__tag-item {
+    padding: 0.2rem;
+}
+
+.recipe-group__ingredient-group {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.recipe-group__ingredient-item {
+    padding: 0.5rem 0.1rem 0.1rem 0;
 }
 
 .recipe-group__link {
@@ -13,6 +40,8 @@
 
 .recipe-group__button {
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+    // flex-direction: column;
+    // justify-content: space-evenly;
+    align-items: flex-start;
+    padding: 0 0 1rem 1rem;
 }

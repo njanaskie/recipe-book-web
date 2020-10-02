@@ -19,8 +19,8 @@ const useRecipes = () => {
     const isCurrent = useRef(true)
     const pathname = window.location.pathname
 
-    console.log(filters)
-    console.log(recipes)
+    // console.log(filters)
+    // console.log(recipes)
 
     React.useEffect(() => {
         return () => {

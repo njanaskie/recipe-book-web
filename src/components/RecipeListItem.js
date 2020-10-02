@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { ReactTinyLink } from 'react-tiny-link'
-import { Button } from 'semantic-ui-react'
+import { Button, Label, Segment } from 'semantic-ui-react'
 import { useFirebaseContext } from '../../context/firebase-context'
 import { useRecipesContext } from '../../context/recipes-context'
 import database from '../firebase/firebase'
@@ -19,18 +19,50 @@ const RecipeListItem = ({ recipe }) => {
 
     return (
         <div className='recipe-group__list'>
-            <div className='recipe-group__link'>
-                <ReactTinyLink
-                    // cardSize="large"
-                    url={recipe.url}
-                    width='100%'
-                >
-                    {recipe.url}
-                </ReactTinyLink>
+            <div className='recipe-group__top'>
+                <div className='recipe-group__link'>
+                    <Segment>
+                        <ReactTinyLink
+                            // cardSize="large"
+                            url={recipe.url}
+                            width='100%'
+                            defaultMedia="/images/image-placeholder.png"
+                        >
+                            {recipe.url}
+                        </ReactTinyLink>
+                        <div className='recipe-group__tag-group'>
+                            {recipe.cuisine && 
+                                <div className='recipe-group__tag-item'>
+                                    <Label tag color='teal'>
+                                        {recipe.cuisine}
+                                    </Label>
+                                </div>
+                            }
+                            {recipe.type && 
+                                <div className='recipe-group__tag-item'>
+                                    <Label tag color='teal'>
+                                        {recipe.type}
+                                    </Label>
+                                </div>
+                            }
+                        </div>
+                        <div className='recipe-group__ingredient-group'>
+                            {recipe.ingredients &&
+                                recipe.ingredients.map(ingredient =>
+                                    <div className='recipe-group__ingredient-item' key={ingredient}>
+                                        <Label size='tiny'>
+                                            {ingredient}
+                                        </Label>
+                                    </div>
+                                )
+                            }
+                        </div>
+                    </Segment>
+                </div>
             </div>
             <div className='recipe-group__button'>
-                <Button as={Link} to={`/edit-recipe/${recipe.id}`} basic>Edit</Button>
-                <Button basic color='red' onClick={removeRecipe}>Remove</Button>
+                <Button as={Link} to={`/edit-recipe/${recipe.id}`} basic icon='edit'></Button>
+                <Button basic color='red' onClick={removeRecipe} icon='remove'></Button>
             </div>
         </div>
 
