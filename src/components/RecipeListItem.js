@@ -1,21 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { ReactTinyLink } from 'react-tiny-link'
-import { Button, Label, Segment, Dropdown, Menu } from 'semantic-ui-react'
+import { Button, Label, Segment, Dropdown, Menu, Confirm } from 'semantic-ui-react'
 import { useFirebaseContext } from '../../context/firebase-context'
 import { useRecipesContext } from '../../context/recipes-context'
 import database from '../firebase/firebase'
 
 const RecipeListItem = ({ recipe }) => {
+    const [open, setOpen] = useState(false)
     const { user } = useFirebaseContext()
     const { recipeDispatch } = useRecipesContext()
     const pathname = window.location.pathname
 
-    const removeRecipe = () => {
+    const show = () => setOpen(true)
+
+    const handleConfirm = () => {
+        setOpen(false)
         database.collection('users').doc(user.uid).collection('recipes').doc(recipe.id).delete().then(() => {
             recipeDispatch({ type: 'REMOVE_RECIPE', id: recipe.id })
         })
     }
+    const handleCancel = () => setOpen(false)
+
+    // const removeRecipe = () => {
+    // }
 
     return (
         <div className='recipe-group__list'>
@@ -28,9 +36,14 @@ const RecipeListItem = ({ recipe }) => {
                                     <Dropdown.Item as={Link} to={`/edit-recipe/${recipe.id}`}>
                                         Edit
                                     </Dropdown.Item>
-                                    <Dropdown.Item onClick={removeRecipe}>
+                                    <Dropdown.Item onClick={show}>
                                         Remove
                                     </Dropdown.Item>
+                                    <Confirm
+                                        open={open}
+                                        onCancel={handleCancel}
+                                        onConfirm={handleConfirm}
+                                    />
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
