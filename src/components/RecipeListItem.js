@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { ReactTinyLink } from 'react-tiny-link'
-import { Button, Label, Segment } from 'semantic-ui-react'
+import { Button, Label, Segment, Dropdown, Menu } from 'semantic-ui-react'
 import { useFirebaseContext } from '../../context/firebase-context'
 import { useRecipesContext } from '../../context/recipes-context'
 import database from '../firebase/firebase'
@@ -22,6 +22,19 @@ const RecipeListItem = ({ recipe }) => {
             <div className='recipe-group__top'>
                 <div className='recipe-group__link'>
                     <Segment>
+                        <div className='recipe-group__dropdown'>
+                            <Dropdown item icon='ellipsis horizontal' simple>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item as={Link} to={`/edit-recipe/${recipe.id}`}>
+                                        Edit
+                                    </Dropdown.Item>
+                                    <Dropdown.Item onClick={removeRecipe}>
+                                        Remove
+                                    </Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </div>
+
                         <ReactTinyLink
                             // cardSize="large"
                             url={recipe.url}
@@ -33,14 +46,14 @@ const RecipeListItem = ({ recipe }) => {
                         <div className='recipe-group__tag-group'>
                             {recipe.cuisine && 
                                 <div className='recipe-group__tag-item'>
-                                    <Label tag color='teal'>
+                                    <Label size='small' tag color='teal'>
                                         {recipe.cuisine}
                                     </Label>
                                 </div>
                             }
                             {recipe.type && 
                                 <div className='recipe-group__tag-item'>
-                                    <Label tag color='teal'>
+                                    <Label size='small' tag color='teal'>
                                         {recipe.type}
                                     </Label>
                                 </div>
@@ -59,10 +72,6 @@ const RecipeListItem = ({ recipe }) => {
                         </div>
                     </Segment>
                 </div>
-            </div>
-            <div className='recipe-group__button'>
-                <Button as={Link} to={`/edit-recipe/${recipe.id}`} basic icon='edit'></Button>
-                <Button basic color='red' onClick={removeRecipe} icon='remove'></Button>
             </div>
         </div>
 

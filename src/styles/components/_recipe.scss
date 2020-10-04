@@ -6,6 +6,11 @@
     width: 50%
 }
 
+.recipe-group__dropdown {
+    display: flex;
+    justify-content: flex-end
+}
+
 .recipe-group__top {
     width: 100%;
     display: flex;
