@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Tab, Button, Modal, Dropdown, Form } from 'semantic-ui-react'
+import moment from 'moment'
 import useIngredients from '../hooks/useIngredients'
 import recipeTypes from '../fixtures/recipeTypes'
 import recipeCuisines from '../fixtures/recipeCuisines'
@@ -10,6 +11,7 @@ const RecipeForm = (props) => {
         ingredients: [],
         type: '',
         cuisine: '',
+        createdAt: '',
         // recipeDish: props.recipeDish ? props.recipeDish : props.dish.name,
         error: ''
     }
@@ -23,6 +25,7 @@ const RecipeForm = (props) => {
             ingredients: props.ingredients || [],
             type: props.type || '',
             cuisine: props.cuisine || '',
+            createdAt: moment(props.createdAt) || moment(),
             // recipeDish: props.recipeDish ? props.recipeDish : props.dish.name,
             error: ''
         })
@@ -35,7 +38,8 @@ const RecipeForm = (props) => {
             url: state.url,
             ingredients: state.ingredients,
             type: state.type,
-            cuisine: state.cuisine
+            cuisine: state.cuisine,
+            createdAt: state.createdAt.valueOf()
             // recipeDish: state.recipeDish
         }
 
