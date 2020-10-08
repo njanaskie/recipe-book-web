@@ -12,9 +12,10 @@ import testDishes from '../tests/fixtures/dishes'
 import pantryDishNamesTest from '../selectors/pantry-dishes'
 import { set } from 'lodash'
 
-const useRecipes = (activePage) => {
-    const [nextPage, setNextPage] = useState(activePage)
+const useRecipes = (props) => {
+    // const [nextPage, setNextPage] = useState(props.activePage)
     const [lastVisible, setLastVisible] = useState()
+    const [firstVisible, setFirstVisible] = useState()
     const { recipes, recipeDispatch } = useRecipesContext()
     const { filters } = useFiltersContext()
     const { user } = useFirebaseContext()
@@ -27,7 +28,7 @@ const useRecipes = (activePage) => {
     // const lastVisible = recipes && recipes.docs[recipes.docs.length - 1]
 
     // console.log(filters)
-    console.log(Object.keys(recipes))
+    console.log(props)
 
     React.useEffect(() => {
         return () => {
@@ -50,7 +51,18 @@ const useRecipes = (activePage) => {
                 }
             }
 
-            var queryLimited = lastVisible ? query.orderBy('createdAt', 'asc').startAfter(lastVisible).limit(2) : query.orderBy('createdAt', 'asc').limit(2)
+            var queryLimited = query.orderBy('createdAt', 'asc')
+            if (lastVisible) {
+                if (props.isNextPage === true && props.isPreviousPage === false) {
+                    queryLimited = queryLimited.startAfter(lastVisible).limit(2)
+                } else if (props.isPreviousPage === true && props.isNextPage === false) {
+                    queryLimited = queryLimited.endBefore(firstVisible).limitToLast(2)
+                } else {
+                    console.log('next/previous page did not work')
+                }
+            } else {
+                queryLimited = queryLimited.limit(2)
+            }
 
             return queryLimited
                 .get()
@@ -58,6 +70,8 @@ const useRecipes = (activePage) => {
                     if (isCurrent.current) {
                         var lastVisible = snapshot.docs[snapshot.docs.length-1];
                         console.log("last", lastVisible);
+                        var firstVisible = snapshot.docs[0];
+                        console.log("first", firstVisible);
                         
                         // var next = query.orderBy('createdAt', 'asc').startAfter(lastVisible).limit(2)
         
@@ -68,6 +82,7 @@ const useRecipes = (activePage) => {
                             
                         recipeDispatch({ type: 'SET_RECIPES', recipes})
                         setLastVisible(lastVisible)
+                        setFirstVisible(firstVisible)
 
                     } else {
                         console.log('component did update')
@@ -78,7 +93,7 @@ const useRecipes = (activePage) => {
         }
 
         fetchRecipes()
-    }, [filters, activePage])
+    }, [filters, props.activePage])
 
     // fetchNextRecipes = () => {
 
