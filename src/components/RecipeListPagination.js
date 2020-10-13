@@ -5,7 +5,7 @@ export const RecipeListPagination = (props) => {
 
     return (
         <Button.Group widths='3' basic>
-            <Button content='Previous' icon='angle left' labelPosition='left' onClick={props.onPreviousPage}></Button>
+            <Button content='Previous' icon='angle left' labelPosition='left' onClick={props.onPreviousPage} disabled={props.isPreviousButtonDisabled}></Button>
             <Button content={props.activePage} disabled/>
             <Button content='Next' icon='angle right' labelPosition='right' onClick={props.onNextPage}></Button>
         </Button.Group>

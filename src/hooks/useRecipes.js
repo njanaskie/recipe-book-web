@@ -16,6 +16,7 @@ const useRecipes = (props) => {
     // const [nextPage, setNextPage] = useState(props.activePage)
     const [lastVisible, setLastVisible] = useState()
     const [firstVisible, setFirstVisible] = useState()
+    const [count, setCount] = useState()
     const { recipes, recipeDispatch } = useRecipesContext()
     const { filters } = useFiltersContext()
     const { user } = useFirebaseContext()
@@ -28,7 +29,7 @@ const useRecipes = (props) => {
     // const lastVisible = recipes && recipes.docs[recipes.docs.length - 1]
 
     // console.log(filters)
-    console.log(props)
+    // console.log(props)
 
     React.useEffect(() => {
         return () => {
@@ -69,9 +70,8 @@ const useRecipes = (props) => {
                 .then((snapshot) => {
                     if (isCurrent.current) {
                         var lastVisible = snapshot.docs[snapshot.docs.length-1];
-                        console.log("last", lastVisible);
                         var firstVisible = snapshot.docs[0];
-                        console.log("first", firstVisible);
+                        var docCount = snapshot.docs.length
                         
                         // var next = query.orderBy('createdAt', 'asc').startAfter(lastVisible).limit(2)
         
@@ -83,9 +83,7 @@ const useRecipes = (props) => {
                         recipeDispatch({ type: 'SET_RECIPES', recipes})
                         setLastVisible(lastVisible)
                         setFirstVisible(firstVisible)
-
-                    } else {
-                        console.log('component did update')
+                        setCount(docCount)
 
                     }
                     
@@ -93,13 +91,13 @@ const useRecipes = (props) => {
         }
 
         fetchRecipes()
-    }, [filters, props.activePage])
+    }, [filters, props])
 
     // fetchNextRecipes = () => {
 
     // }
 
-    return recipes
+    return { recipes, count }
 }
 
 export default useRecipes

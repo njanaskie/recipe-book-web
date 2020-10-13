@@ -15,8 +15,8 @@ const EditRecipe = () => {
     const history = useHistory()
     const { user } = useFirebaseContext()
     const { id } = useParams()
-    const allRecipes = useRecipes()
-    const recipe = allRecipes.find((recipe) => recipe.id === id)
+    const results = useRecipes()
+    const recipe = results.recipes.find((recipe) => recipe.id === id)
 
     const onSubmit = (editRecipe) => {
         database.collection('users').doc(user.uid).collection('recipes').doc(recipe.id).update(editRecipe).then(() => {
