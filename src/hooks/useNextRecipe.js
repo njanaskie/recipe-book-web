@@ -10,8 +10,8 @@ const useNextRecipe = ({ recipes }) => {
     // const results = useRecipes()
     const lastVisible = recipes[recipes.length - 1]
 
-    console.log(recipes)
-    console.log(lastVisible)
+    // console.log(recipes)
+    // console.log(lastVisible)
 
     React.useEffect(() => {
         return () => {
@@ -35,7 +35,7 @@ const useNextRecipe = ({ recipes }) => {
                         ...doc.data()
                         }))
 
-                    console.log(recipe)
+                    // console.log(recipe)
                     setNextRecipe(recipe)
                 }
             });

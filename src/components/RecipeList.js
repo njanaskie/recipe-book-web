@@ -16,22 +16,32 @@ export const RecipeList = (props) => {
     }
     const [pageState, setPageState] = useState(initialFormState)
     const results = useRecipes(pageState)
-    const nextResult = useNextRecipe(results)
+    // const nextResult = useNextRecipe(results)
     // const recipes = useFilteredRecipes()
 
-    console.log(nextResult)
+    console.log(results)
 
-    const onNextPage = () => {
-        setPageState(prevState => ({activePage: prevState.activePage+1, isNextPage: true, isPreviousPage: false }))
-    }
+    // if (results.lastVisible && results.nextHidden) {
+    //     console.log(results.lastVisible.id)
+    //     console.log(results.nextHidden.id)
+    // }
 
     React.useEffect(() => {
         if (pageState.activePage === 1) {
             setPageState({ ...pageState, isPreviousButtonDisabled: true })
         }
+        
+        // if (results.lastVisibleId && results.nextHiddenId) {
+        //     if (results.lastVisibleId === results.nextHiddenId) {
+        //         console.log('disable next')
+        //         setPageState({ ...pageState, isNextButtonDisabled: true })
+        //     }
+        // }
     }, [pageState.activePage])
-
-
+    
+    const onNextPage = () => {
+        setPageState(prevState => ({activePage: prevState.activePage+1, isNextPage: true, isPreviousPage: false }))
+    }
 
     const onPreviousPage = () => {
         setPageState(prevState => ({ activePage: prevState.activePage-1, isNextPage: false, isPreviousPage: true }))
@@ -41,7 +51,7 @@ export const RecipeList = (props) => {
         return <div className='content-container'><span className="list-item--message">No recipes</span></div>
     }
 
-    const tableItems = results.recipes && results.recipes.slice(0,2).map((recipe) => {
+    const tableItems = results.recipes && results.recipes.map((recipe) => {
         return (
             <RecipeListItem key={recipe.id} recipe={recipe} />
         )
@@ -55,6 +65,7 @@ export const RecipeList = (props) => {
                     activePage={pageState.activePage}
                     onNextPage={onNextPage}
                     onPreviousPage={onPreviousPage}
+                    isNextButtonDisabled={pageState.isNextButtonDisabled}
                     isPreviousButtonDisabled={pageState.isPreviousButtonDisabled}
                     // totalPages={10}
                 />

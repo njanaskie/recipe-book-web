@@ -17,13 +17,22 @@ const useRecipes = (props) => {
     const [lastVisible, setLastVisible] = useState()
     const [firstVisible, setFirstVisible] = useState()
     const [count, setCount] = useState()
+    const [nextHidden, setNextHidden] = useState()
     const { recipes, recipeDispatch } = useRecipesContext()
     const { filters } = useFiltersContext()
     const { user } = useFirebaseContext()
     const isCurrent = useRef(true)
     const pathname = window.location.pathname
+    const lastVisibleId = lastVisible && lastVisible.id
+    const nextHiddenId = nextHidden && nextHidden.id
 
-    // console.log(lastVisible)
+    // if (firstVisible && lastVisible && nextHidden) {
+    //     console.log(firstVisible.id)
+    //     console.log(lastVisible.id)
+    //     console.log(nextHidden.id)
+    // }
+
+    // console.log(nextHiddenId)
 
     // Last Visible.
     // const lastVisible = recipes && recipes.docs[recipes.docs.length - 1]
@@ -55,27 +64,30 @@ const useRecipes = (props) => {
             var queryLimited = query.orderBy('createdAt', 'asc')
             if (lastVisible) {
                 if (props.isNextPage === true && props.isPreviousPage === false) {
-                    queryLimited = queryLimited.startAfter(lastVisible).limit(2)
+                    queryLimited = queryLimited.startAfter(lastVisible).limit(3)
                 } else if (props.isPreviousPage === true && props.isNextPage === false) {
                     queryLimited = queryLimited.endBefore(firstVisible).limitToLast(2)
                 } else {
                     console.log('next/previous page did not work')
+                    queryLimited = queryLimited.limit(3)
                 }
             } else {
-                queryLimited = queryLimited.limit(2)
-            }
+                queryLimited = queryLimited.limit(3)
+            } 
 
             return queryLimited
                 .get()
                 .then((snapshot) => {
                     if (isCurrent.current) {
-                        var lastVisible = snapshot.docs[snapshot.docs.length-1];
-                        var firstVisible = snapshot.docs[0];
                         var docCount = snapshot.docs.length
+                        var subtractor = docCount < 3 ? 1 : 2
+                        var lastVisible = snapshot.docs[snapshot.docs.length-subtractor];
+                        var firstVisible = snapshot.docs[0];
+                        var nextHidden = snapshot.docs[snapshot.docs.length-1];
                         
                         // var next = query.orderBy('createdAt', 'asc').startAfter(lastVisible).limit(2)
         
-                        const recipes = snapshot.docs.map((doc) => ({
+                        const recipes = snapshot.docs.slice(0,2).map((doc) => ({
                             id: doc.id,
                             ...doc.data()
                             }))
@@ -84,6 +96,7 @@ const useRecipes = (props) => {
                         setLastVisible(lastVisible)
                         setFirstVisible(firstVisible)
                         setCount(docCount)
+                        setNextHidden(nextHidden)
 
                     }
                     
@@ -97,7 +110,7 @@ const useRecipes = (props) => {
 
     // }
 
-    return { recipes, count }
+    return { recipes, lastVisibleId, nextHiddenId }
 }
 
 export default useRecipes
