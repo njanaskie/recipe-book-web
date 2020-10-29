@@ -1,10 +1,4 @@
-export const source  = [
-    {
-        value: 'pmcentral',
-        label: 'PMCentral',
-    },
-    {
-        value: 'PMC_QC_2',
-        label: 'PMC QC 2',
-    }
-];
+export const config  = {
+    itemsPerPage: 2,
+    itemsFetched: 3
+}

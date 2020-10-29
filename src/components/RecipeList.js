@@ -5,6 +5,7 @@ import RecipeListItem from './RecipeListItem'
 import useRecipes from '../hooks/useRecipes'
 import useNextRecipe from '../hooks/useNextRecipe'
 import useFilteredRecipes from '../hooks/useFilteredRecipes'
+import { config } from '../../config'
 
 export const RecipeList = (props) => {
     const initialFormState = {
@@ -19,39 +20,56 @@ export const RecipeList = (props) => {
     // const nextResult = useNextRecipe(results)
     // const recipes = useFilteredRecipes()
 
-    console.log(results)
+    // console.log(results)
+    // console.log(pageState)
 
     // if (results.lastVisible && results.nextHidden) {
     //     console.log(results.lastVisible.id)
     //     console.log(results.nextHidden.id)
     // }
 
+    // React.useEffect(() => {
+    //     if (pageState.isNextPage === true && pageState.activePage === 3) {
+    //         setPageState({ ...pageState, isNextButtonDisabled: true })
+    //     }
+    // }, [])
+
     React.useEffect(() => {
         if (pageState.activePage === 1) {
             setPageState({ ...pageState, isPreviousButtonDisabled: true })
-        }
-        
-        // if (results.lastVisibleId && results.nextHiddenId) {
-        //     if (results.lastVisibleId === results.nextHiddenId) {
-        //         console.log('disable next')
-        //         setPageState({ ...pageState, isNextButtonDisabled: true })
-        //     }
+        } 
+        // else if (pageState.isNextPage === true && results.count < config.itemsFetched) {
+        //     setPageState({ ...pageState, isNextButtonDisabled: true })
+        //     console.log(pageState)
+        //     console.log(results)
         // }
     }, [pageState.activePage])
     
     const onNextPage = () => {
-        setPageState(prevState => ({activePage: prevState.activePage+1, isNextPage: true, isPreviousPage: false }))
+        setPageState(prevState => ({
+            activePage: prevState.activePage+1,
+            isNextPage: true,
+            isPreviousPage: false 
+        }))
     }
 
     const onPreviousPage = () => {
-        setPageState(prevState => ({ activePage: prevState.activePage-1, isNextPage: false, isPreviousPage: true }))
+        setPageState(prevState => ({
+            activePage: prevState.activePage-1,
+            isNextPage: false,
+            isPreviousPage: true
+        }))
     }
+
+    // if (results.alert === true) {
+    //     alert('no more recipes')
+    // }
 
     if (!results.recipes || !results.recipes.length) {
         return <div className='content-container'><span className="list-item--message">No recipes</span></div>
     }
 
-    const tableItems = results.recipes && results.recipes.map((recipe) => {
+    const tableItems = results.recipes && results.recipes.slice(0,config.itemsPerPage).map((recipe) => {
         return (
             <RecipeListItem key={recipe.id} recipe={recipe} />
         )

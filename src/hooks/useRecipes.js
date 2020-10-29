@@ -10,7 +10,7 @@ import useFilteredDishes from './useFilteredRecipes'
 import database, { firebase } from '../firebase/firebase'
 import testDishes from '../tests/fixtures/dishes'
 import pantryDishNamesTest from '../selectors/pantry-dishes'
-import { set } from 'lodash'
+import { config } from '../../config'
 
 const useRecipes = (props) => {
     // const [nextPage, setNextPage] = useState(props.activePage)
@@ -25,6 +25,7 @@ const useRecipes = (props) => {
     const pathname = window.location.pathname
     const lastVisibleId = lastVisible && lastVisible.id
     const nextHiddenId = nextHidden && nextHidden.id
+    // const [alert, setAlert] = useState(false)
 
     // if (firstVisible && lastVisible && nextHidden) {
     //     console.log(firstVisible.id)
@@ -64,15 +65,14 @@ const useRecipes = (props) => {
             var queryLimited = query.orderBy('createdAt', 'asc')
             if (lastVisible) {
                 if (props.isNextPage === true && props.isPreviousPage === false) {
-                    queryLimited = queryLimited.startAfter(lastVisible).limit(3)
+                    queryLimited = queryLimited.startAfter(lastVisible).limit(config.itemsFetched)
                 } else if (props.isPreviousPage === true && props.isNextPage === false) {
-                    queryLimited = queryLimited.endBefore(firstVisible).limitToLast(2)
+                    queryLimited = queryLimited.endBefore(firstVisible).limitToLast(config.itemsPerPage)
                 } else {
-                    console.log('next/previous page did not work')
-                    queryLimited = queryLimited.limit(3)
+                    queryLimited = queryLimited.limit(config.itemsFetched)
                 }
             } else {
-                queryLimited = queryLimited.limit(3)
+                queryLimited = queryLimited.limit(config.itemsFetched)
             } 
 
             return queryLimited
@@ -80,14 +80,14 @@ const useRecipes = (props) => {
                 .then((snapshot) => {
                     if (isCurrent.current) {
                         var docCount = snapshot.docs.length
-                        var subtractor = docCount < 3 ? 1 : 2
+                        var subtractor = docCount < config.itemsFetched ? (config.itemsFetched-2) : (config.itemsFetched-1)
                         var lastVisible = snapshot.docs[snapshot.docs.length-subtractor];
                         var firstVisible = snapshot.docs[0];
-                        var nextHidden = snapshot.docs[snapshot.docs.length-1];
+                        var nextHidden = snapshot.docs[snapshot.docs.length-(subtractor-1)];
                         
                         // var next = query.orderBy('createdAt', 'asc').startAfter(lastVisible).limit(2)
         
-                        const recipes = snapshot.docs.slice(0,2).map((doc) => ({
+                        const recipes = snapshot.docs.map((doc) => ({
                             id: doc.id,
                             ...doc.data()
                             }))
@@ -97,6 +97,9 @@ const useRecipes = (props) => {
                         setFirstVisible(firstVisible)
                         setCount(docCount)
                         setNextHidden(nextHidden)
+                        // if (docCount === 0) {
+                        //     setAlert(true)
+                        // }
 
                     }
                     
@@ -110,7 +113,7 @@ const useRecipes = (props) => {
 
     // }
 
-    return { recipes, lastVisibleId, nextHiddenId }
+    return { recipes, lastVisibleId, nextHiddenId, count }
 }
 
 export default useRecipes
