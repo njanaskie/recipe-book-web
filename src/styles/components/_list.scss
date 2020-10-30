@@ -1,3 +1,21 @@
+.list-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.list-pagination {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    bottom: 0;
+    margin-bottom: $m-size;
+
+    @media (min-width: $desktop-breakpoint) {
+        margin-bottom: $l-size;
+    }
+}
+
 .list-page-nav {
     display: flex;
 }

@@ -94,14 +94,16 @@ export const RecipeList = (props) => {
     
     return (
         <div className="content-container">
-            <div className='dish-table'>
-                {tableItems}
-                <Pagination
-                    activePage={pageState.activePage}
-                    onPageChange={handlePageChange}
-                    totalPages={results.count / config.itemsPerPage}
-                />
-            </div>
+                <div className='dish-table'>
+                    {tableItems}
+                </div>
+                <div className='list-pagination'>
+                    <Pagination
+                        activePage={pageState.activePage}
+                        onPageChange={handlePageChange}
+                        totalPages={results.count / config.itemsPerPage}
+                    />
+                </div>
         </div>
     )
 }
