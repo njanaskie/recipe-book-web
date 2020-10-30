@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
+import { useSelector } from 'react-redux'
 import { Pagination } from 'semantic-ui-react'
 import RecipeListPagination from './RecipeListPagination'
 import RecipeListItem from './RecipeListItem'
 import useRecipes from '../hooks/useRecipes'
 import useNextRecipe from '../hooks/useNextRecipe'
 import useFilteredRecipes from '../hooks/useFilteredRecipes'
+import { useFiltersContext } from '../../context/filters-context'
 import useAllRecipes from '../hooks/useAllRecipes'
 import { config } from '../../config'
+import selectRecipes from '../selectors/recipes'
 
 export const RecipeList = (props) => {
     const initialFormState = {
@@ -17,16 +20,17 @@ export const RecipeList = (props) => {
         // isPreviousButtonDisabled: false,
     }
     const [pageState, setPageState] = useState(initialFormState)
+    const { filters } = useFiltersContext()
     // const results = useRecipes(pageState)
     // const nextResult = useNextRecipe(results)
     const results = useAllRecipes()
+    const selectedRecipes = selectRecipes(results.recipes, filters)
     const startIndex = (pageState.activePage * config.itemsPerPage) - config.itemsPerPage
     const endIndex = startIndex + config.itemsPerPage
-    const paginatedItems = results.recipes && results.recipes.slice(startIndex, endIndex)
+    const paginatedItems = selectedRecipes && selectedRecipes.slice(startIndex, endIndex)
 
     console.log(results)
-    console.log(paginatedItems)
-    console.log(startIndex, endIndex)
+    console.log(selectedRecipes)
 
     // if (results.lastVisible && results.nextHidden) {
     //     console.log(results.lastVisible.id)
@@ -68,7 +72,7 @@ export const RecipeList = (props) => {
 
     const handlePageChange = (e, { activePage }) => setPageState({ activePage })
 
-    if (!results.recipes || !results.recipes.length) {
+    if (!selectedRecipes || !selectedRecipes.length) {
         return <div className='content-container'><span className="list-item--message">No recipes</span></div>
     }
 
