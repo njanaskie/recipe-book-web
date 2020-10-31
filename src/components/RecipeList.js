@@ -24,12 +24,14 @@ export const RecipeList = (props) => {
     // const results = useRecipes(pageState)
     // const nextResult = useNextRecipe(results)
     const results = useAllRecipes()
-    const selectedRecipes = selectRecipes(results.recipes, filters)
     const startIndex = (pageState.activePage * config.itemsPerPage) - config.itemsPerPage
     const endIndex = startIndex + config.itemsPerPage
+    const selectedRecipes = selectRecipes(results.recipes, filters)
     const paginatedItems = selectedRecipes && selectedRecipes.slice(startIndex, endIndex)
 
-    console.log(results)
+    console.log(pageState.activePage)
+    console.log(startIndex)
+    console.log(endIndex)
     console.log(selectedRecipes)
 
     // if (results.lastVisible && results.nextHidden) {
@@ -101,7 +103,7 @@ export const RecipeList = (props) => {
                     <Pagination
                         activePage={pageState.activePage}
                         onPageChange={handlePageChange}
-                        totalPages={results.count / config.itemsPerPage}
+                        totalPages={Math.ceil(results.count / config.itemsPerPage)}
                     />
                 </div>
         </div>
