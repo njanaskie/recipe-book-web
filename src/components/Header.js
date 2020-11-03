@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { startLogout } from '../actions/auth';
 import { firebase } from '../firebase/firebase';
-import SubHeader from './SubHeader'
+import SubHeaderContext from './SubHeaderContext'
 
 // export const signOut = () => firebase.auth().signOut()
 
@@ -18,7 +18,7 @@ export const Header = ({ startLogout }) => {
                     <Link className="header__title" to='/home' >
                         <h1>Recipe Book</h1>
                     </Link>
-                    <SubHeader />
+                    <SubHeaderContext />
                 </div>
             </div>
         </header>

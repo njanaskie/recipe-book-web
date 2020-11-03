@@ -8,14 +8,14 @@ import RecipesContext from '../../context/recipes-context'
 import recipesReducer from '../reducers/recipes'
 import IngredientsContext from '../../context/ingredients-context'
 import ingredientsReducer from '../reducers/ingredients'
-import useRecipes from '../hooks/useRecipes'
+import useAllRecipes from '../hooks/useAllRecipes'
 
 const EditRecipe = () => {
     const { recipeDispatch } = useRecipesContext()
     const history = useHistory()
     const { user } = useFirebaseContext()
     const { id } = useParams()
-    const results = useRecipes()
+    const results = useAllRecipes()
     const recipe = results.recipes.find((recipe) => recipe.id === id)
 
     const onSubmit = (editRecipe) => {

@@ -103,7 +103,7 @@ export const RecipeList = (props) => {
                     <Pagination
                         activePage={pageState.activePage}
                         onPageChange={handlePageChange}
-                        totalPages={Math.ceil(results.count / config.itemsPerPage)}
+                        totalPages={Math.ceil(selectedRecipes.length / config.itemsPerPage)}
                     />
                 </div>
         </div>
