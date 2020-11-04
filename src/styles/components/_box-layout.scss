@@ -1,6 +1,6 @@
 .box-layout {
     align-items: center;
-    background: url('/images/bg.jpg');
+    background: url('/images/bg-green.jpg');
     background-size: cover;
     display: flex;
     height: 100vh;
@@ -17,6 +17,11 @@
 }
 
 .box-layout__title {
-    margin: 0 0 $m-size 0;
+    color: $mint;
+    // margin: 0 0 $m-size 0;
     line-height: 1;
 };
+
+.box-layout__button {
+    padding: $s-size;
+}

@@ -74,8 +74,6 @@ const RecipeForm = (props) => {
     }
 
     return (
-        <div className='content-container'>
-            <div className='form-container'>
             <Form onSubmit={onSubmit} className='form-container'>
                 {state.error && <p>{state.error}</p>}
                 <Form.Input
@@ -102,42 +100,42 @@ const RecipeForm = (props) => {
                         }
                     })}
                 />
-                <Form.Dropdown
-                    placeholder='Select recipe type'
-                    name='type'
-                    clearable
-                    fluid selection
-                    clearable={true}
-                    value={state.type}
-                    onChange={onTypeChange}
-                    options={recipeTypes.map(recipeType => {
-                        return {
-                            key: recipeType,
-                            text: recipeType,
-                            value: recipeType
-                        }
-                    })}
-                />
-                <Form.Dropdown
-                    placeholder='Select cuisine'
-                    name='cuisine'
-                    clearable
-                    fluid selection
-                    clearable={true}
-                    value={state.cuisine}
-                    onChange={onCuisineChange}
-                    options={recipeCuisines.map(recipeCuisine => {
-                        return {
-                            key: recipeCuisine,
-                            text: recipeCuisine,
-                            value: recipeCuisine
-                        }
-                    })}
-                />
-                <Form.Button fluid basic color='green' type='submit'>Save Recipe</Form.Button>
+                <Form.Group>
+                    <Form.Dropdown
+                        placeholder='Select recipe type'
+                        name='type'
+                        clearable
+                        fluid selection
+                        clearable={true}
+                        value={state.type}
+                        onChange={onTypeChange}
+                        options={recipeTypes.map(recipeType => {
+                            return {
+                                key: recipeType,
+                                text: recipeType,
+                                value: recipeType
+                            }
+                        })}
+                    />
+                    <Form.Dropdown
+                        placeholder='Select cuisine'
+                        name='cuisine'
+                        clearable
+                        fluid selection
+                        clearable={true}
+                        value={state.cuisine}
+                        onChange={onCuisineChange}
+                        options={recipeCuisines.map(recipeCuisine => {
+                            return {
+                                key: recipeCuisine,
+                                text: recipeCuisine,
+                                value: recipeCuisine
+                            }
+                        })}
+                    />
+                    <Form.Button fluid basic color='green' type='submit'>Save Recipe</Form.Button>
+                </Form.Group>
             </Form>
-            </div>
-        </div>
         
     )
 }

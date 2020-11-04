@@ -29,7 +29,10 @@ const EditRecipe = () => {
     }
 
     return (
-        <div>
+        <div className='content-container'>
+            <div className='form-container form-title'>
+                <h3>Edit recipe details...</h3>
+            </div>
             <RecipeForm
                 {...recipe}
                 onSubmit={onSubmit}

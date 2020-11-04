@@ -59,14 +59,14 @@ const RecipeListItem = ({ recipe }) => {
                         <div className='recipe-group__tag-group'>
                             {recipe.cuisine && 
                                 <div className='recipe-group__tag-item'>
-                                    <Label size='small' tag color='teal'>
+                                    <Label size='medium' circular color='teal'>
                                         {recipe.cuisine}
                                     </Label>
                                 </div>
                             }
                             {recipe.type && 
                                 <div className='recipe-group__tag-item'>
-                                    <Label size='small' tag color='teal'>
+                                    <Label size='medium' circular color='teal'>
                                         {recipe.type}
                                     </Label>
                                 </div>

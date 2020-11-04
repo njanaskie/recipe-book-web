@@ -5,7 +5,7 @@ const RecipeInputModal = ({ children, isModalOpen, handleModalClose }) => {
 
     return (
         <Modal dimmer='inverted' open={isModalOpen} onClose={handleModalClose}>
-            <Modal.Header>Add recipe details...</Modal.Header>
+            <Modal.Header>Add to your recipe book...</Modal.Header>
             <Modal.Content>
                 {children}
             </Modal.Content>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Menu } from 'semantic-ui-react'
 import { startLogout } from '../actions/auth';
 import { firebase } from '../firebase/firebase';
 import SubHeaderContext from './SubHeaderContext'
