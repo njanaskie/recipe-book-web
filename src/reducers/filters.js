@@ -6,6 +6,7 @@ const filtersReducerDefaultState = {
     ingredients: [],
     cuisine: '',
     recipeType: '',
+    customTags: []
 };
 
 const filtersReducer = (state = filtersReducerDefaultState, action) => {
@@ -29,6 +30,11 @@ const filtersReducer = (state = filtersReducerDefaultState, action) => {
             return {
                 ...state,
                 recipeType: action.recipeType
+            }
+        case 'SET_CUSTOM_TAG_FILTER':
+            return {
+                ...state,
+                customTags: action.customTags
             }
         default:
             return state;

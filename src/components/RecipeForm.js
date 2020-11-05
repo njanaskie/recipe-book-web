@@ -1,24 +1,35 @@
 import React, { useEffect, useState } from 'react'
 import { Tab, Button, Modal, Dropdown, Form } from 'semantic-ui-react'
 import moment from 'moment'
+import { useRecipesContext } from '../../context/recipes-context'
 import useIngredients from '../hooks/useIngredients'
 import recipeTypes from '../fixtures/recipeTypes'
 import recipeCuisines from '../fixtures/recipeCuisines'
+import useCustomTags from '../hooks/useCustomTags'
+import useAllRecipes from '../hooks/useAllRecipes'
+import selectCustomTags from '../selectors/custom-tags'
 
 const RecipeForm = (props) => {
+    const results = useAllRecipes()
     const initialFormState = {
         url: '',
         ingredients: [],
         type: '',
         cuisine: '',
         createdAt: '',
+        customTags: [],
         // recipeDish: props.recipeDish ? props.recipeDish : props.dish.name,
         error: ''
     }
     const [state, setState] = useState(initialFormState)
     const allIngredients = useIngredients()
+    const allCustomTags = selectCustomTags(results.recipes)
+    // const allCustomTags = useCustomTags()
     // const selectableIngredients = allIngredients && Object.values(allIngredients).filter((ingredient) => !(props.dish.keyIngredients.includes(ingredient['name'])))
 
+    console.log(allCustomTags)
+    console.log(state)
+    
     useEffect(() => {
         setState({
             url: props.url || '',
@@ -26,6 +37,7 @@ const RecipeForm = (props) => {
             type: props.type || '',
             cuisine: props.cuisine || '',
             createdAt: moment(props.createdAt) || moment(),
+            customTags: props.customTags || [],
             // recipeDish: props.recipeDish ? props.recipeDish : props.dish.name,
             error: ''
         })
@@ -39,7 +51,8 @@ const RecipeForm = (props) => {
             ingredients: state.ingredients,
             type: state.type,
             cuisine: state.cuisine,
-            createdAt: state.createdAt.valueOf()
+            createdAt: state.createdAt.valueOf(),
+            customTags: state.customTags
             // recipeDish: state.recipeDish
         }
 
@@ -73,6 +86,19 @@ const RecipeForm = (props) => {
         setState({ ...state, cuisine: value })
     }
 
+    const onCustomTagChange = (e, result) => {
+        const { value } = result || e.target
+        setState({ ...state, customTags: value })
+    }
+
+    const onAddCustomTag = (e, result) => {
+        const { value } = result || e.target
+        setState((prevState) => ({
+          customTags: [{ text: value, value }, ...prevState.customTags],
+          ...prevState
+        }))
+    }
+
     return (
             <Form onSubmit={onSubmit} className='form-container'>
                 {state.error && <p>{state.error}</p>}
@@ -88,7 +114,7 @@ const RecipeForm = (props) => {
                 <Form.Dropdown
                     placeholder='Add ingredients'
                     name='ingredients'
-                    fluid multiple selection
+                    fluid multiple search selection
                     multiple={true}
                     value={state.ingredients.sort((a,b) => a.localeCompare(b))}
                     onChange={onIngredientChange}
@@ -97,6 +123,24 @@ const RecipeForm = (props) => {
                             key: ingredient.id,
                             text: ingredient.name,
                             value: ingredient.name
+                        }
+                    })}
+                />
+                <Form.Dropdown
+                    placeholder='Add custom tags'
+                    name='customTags'
+                    fluid multiple search selection
+                    allowAdditions
+                    multiple={true}
+                    value={state.customTags}
+                    onChange={onCustomTagChange}
+                    onAddItem={onAddCustomTag}
+                    // options={[]}
+                    options={allCustomTags.map(tag => {
+                        return {
+                            key: tag,
+                            text: tag,
+                            value: tag
                         }
                     })}
                 />

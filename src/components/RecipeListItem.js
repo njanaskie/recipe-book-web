@@ -71,6 +71,15 @@ const RecipeListItem = ({ recipe }) => {
                                     </Label>
                                 </div>
                             }
+                            {recipe.customTags && 
+                                recipe.customTags.map(tag =>
+                                    <div className='recipe-group__tag-item' key={tag}>
+                                        <Label size='medium' circular color='purple'>
+                                            {tag}
+                                        </Label>
+                                    </div>
+                                )
+                            }
                         </div>
                         <div className='recipe-group__ingredient-group'>
                             {recipe.ingredients &&

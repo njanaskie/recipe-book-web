@@ -29,11 +29,6 @@ export const RecipeList = (props) => {
     const selectedRecipes = selectRecipes(results.recipes, filters)
     const paginatedItems = selectedRecipes && selectedRecipes.slice(startIndex, endIndex)
 
-    console.log(pageState.activePage)
-    console.log(startIndex)
-    console.log(endIndex)
-    console.log(selectedRecipes)
-
     // if (results.lastVisible && results.nextHidden) {
     //     console.log(results.lastVisible.id)
     //     console.log(results.nextHidden.id)

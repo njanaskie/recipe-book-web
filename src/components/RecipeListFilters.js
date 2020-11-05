@@ -4,11 +4,15 @@ import { useFiltersContext } from '../../context/filters-context'
 // import { usePantryContext } from '../../../context/pantry-context'
 import recipeCuisines from '../fixtures/recipeCuisines'
 import recipeTypes from '../fixtures/recipeTypes'
+import selectCustomTags from '../selectors/custom-tags'
 import useIngredients from '../hooks/useIngredients'
+import useAllRecipes from '../hooks/useAllRecipes'
 
 export const RecipeListFilters = () => {
     const { filters, filtersDispatch } = useFiltersContext()
     const allIngredients = useIngredients()
+    const results = useAllRecipes()
+    const allCustomTags = selectCustomTags(results.recipes)
     // const { pantryIngredients } = usePantryContext()
 
     const onTextChange = (e) => {
@@ -30,6 +34,11 @@ export const RecipeListFilters = () => {
         filtersDispatch({ type: 'SET_RECIPE_TYPE_FILTER', recipeType: value })
     }
 
+    const onCustomTagChange = (e, result) => {
+        const { value } = result || e.target
+        filtersDispatch({ type: 'SET_CUSTOM_TAG_FILTER', customTags: value })
+    }
+
 //     <div className="input-group__input">                
 //     <Input
 //         placeholder='Search...'
@@ -49,7 +58,7 @@ export const RecipeListFilters = () => {
                             placeholder='Select ingredient'
                             name='ingredient'
                             clearable={true}
-                            fluid multiple selection
+                            multiple search selection
                             multiple={true}
                             value={filters ? filters.ingredients.sort((a,b) => a.localeCompare(b)) : []}
                             onChange={onIngredientChange}
@@ -92,6 +101,24 @@ export const RecipeListFilters = () => {
                                     key: recipeType,
                                     text: recipeType,
                                     value: recipeType
+                                }
+                            })}
+                        />
+                    </div>
+                    <div className="input-group__item">
+                        <Dropdown
+                            placeholder='Select custom tag'
+                            name='customTag'
+                            clearable={true}
+                            multiple search selection
+                            multiple={true}
+                            value={filters ? filters.customTags : []}
+                            onChange={onCustomTagChange}
+                            options={allCustomTags.map(tag => {
+                                return {
+                                    key: tag,
+                                    text: tag,
+                                    value: tag
                                 }
                             })}
                         />
