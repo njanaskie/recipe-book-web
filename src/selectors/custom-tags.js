@@ -4,7 +4,7 @@ export default (recipes) => {
     const customTags = []
     
     recipes.map(recipe => {
-        if (recipe.customTags) {
+        if (recipe.customTags.length > 0) {
             customTags.push(recipe.customTags)
         }
     })

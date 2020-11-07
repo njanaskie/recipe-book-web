@@ -15,6 +15,8 @@ export const RecipeListFilters = () => {
     const allCustomTags = selectCustomTags(results.recipes)
     // const { pantryIngredients } = usePantryContext()
 
+    console.log(filters)
+
     const onTextChange = (e) => {
         filtersDispatch({ type: 'SET_TEXT_FILTER', text: e.target.value })
     }
@@ -118,7 +120,7 @@ export const RecipeListFilters = () => {
                                 return {
                                     key: tag,
                                     text: tag,
-                                    value: tag
+                                    value: tag.toLocaleString()
                                 }
                             })}
                         />

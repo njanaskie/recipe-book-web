@@ -6,7 +6,7 @@ const filtersReducerDefaultState = {
     ingredients: [],
     cuisine: '',
     recipeType: '',
-    customTags: []
+    customTags: ['']
 };
 
 const filtersReducer = (state = filtersReducerDefaultState, action) => {

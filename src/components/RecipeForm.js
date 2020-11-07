@@ -132,7 +132,7 @@ const RecipeForm = (props) => {
                     fluid multiple search selection
                     allowAdditions
                     multiple={true}
-                    value={state.customTags}
+                    value={state.customTags.sort((a,b) => a.localeCompare(b))}
                     onChange={onCustomTagChange}
                     onAddItem={onAddCustomTag}
                     // options={[]}
