@@ -114,7 +114,7 @@ export const RecipeListFilters = () => {
                             clearable={true}
                             multiple search selection
                             multiple={true}
-                            value={filters ? filters.customTags : []}
+                            value={filters ? filters.customTags.sort((a,b) => a.localeCompare(b)) : []}
                             onChange={onCustomTagChange}
                             options={allCustomTags.map(tag => {
                                 return {

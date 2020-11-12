@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Tab, Button, Modal, Dropdown, Form } from 'semantic-ui-react'
+import { Tab, Button, Modal, Dropdown, Form, Select, Option } from 'semantic-ui-react'
 import moment from 'moment'
 import { useRecipesContext } from '../../context/recipes-context'
 import useIngredients from '../hooks/useIngredients'
@@ -19,15 +19,18 @@ const RecipeForm = (props) => {
         createdAt: '',
         customTags: [],
         // recipeDish: props.recipeDish ? props.recipeDish : props.dish.name,
-        error: ''
+        error: '',
+        customTagOptions: []
     }
     const [state, setState] = useState(initialFormState)
+    // const [tagState, setTagState] = useState()
     const allIngredients = useIngredients()
     const allCustomTags = selectCustomTags(results.recipes)
+    // const [customTagOptions, setCustomTagOptions] = useState(allCustomTags)
     // const allCustomTags = useCustomTags()
     // const selectableIngredients = allIngredients && Object.values(allIngredients).filter((ingredient) => !(props.dish.keyIngredients.includes(ingredient['name'])))
 
-    console.log(allCustomTags)
+    // console.log(customTagOptions)
     console.log(state)
     
     useEffect(() => {
@@ -39,7 +42,8 @@ const RecipeForm = (props) => {
             createdAt: moment(props.createdAt) || moment(),
             customTags: props.customTags || [],
             // recipeDish: props.recipeDish ? props.recipeDish : props.dish.name,
-            error: ''
+            customTagOptions: props.customTagOptions || allCustomTags,
+            error: '',
         })
     }, [props])
 
@@ -94,8 +98,8 @@ const RecipeForm = (props) => {
     const onAddCustomTag = (e, result) => {
         const { value } = result || e.target
         setState((prevState) => ({
-          customTags: [{ text: value, value }, ...prevState.customTags],
-          ...prevState
+            ...state,
+            customTagOptions: [...prevState.customTagOptions, value]
         }))
     }
 
@@ -131,19 +135,19 @@ const RecipeForm = (props) => {
                     name='customTags'
                     fluid multiple search selection
                     allowAdditions
-                    multiple={true}
-                    value={state.customTags.sort((a,b) => a.localeCompare(b))}
+                    // multiple={true}
+                    value={state.customTags}
                     onChange={onCustomTagChange}
                     onAddItem={onAddCustomTag}
-                    // options={[]}
-                    options={allCustomTags.map(tag => {
+                    options={state.customTagOptions.map(tag => {
                         return {
                             key: tag,
                             text: tag,
-                            value: tag
+                            value: tag.toLocaleString()
                         }
                     })}
                 />
+
                 <Form.Group>
                     <Form.Dropdown
                         placeholder='Select recipe type'
