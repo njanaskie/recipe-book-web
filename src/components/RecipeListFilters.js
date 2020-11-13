@@ -15,7 +15,7 @@ export const RecipeListFilters = () => {
     const allCustomTags = selectCustomTags(results.recipes)
     // const { pantryIngredients } = usePantryContext()
 
-    console.log(filters)
+    console.log(allCustomTags)
 
     const onTextChange = (e) => {
         filtersDispatch({ type: 'SET_TEXT_FILTER', text: e.target.value })

@@ -31,7 +31,7 @@ const RecipeForm = (props) => {
     // const selectableIngredients = allIngredients && Object.values(allIngredients).filter((ingredient) => !(props.dish.keyIngredients.includes(ingredient['name'])))
 
     // console.log(customTagOptions)
-    console.log(state)
+    // console.log(state)
     
     useEffect(() => {
         setState({
