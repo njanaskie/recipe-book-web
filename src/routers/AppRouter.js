@@ -14,7 +14,7 @@ import AddDishPage from '../components/Dishes/AddDishPage'
 import DishesPage from '../components/Dishes/DishesPage'
 import DishDetailPage from '../components/Dishes/DishDetails/DishDetailPage';
 import EditDishPage from '../components/Dishes/EditDishPage'
-import HomePage from '../components/HomePage'
+import HomePageContext from '../components/HomePageContext'
 import AddRecipeContext from '../components/AddRecipeContext';
 import EditRecipeContext from '../components/EditRecipeContext'
 
@@ -33,7 +33,7 @@ const AppRouter = () => (
             <div>
                 <Switch>
                     <PublicRoute path='/' component={LoginPage} exact={true}/>
-                    <PrivateRoute path='/home' component={HomePage} />
+                    <PrivateRoute path='/home' component={HomePageContext} />
                     <PrivateRoute path='/add-recipe' component={AddRecipeContext} />
                     <AdminRoute path='/ingredients' component={IngredientsPage} />
                     <AdminRoute path='/edit-recipe/:id' component={EditRecipeContext} />

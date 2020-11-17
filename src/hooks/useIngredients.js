@@ -20,7 +20,7 @@ const useIngredients = () => {
         
     }, [])
 
-    return ingredients
+    return ingredients.sort((a,b) => a.name.localeCompare(b.name))
 }
 
 export default useIngredients

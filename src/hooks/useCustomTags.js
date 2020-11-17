@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import database from '../firebase/firebase'
-import { useIngredientsContext } from '../../context/ingredients-context'
 import { useFirebaseContext } from '../../context/firebase-context'
 
 const useCustomTags = () => {

@@ -10,7 +10,7 @@ import useAllRecipes from '../hooks/useAllRecipes'
 import selectCustomTags from '../selectors/custom-tags'
 
 const RecipeForm = (props) => {
-    const results = useAllRecipes()
+    const formResults = props.results ? props.results : useAllRecipes()
     const initialFormState = {
         url: '',
         ingredients: [],
@@ -25,7 +25,7 @@ const RecipeForm = (props) => {
     const [state, setState] = useState(initialFormState)
     // const [tagState, setTagState] = useState()
     const allIngredients = useIngredients()
-    const allCustomTags = selectCustomTags(results.recipes)
+    const allCustomTags = selectCustomTags(formResults.recipes)
     // const [customTagOptions, setCustomTagOptions] = useState(allCustomTags)
     // const allCustomTags = useCustomTags()
     // const selectableIngredients = allIngredients && Object.values(allIngredients).filter((ingredient) => !(props.dish.keyIngredients.includes(ingredient['name'])))

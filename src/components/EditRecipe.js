@@ -36,6 +36,7 @@ const EditRecipe = () => {
             <RecipeForm
                 {...recipe}
                 onSubmit={onSubmit}
+                results={results}
             />
         </div>
     )

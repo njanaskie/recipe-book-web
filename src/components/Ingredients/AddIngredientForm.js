@@ -22,7 +22,7 @@ const AddIngredientForm = (props) => {
         }
 
         if (!state.name || !state.category || !state.price) {
-            setError('Please provide name, category, and price')
+            setState({ error: 'Please provide name, category, and price'})
         } else {
             database.collection('ingredients').add(ingredient).then((ref) => {
                 dispatch(({ type: 'ADD_INGREDIENT', ingredient: {id: ref.key, ...ingredient} }))
@@ -98,7 +98,7 @@ const AddIngredientForm = (props) => {
                                 clearable
                                 value={state.category || ''}
                                 onChange={onCategoryChange}
-                                options={categoryOptions.map(category => category)}
+                                options={categoryOptions.sort((a,b) => a.key.localeCompare(b.key)).map(category => category)}
                             />
                         </div>
                         <div className='form-item'>

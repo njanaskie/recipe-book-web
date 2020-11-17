@@ -17,7 +17,7 @@ export const Header = ({ startLogout }) => {
             <div className="content-container">
                 <div className="header__content">
                     <Link className="header__title" to='/home' >
-                        <h1>Recipe Book</h1>
+                        <img className="logo__image" src="/images/app-logo.png" />
                     </Link>
                     <SubHeaderContext />
                 </div>

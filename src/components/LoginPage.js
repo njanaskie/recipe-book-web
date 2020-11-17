@@ -6,7 +6,7 @@ import { startLogin } from '../actions/auth';
 export const LoginPage = ({ startLogin }) => (
     <div className="box-layout">
         <div className="box-layout__box">
-            <h1 className="box-layout__title">Recipe Book</h1>
+            <img className="logo__image" src="/images/app-logo.png" />
             <p className='box-layout__subtitle'>Save your favorite recipes</p>
             <div className='box-layout__button'>
                 <Button color='google plus' onClick={startLogin}>Login with Google</Button>

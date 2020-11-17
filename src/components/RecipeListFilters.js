@@ -5,17 +5,14 @@ import { useFiltersContext } from '../../context/filters-context'
 import recipeCuisines from '../fixtures/recipeCuisines'
 import recipeTypes from '../fixtures/recipeTypes'
 import selectCustomTags from '../selectors/custom-tags'
-import useIngredients from '../hooks/useIngredients'
 import useAllRecipes from '../hooks/useAllRecipes'
 
-export const RecipeListFilters = () => {
+export const RecipeListFilters = ({ results, allIngredients }) => {
     const { filters, filtersDispatch } = useFiltersContext()
-    const allIngredients = useIngredients()
-    const results = useAllRecipes()
+    // const allIngredients = useIngredients()
+    // const results = useAllRecipes()
     const allCustomTags = selectCustomTags(results.recipes)
     // const { pantryIngredients } = usePantryContext()
-
-    console.log(allCustomTags)
 
     const onTextChange = (e) => {
         filtersDispatch({ type: 'SET_TEXT_FILTER', text: e.target.value })
@@ -116,6 +113,7 @@ export const RecipeListFilters = () => {
                             multiple={true}
                             value={filters ? filters.customTags.sort((a,b) => a.localeCompare(b)) : []}
                             onChange={onCustomTagChange}
+                            // options={[]}
                             options={allCustomTags.map(tag => {
                                 return {
                                     key: tag,

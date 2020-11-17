@@ -11,7 +11,7 @@ import useAllRecipes from '../hooks/useAllRecipes'
 import { config } from '../../config'
 import selectRecipes from '../selectors/recipes'
 
-export const RecipeList = (props) => {
+export const RecipeList = ({ results }) => {
     const initialFormState = {
         activePage: 1,
         // isNextPage: false,
@@ -23,7 +23,6 @@ export const RecipeList = (props) => {
     const { filters } = useFiltersContext()
     // const results = useRecipes(pageState)
     // const nextResult = useNextRecipe(results)
-    const results = useAllRecipes()
     const startIndex = (pageState.activePage * config.itemsPerPage) - config.itemsPerPage
     const endIndex = startIndex + config.itemsPerPage
     const selectedRecipes = selectRecipes(results.recipes, filters)
