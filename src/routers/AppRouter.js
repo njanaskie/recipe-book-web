@@ -7,7 +7,7 @@ import NotFoundPage from '../components/NotFoundPage';
 import LoginPage from '../components/LoginPage';
 import PrivateRoute from '../routers/PrivateRoute';
 import PublicRoute from '../routers/PublicRoute';
-import AdminRoute from './AdminRoute'
+import SpecialUserRoute from './SpecialUserRoute'
 import IngredientsPage from '../components/Ingredients/IngredientsPage';
 import PantryPage from '../components/Pantry/PantryPage'
 import AddDishPage from '../components/Dishes/AddDishPage'
@@ -23,9 +23,9 @@ export const history = createHistory();
 
 // <PrivateRoute path='/dashboard' component={DashboardPage} />
 // <PrivateRoute path='/pantry' component={PantryPage} />
-// <AdminRoute path='/dishes' component={DishesPage} />
+// <SpecialUserRoute path='/dishes' component={DishesPage} />
 // <PrivateRoute path='/dish/:id' component={DishDetailPage} />
-// <AdminRoute path='/add-dish' component={AddDishPage} />
+// <SpecialUserRoute path='/add-dish' component={AddDishPage} />
 
 const AppRouter = () => (
     <FirebaseProvider >
@@ -35,8 +35,8 @@ const AppRouter = () => (
                     <PublicRoute path='/' component={LoginPage} exact={true}/>
                     <PrivateRoute path='/home' component={HomePageContext} />
                     <PrivateRoute path='/add-recipe' component={AddRecipeContext} />
-                    <AdminRoute path='/ingredients' component={IngredientsPage} />
-                    <AdminRoute path='/edit-recipe/:id' component={EditRecipeContext} />
+                    <SpecialUserRoute path='/ingredients' component={IngredientsPage} />
+                    <SpecialUserRoute path='/edit-recipe/:id' component={EditRecipeContext} />
                     <Route component={NotFoundPage}/>
                 </Switch>
             </div>

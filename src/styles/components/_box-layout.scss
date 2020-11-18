@@ -24,9 +24,10 @@
 };
 
 .box-layout__subtitle {
-    color: darkslategrey
+    color: darkslategrey;
+    padding-bottom: $s-size;
 }
 
 .box-layout__button {
-    padding: $s-size;
+    padding: $s-size/2;
 }

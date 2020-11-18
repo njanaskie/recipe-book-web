@@ -2,21 +2,21 @@ import React, { useContext } from 'react'
 import { Route, Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import SubHeader from '../components/SubHeader'
-import Admin from '../components/Admin'
+import SpecialUser from '../components/SpecialUser'
 import FirebaseContext from '../../context/firebase-context'
 
 export const AdminRoute = ({
     component: Component,
     ...rest
 }) => {
-    const { user, isAdmin } = useContext(FirebaseContext)
+    const { user, isAdmin, isGuest } = useContext(FirebaseContext)
 
     return (
         <Route {...rest} component={(props) => (
-            (!!isAdmin && !!user) ? (
+            ((!!isAdmin || !!isGuest) && !!user) ? (
                 <div>
                     <Header />
-                    <Admin />
+                    <SpecialUser />
                     <Component {...props}/>
                 </div>
             ) : (

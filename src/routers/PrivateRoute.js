@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import SubHeader from '../components/SubHeader'
 import FirebaseContext from '../../context/firebase-context'
-import Admin from '../components/Admin'
+import SpecialUserRoute from '../components/SpecialUser'
 
 export const PrivateRoute = ({
     component: Component,
@@ -17,7 +17,7 @@ export const PrivateRoute = ({
             !!user ? (
                 <div>
                     <Header />
-                    <Admin />
+                    <SpecialUserRoute />
                     <Component {...props}/>
                 </div>
             ) : (

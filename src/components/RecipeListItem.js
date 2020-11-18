@@ -8,7 +8,7 @@ import database from '../firebase/firebase'
 
 const RecipeListItem = ({ recipe }) => {
     const [open, setOpen] = useState(false)
-    const { user } = useFirebaseContext()
+    const { user, isGuest } = useFirebaseContext()
     const { recipeDispatch } = useRecipesContext()
     const pathname = window.location.pathname
 
@@ -22,6 +22,7 @@ const RecipeListItem = ({ recipe }) => {
     }
     const handleCancel = () => setOpen(false)
 
+
     // const removeRecipe = () => {
     // }
 
@@ -33,10 +34,10 @@ const RecipeListItem = ({ recipe }) => {
                         <div className='recipe-group__dropdown'>
                             <Dropdown item icon='ellipsis horizontal' simple>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item as={Link} to={`/edit-recipe/${recipe.id}`}>
+                                    <Dropdown.Item as={Link} to={`/edit-recipe/${recipe.id}`} disabled={isGuest ? true : false}>
                                         Edit
                                     </Dropdown.Item>
-                                    <Dropdown.Item onClick={show}>
+                                    <Dropdown.Item onClick={show} disabled={isGuest ? true : false}>
                                         Remove
                                     </Dropdown.Item>
                                     <Confirm

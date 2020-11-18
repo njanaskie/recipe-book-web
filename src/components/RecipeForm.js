@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Tab, Button, Modal, Dropdown, Form, Select, Option } from 'semantic-ui-react'
 import moment from 'moment'
-import { useRecipesContext } from '../../context/recipes-context'
+import { useFirebaseContext } from '../../context/firebase-context'
 import useIngredients from '../hooks/useIngredients'
 import recipeTypes from '../fixtures/recipeTypes'
 import recipeCuisines from '../fixtures/recipeCuisines'
@@ -10,6 +10,7 @@ import useAllRecipes from '../hooks/useAllRecipes'
 import selectCustomTags from '../selectors/custom-tags'
 
 const RecipeForm = (props) => {
+    const { isGuest } = useFirebaseContext()
     const formResults = props.results ? props.results : useAllRecipes()
     const initialFormState = {
         url: '',
@@ -181,7 +182,7 @@ const RecipeForm = (props) => {
                             }
                         })}
                     />
-                    <Form.Button fluid basic color='green' type='submit'>Save Recipe</Form.Button>
+                    <Form.Button fluid basic color='green' type='submit' disabled={isGuest ? true : false}>Save Recipe</Form.Button>
                 </Form.Group>
             </Form>
         

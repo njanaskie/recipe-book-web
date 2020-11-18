@@ -8,7 +8,12 @@ export const login = (uid) => ({
 export const startLogin = () => {
     return () => {
         return firebase.auth().signInWithPopup(googleAuthProvider);
+    };
+};
 
+export const startLoginAsGuest = (email, password) => {
+    return () => {
+        return firebase.auth().signInWithEmailAndPassword(email, password);
     };
 };
 

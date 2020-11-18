@@ -12,12 +12,14 @@ const FirebaseProvider = ({ children }) => {
     const [user, setUser] = useState('')
     const [loading, setLoading] = useState(true)
     const [isAdmin, setIsAdmin] = useState()
+    const [isGuest, setIsGuest] = useState()
 
     useEffect(() => {
         const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
             setUser(user)
             setLoading(false)
             setIsAdmin()
+            setIsGuest()
         })
 
         return () => unsubscribe()
@@ -32,6 +34,9 @@ const FirebaseProvider = ({ children }) => {
                     if (userData.isAdmin === true) {
                         const isAdmin = userData.isAdmin
                         setIsAdmin(isAdmin)
+                    } else if (userData.isGuest === true) {
+                        const isGuest = userData.isGuest
+                        setIsGuest(isGuest)
                     }
                 }
             })
@@ -50,7 +55,7 @@ const FirebaseProvider = ({ children }) => {
     // }
 
     return (
-        <FirebaseContext.Provider value={{ user, isAdmin }}>
+        <FirebaseContext.Provider value={{ user, isAdmin, isGuest }}>
             {children}
         </FirebaseContext.Provider>
     )
