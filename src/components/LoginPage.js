@@ -22,8 +22,8 @@ export const LoginPage = ({ startLogin, startLoginAsGuest }) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    const email = 'guest@gmail.com'
-    const password = 'guest1'
+    const email = process.env.GUEST_EMAIL
+    const password = process.env.GUEST_PASSWORD
 
     return {
         startLogin: () => dispatch(startLogin()),

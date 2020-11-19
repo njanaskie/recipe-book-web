@@ -70,6 +70,8 @@ module.exports = (env) => {
                 'process.env.FIREBASE_MESSAGING_SENDER_ID': JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID),
                 'process.env.FIREBASE_APP_ID': JSON.stringify(process.env.FIREBASE_APP_ID),
                 'process.env.FIREBASE_MEASUREMENT_ID': JSON.stringify(process.env.FIREBASE_MEASUREMENT_ID),
+                'process.env.GUEST_EMAIL': JSON.stringify(process.env.GUEST_EMAIL),
+                'process.env.GUEST_PASSWORD': JSON.stringify(process.env.GUEST_PASSWORD),
             })
         ],
         devtool: isProduction ? 'source-map' : 'inline-source-map',
