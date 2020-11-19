@@ -5,6 +5,7 @@ import { Button, Label, Segment, Dropdown, Menu, Confirm } from 'semantic-ui-rea
 import { useFirebaseContext } from '../../context/firebase-context'
 import { useRecipesContext } from '../../context/recipes-context'
 import database from '../firebase/firebase'
+import RecipeIngredientsCarousel from './RecipeIngredientsCarousel'
 
 const RecipeListItem = ({ recipe }) => {
     const [open, setOpen] = useState(false)
@@ -82,17 +83,7 @@ const RecipeListItem = ({ recipe }) => {
                                 )
                             }
                         </div>
-                        <div className='recipe-group__ingredient-group'>
-                            {recipe.ingredients &&
-                                recipe.ingredients.map(ingredient =>
-                                    <div className='recipe-group__ingredient-item' key={ingredient}>
-                                        <Label size='tiny'>
-                                            {ingredient}
-                                        </Label>
-                                    </div>
-                                )
-                            }
-                        </div>
+                        <RecipeIngredientsCarousel ingredients={recipe.ingredients}/>
                     </Segment>
                 </div>
             </div>
