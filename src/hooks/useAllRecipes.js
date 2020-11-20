@@ -15,6 +15,7 @@ const useAllRecipes = () => {
             isCurrent.current = false
         }
     }, [])
+    
 
     React.useEffect(() => {
         const fetchData = () => {
@@ -30,13 +31,22 @@ const useAllRecipes = () => {
                         ...doc.data()
                         }))
 
+                    localStorage.setItem('myValueInLocalStorage', JSON.stringify(recipes));
                     recipeDispatch({ type: 'SET_RECIPES', recipes})
                     setCount(docCount)
                 }
             });
         }
 
-        fetchData()
+        const cachedHits = JSON.parse(localStorage.getItem('myValueInLocalStorage'))
+
+        if (cachedHits) {
+            console.log('cached hits')
+            recipeDispatch({ type: 'SET_RECIPES', recipes: cachedHits})
+        } else {
+            console.log('api hits')
+            fetchData()
+        }
 
     }, [])
 

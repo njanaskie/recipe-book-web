@@ -13,10 +13,22 @@ const useIngredients = () => {
                 ...doc.data()
                 }))
 
+            localStorage.setItem('myValueInLocalStorageIngs', JSON.stringify(ingredients));
             dispatch({ type: 'SET_INGREDIENTS', ingredients})
         });
 
-        return () => unsubscribe()
+
+        const cachedHits = JSON.parse(localStorage.getItem('myValueInLocalStorageIngs'))
+
+        return () => {
+            if (cachedHits) {
+                console.log('ings cached hits')
+                dispatch({ type: 'SET_INGREDIENTS', ingredients: cachedHits})
+            } else {
+                console.log('ings api hits')
+                unsubscribe()
+            }
+        }
         
     }, [])
 
