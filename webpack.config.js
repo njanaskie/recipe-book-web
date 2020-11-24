@@ -40,7 +40,13 @@ module.exports = (env) => {
                             options: {
                                 sourceMap: true
                             }
-                        }
+                        },
+                        // {
+                        //     loader: 'style-loader',
+                        //     options: {
+                        //         sourceMap: true
+                        //     }
+                        // },
                     ]
                 })
             }, {
@@ -51,11 +57,13 @@ module.exports = (env) => {
                 },
             }, {
                 test: /\.(png|jpe?g|gif)$/i,
-                use: [
-                    {
-                        loader: 'file-loader',
-                    },
-                ],
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'fonts/'
+                    }
+                }],
             }
         ]
         },
