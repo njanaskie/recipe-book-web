@@ -6,6 +6,7 @@ import { useFirebaseContext } from '../../context/firebase-context'
 import { useRecipesContext } from '../../context/recipes-context'
 import database from '../firebase/firebase'
 import RecipeIngredientsCarousel from './RecipeIngredientsCarousel'
+import RecipeCarousel from './RecipeCarousel'
 
 const RecipeListItem = ({ recipe }) => {
     const [open, setOpen] = useState(false)
@@ -72,8 +73,8 @@ const RecipeListItem = ({ recipe }) => {
                                         {recipe.type}
                                     </Label>
                                 </div>
-                            }
-                            {recipe.customTags && 
+                            }                            
+                            {recipe.customTags &&
                                 recipe.customTags.map(tag =>
                                     <div className='recipe-group__tag-item' key={tag}>
                                         <Label size='medium' circular color='purple'>
@@ -83,7 +84,17 @@ const RecipeListItem = ({ recipe }) => {
                                 )
                             }
                         </div>
-                        <RecipeIngredientsCarousel ingredients={recipe.ingredients}/>
+                        <RecipeCarousel items={recipe.ingredients}>
+                            {recipe.ingredients &&
+                                recipe.ingredients.map(ingredient =>
+                                    <div key={ingredient} className='slider-item'>
+                                        <Label size='tiny'>
+                                            {ingredient}
+                                        </Label>
+                                    </div>
+                                )
+                            }
+                        </RecipeCarousel>
                     </Segment>
                 </div>
             </div>
