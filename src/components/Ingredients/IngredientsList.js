@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import _ from 'lodash'
+import { List } from 'semantic-ui-react'
 import IngredientListItem from './IngredientListItem'
 import IngredientListHeader from './IngredientListHeader'
 import IngredientsContext from '../../../context/ingredients-context'
@@ -13,6 +14,7 @@ import { usePantryDishContext } from '../../../context/pantry-dish-context'
 import useDishes from '../../hooks/useDishes'
 import useExistingPantryDishes from '../../hooks/useExistingPantryDishes'
 import selectPantryDishes from '../../selectors/pantry-dishes'
+import selectIngredients from '../../selectors/ingredients'
 
 export const syncIngredientsWithPantry = (ings, pIngs) => {
     const syncedIngredients = []
@@ -36,8 +38,27 @@ export const syncIngredientsWithPantry = (ings, pIngs) => {
     return syncedIngredients
 }
 
+// ingredients ? (
+//     Object.keys(groupedIngredients).map(category => {
+//         return (
+//             <div key={category} >
+//                 <IngredientListHeader category={category} />
+//                 <div className='ingredient-group-list'>
+//                     {groupedIngredients[category].map((ingredient, id) => {
+//                         return (
+//                                 <IngredientListItem
+//                                     key={id}
+//                                     ingredient={ingredient}
+//                                 />
+//                         )
+//                     })}
+//                 </div>
+//             </div>
+//         )
+//     })
+
 export const IngredientsList = (props) => {
-    const ingredients = useIngredients().filter(ingredient => ingredient.id !== undefined)
+    const ingredients = selectIngredients(useIngredients())
     const pantryIngredients = usePantryIngredients()
     const syncedIngredients = syncIngredientsWithPantry(ingredients, pantryIngredients)
     const { dishDispatch } = useDishesContext()
@@ -55,33 +76,22 @@ export const IngredientsList = (props) => {
 
     return (
         <div className="content-container">
-            <div>
+            <List divided verticalAlign='middle'>
                 {
                     ingredients ? (
-                        Object.keys(groupedIngredients).map(category => {
-                            return (
-                                <div key={category} >
-                                    <IngredientListHeader category={category} />
-                                    <div className='ingredient-group-list'>
-                                        {groupedIngredients[category].map((ingredient, id) => {
-                                            return (
-                                                <IngredientListItem
-                                                    key={id}
-                                                    ingredient={ingredient}
-                                                />
-                                            )
-                                        })}
-                                    </div>
-                                </div>
-                            )
-                        })
+                        ingredients.map((ingredient, id) => (
+                                <IngredientListItem
+                                    key={id}
+                                    ingredient={ingredient}
+                                />
+                        ))
                     ) : (
                         <div>
                             <span>No ingredients</span>
                         </div>
                     )
                 }
-            </div>
+            </List>
         </div>
     )
 }

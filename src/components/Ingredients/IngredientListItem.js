@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Checkbox, Button, Icon, Label } from 'semantic-ui-react'
+import { Checkbox, Button, Icon, Label, List } from 'semantic-ui-react'
 import { useFirebaseContext } from '../../../context/firebase-context'
 import { useIngredientsContext } from '../../../context/ingredients-context'
 import { usePantryContext } from '../../../context/pantry-context'
@@ -140,33 +140,15 @@ const IngredientListItem = ({ ingredient }) => {
   }
 
   return (
-  <div>
-    {pathname === '/pantry' ?
-      <div className='ingredient-pantry-item'>
-        <Checkbox
-          toggle
-          label={ingredient.name}
-          checked={ingredient.isPantry}
-          onChange={toggle}
-        />
-      </div>
-          // ingredient.isPantry ?
-          //   <button onClick={removePantryIngredient}>
-          //     Remove from Pantry
-          //   </button>
-          // :
-          // <button onClick={addPantryIngredient}>
-          //   Add to Pantry
-          // </button> 
-      :
-      <div className='ingredient-item' >
-        <Label size='medium'>
-          {ingredient.name}
-          <Icon onClick={removeIngredient} name='delete' />
-        </Label>
-      </div>
-    }
-  </div>
+    <List.Item>
+      <List.Content floated='right'>
+        <Button onClick={removeIngredient} icon='delete' size='tiny'/>
+      </List.Content>
+      <List.Content>
+        <List.Header>{ingredient.name}</List.Header>
+        <List.Description>{ingredient.category.toUpperCase()}</List.Description>
+      </List.Content>
+    </List.Item>
 
   //   <div className='dish-preview' >
   //     <div className='image-container'>
