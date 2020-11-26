@@ -50,15 +50,16 @@ const RecipeListItem = ({ recipe }) => {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
-
-                        <ReactTinyLink
-                            // cardSize="large"
-                            url={recipe.url}
-                            width='100%'
-                            defaultMedia="/images/image-placeholder.png"
-                        >
-                            {recipe.url}
-                        </ReactTinyLink>
+                        <div className='recipe-group__tiny-link'>
+                            <ReactTinyLink
+                                // cardSize="large"
+                                url={recipe.url}
+                                width='100%'
+                                defaultMedia="/images/image-placeholder.png"
+                            >
+                                {recipe.url}
+                            </ReactTinyLink>
+                        </div>
                         <div className='recipe-group__tag-group'>
                             {recipe.cuisine && 
                                 <div className='recipe-group__tag-item'>
