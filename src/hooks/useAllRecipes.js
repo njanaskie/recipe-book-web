@@ -18,7 +18,7 @@ const useAllRecipes = () => {
     
 
     React.useEffect(() => {
-        const fetchData = () => {
+        const fetchData =
             database.collection('users').doc(user.uid).collection('recipes')
             .orderBy('createdAt', 'desc')
             .get()
@@ -36,16 +36,17 @@ const useAllRecipes = () => {
                     setCount(docCount)
                 }
             });
-        }
 
         const cachedHits = JSON.parse(localStorage.getItem('myValueInLocalStorage'))
 
-        if (cachedHits) {
-            console.log('cached hits')
-            recipeDispatch({ type: 'SET_RECIPES', recipes: cachedHits})
-        } else {
-            console.log('api hits')
-            fetchData()
+        return () => {
+            if (cachedHits) {
+                console.log('cached hits')
+                recipeDispatch({ type: 'SET_RECIPES', recipes: cachedHits})
+            } else {
+                console.log('api hits')
+                fetchData()
+            }
         }
 
     }, [])
