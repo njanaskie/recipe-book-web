@@ -56,6 +56,7 @@ const AddIngredientForm = (props) => {
         {key: 'condiments', text: 'Condiments', value: 'condiments'},
         {key: 'spices', text: 'Spices', value: 'spices'},
         {key: 'fish', text: 'Fish', value: 'fish'},
+        {key: 'fruits', text: 'Fruits', value: 'fruits'},
         {key: 'oils', text: 'Oils', value: 'oils'},
         {key: 'seasonings', text: 'Seasonings', value: 'seasonings'},
         {key: 'sauces', text: 'Sauces', value: 'sauces'},

@@ -1,7 +1,7 @@
 
 // Filters Reducer
 
-const filtersReducerDefaultState = {
+export const filtersReducerDefaultState = {
     text: '',
     ingredients: [],
     cuisine: '',
@@ -9,7 +9,7 @@ const filtersReducerDefaultState = {
     customTags: []
 };
 
-const filtersReducer = (state = filtersReducerDefaultState, action) => {
+const filtersReducer = (state = {}, action) => {
     switch (action.type) {
         case 'SET_TEXT_FILTER':
             return {
