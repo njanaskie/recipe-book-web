@@ -77,33 +77,30 @@ const AddIngredientForm = (props) => {
 
     return (
         <div className='content-container'>
-            <h4>Add an ingredient to the site</h4>
-            <div className='form'>
-                <Form unstackable onSubmit={addIngredient}>
+            <div className='form-container form-title'>
+                <h4>Add an ingredient to the site</h4>
+            </div>
+                <Form onSubmit={addIngredient} className='form-container'>
                     {state.error && <p>{state.error}</p>}
-                    <Form.Group widths='equal'>
-                        <div className='form-item'>
+                    <Form.Group widths='equal' inline>
                             <Form.Input
                                 id='set-name'
+                                fluid
                                 type='text'
                                 placeholder='Name'
                                 value={state.name || ''}
                                 onChange={onNameChange}
                             />
-                        </div>
-                        <div className='form-item'>
-                            <Dropdown
+                            <Form.Dropdown
                                 id='set-category'
                                 placeholder='Category'
-                                selection
+                                fluid selection
                                 clearable
                                 value={state.category || ''}
                                 onChange={onCategoryChange}
                                 options={categoryOptions.sort((a,b) => a.key.localeCompare(b.key)).map(category => category)}
                             />
-                        </div>
-                        <div className='form-item'>
-                            <Dropdown
+                            <Form.Dropdown
                                 id='set-price'
                                 placeholder='Price'
                                 fluid selection
@@ -112,13 +109,9 @@ const AddIngredientForm = (props) => {
                                 onChange={onPriceChange}
                                 options={priceOptions.map(price => price)}
                             />
-                        </div>
-                        <div className='form-item'>
-                            <Form.Button>Add Ingredient</Form.Button>
-                        </div>
-                    </Form.Group>
+                            <Form.Button fluid>Add Ingredient</Form.Button>
+                        </Form.Group>
                 </Form>
-            </div>
         </div>
 
     )

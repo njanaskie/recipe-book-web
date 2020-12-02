@@ -35,6 +35,8 @@ const useAllRecipes = () => {
                     recipeDispatch({ type: 'SET_RECIPES', recipes})
                     setCount(docCount)
                 }
+            }, (e) => {
+                console.log('Error with array. ', e)
             });
 
         const cachedHits = JSON.parse(localStorage.getItem('myValueInLocalStorage'))

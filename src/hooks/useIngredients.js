@@ -1,20 +1,31 @@
-import { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import database from '../firebase/firebase'
 import { useIngredientsContext } from '../../context/ingredients-context'
 
 const useIngredients = () => {
     const { ingredients, dispatch } = useIngredientsContext()
+    const isCurrent = useRef(true)
 
-    useEffect(() => {
+    React.useEffect(() => {
+        return () => {
+            isCurrent.current = false
+        }
+    }, [])
+
+    React.useEffect(() => {
         const unsubscribe = database.collection('ingredients').orderBy("category", "asc")
         .onSnapshot((snapshot) => {
-            const ingredients = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data()
+            if (isCurrent.current) {
+                const ingredients = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data()
                 }))
 
-            localStorage.setItem('myValueInLocalStorageIngs', JSON.stringify(ingredients));
-            dispatch({ type: 'SET_INGREDIENTS', ingredients})
+                localStorage.setItem('myValueInLocalStorageIngs', JSON.stringify(ingredients));
+                dispatch({ type: 'SET_INGREDIENTS', ingredients})
+            }
+        }, (e) => {
+            console.log('Error with array. ', e)
         });
 
 

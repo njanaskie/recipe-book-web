@@ -20,10 +20,14 @@
 
 .recipe-group__tag-group {
     display: flex;
-    flex-direction: row;
     justify-content: flex-start;
     padding-top: 0.5rem;
     margin-left: $s-size;
+    flex-direction: column;
+
+    @media (min-width: $desktop-breakpoint) {
+        flex-direction: row;
+    }
 }
 
 .recipe-group__tag-item {
@@ -43,7 +47,7 @@
 .recipe-group__link {
     width: 100%;
     padding: 0.5rem 1rem;
-    
+    margin: auto;
 }
 
 .recipe-group__tiny-link {

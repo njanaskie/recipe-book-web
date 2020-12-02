@@ -11,7 +11,7 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
-    padding: $s-size 0;
+    padding: $s-size/2 0;
 }
 
 .form-group {
@@ -22,6 +22,7 @@
 .form-container {
     width: 80%;
     margin: auto;
+    margin-bottom: $s-size;
 }
 
 .form-item {

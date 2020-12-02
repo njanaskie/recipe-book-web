@@ -149,7 +149,7 @@ const RecipeForm = (props) => {
                     })}
                 />
 
-                <Form.Group>
+                <Form.Group widths='equal'>
                     <Form.Dropdown
                         placeholder='Select recipe type'
                         name='type'
