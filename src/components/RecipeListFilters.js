@@ -6,12 +6,14 @@ import recipeCuisines from '../fixtures/recipeCuisines'
 import recipeTypes from '../fixtures/recipeTypes'
 import selectCustomTags from '../selectors/custom-tags'
 import useAllRecipes from '../hooks/useAllRecipes'
+import { useRecipesContext } from '../../context/recipes-context'
 
 export const RecipeListFilters = ({ results, allIngredients }) => {
     const { filters, filtersDispatch } = useFiltersContext()
+    const { recipes } = useRecipesContext()
     // const allIngredients = useIngredients()
     // const results = useAllRecipes()
-    const allCustomTags = selectCustomTags(results.recipes)
+    const allCustomTags = selectCustomTags(recipes)
     // const { pantryIngredients } = usePantryContext()
 
     const onTextChange = (e) => {

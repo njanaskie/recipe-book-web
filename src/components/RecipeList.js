@@ -10,6 +10,7 @@ import { useFiltersContext } from '../../context/filters-context'
 import useAllRecipes from '../hooks/useAllRecipes'
 import { config } from '../../config'
 import selectRecipes from '../selectors/recipes'
+import { useRecipesContext } from '../../context/recipes-context'
 
 export const RecipeList = ({ results }) => {
     const initialFormState = {
@@ -21,11 +22,12 @@ export const RecipeList = ({ results }) => {
     }
     const [pageState, setPageState] = useState(initialFormState)
     const { filters } = useFiltersContext()
+    const { recipes } = useRecipesContext()
     // const results = useRecipes(pageState)
     // const nextResult = useNextRecipe(results)
     const startIndex = (pageState.activePage * config.itemsPerPage) - config.itemsPerPage
     const endIndex = startIndex + config.itemsPerPage
-    const selectedRecipes = selectRecipes(results.recipes, filters)
+    const selectedRecipes = selectRecipes(recipes, filters)
     const paginatedItems = selectedRecipes && selectedRecipes.slice(startIndex, endIndex)
 
     // if (results.lastVisible && results.nextHidden) {

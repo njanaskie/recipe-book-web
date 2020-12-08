@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Menu } from 'semantic-ui-react'
 import { startLogout } from '../actions/auth';
 import { firebase } from '../firebase/firebase';
-import SubHeaderContext from './SubHeaderContext'
+import SubHeader from './SubHeader'
 
 // export const signOut = () => firebase.auth().signOut()
 
@@ -19,7 +19,7 @@ export const Header = ({ startLogout }) => {
                     <Link className="header__title" to='/home' >
                         <img className="logo__image" src="/images/app-logo.png" />
                     </Link>
-                    <SubHeaderContext />
+                    <SubHeader />
                 </div>
             </div>
         </header>

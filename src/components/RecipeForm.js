@@ -8,10 +8,13 @@ import recipeCuisines from '../fixtures/recipeCuisines'
 import useCustomTags from '../hooks/useCustomTags'
 import useAllRecipes from '../hooks/useAllRecipes'
 import selectCustomTags from '../selectors/custom-tags'
+import { useIngredientsContext } from '../../context/ingredients-context'
+import { useRecipesContext } from '../../context/recipes-context'
 
 const RecipeForm = (props) => {
     const { isGuest } = useFirebaseContext()
-    const formResults = props.results ? props.results : useAllRecipes()
+    const { recipes } = useRecipesContext()
+    const formResults = props.results ? props.results : recipes
     const initialFormState = {
         url: '',
         ingredients: [],
@@ -25,14 +28,14 @@ const RecipeForm = (props) => {
     }
     const [state, setState] = useState(initialFormState)
     // const [tagState, setTagState] = useState()
-    const allIngredients = useIngredients()
-    const allCustomTags = selectCustomTags(formResults.recipes)
+    const { ingredients } = useIngredientsContext()
+    const allCustomTags = selectCustomTags(formResults)
     // const [customTagOptions, setCustomTagOptions] = useState(allCustomTags)
     // const allCustomTags = useCustomTags()
     // const selectableIngredients = allIngredients && Object.values(allIngredients).filter((ingredient) => !(props.dish.keyIngredients.includes(ingredient['name'])))
 
     // console.log(customTagOptions)
-    // console.log(state)
+    // console.log(props)
     
     useEffect(() => {
         setState({
@@ -123,7 +126,7 @@ const RecipeForm = (props) => {
                     multiple={true}
                     value={state.ingredients.sort((a,b) => a.localeCompare(b))}
                     onChange={onIngredientChange}
-                    options={allIngredients.map(ingredient => {
+                    options={ingredients.map(ingredient => {
                         return {
                             key: ingredient.id,
                             text: ingredient.name,

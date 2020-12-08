@@ -15,8 +15,15 @@ import DishesPage from '../components/Dishes/DishesPage'
 import DishDetailPage from '../components/Dishes/DishDetails/DishDetailPage';
 import EditDishPage from '../components/Dishes/EditDishPage'
 import HomePageContext from '../components/HomePageContext'
+import HomePage from '../components/HomePage';
 import AddRecipeContext from '../components/AddRecipeContext';
+import AddRecipe from '../components/AddRecipe';
 import EditRecipeContext from '../components/EditRecipeContext'
+import EditRecipe from '../components/EditRecipe';
+import { IngredientsProvider } from '../../context/ingredients-context';
+import { RecipesProvider } from '../../context/recipes-context';
+import { FiltersProvider } from '../../context/filters-context';
+import AppShell from '../components/AppShell'
 
 export const history = createHistory();
 
@@ -29,18 +36,25 @@ export const history = createHistory();
 
 const AppRouter = () => (
     <FirebaseProvider >
-        <Router history={history}>
-            <div>
-                <Switch>
-                    <PublicRoute path='/' component={LoginPage} exact={true}/>
-                    <PrivateRoute path='/home' component={HomePageContext} />
-                    <PrivateRoute path='/add-recipe' component={AddRecipeContext} />
-                    <SpecialUserRoute path='/ingredients' component={IngredientsPage} />
-                    <SpecialUserRoute path='/edit-recipe/:id' component={EditRecipeContext} />
-                    <Route component={NotFoundPage}/>
-                </Switch>
-            </div>
-        </Router>
+        <IngredientsProvider>
+            <RecipesProvider>
+                <FiltersProvider>
+                    <Router history={history}>
+                        <div>
+                            <AppShell>
+                                <Switch>
+                                    <PublicRoute path='/' component={LoginPage} exact={true}/>
+                                    <PrivateRoute path='/home' component={HomePage} />
+                                    <SpecialUserRoute path='/ingredients' component={IngredientsPage} />
+                                    <SpecialUserRoute path='/edit-recipe/:id' component={EditRecipe} />
+                                    <Route component={NotFoundPage}/>
+                                </Switch>
+                            </AppShell>
+                        </div>
+                    </Router>
+                </FiltersProvider>
+            </RecipesProvider>
+        </IngredientsProvider>
     </FirebaseProvider>
 )
 

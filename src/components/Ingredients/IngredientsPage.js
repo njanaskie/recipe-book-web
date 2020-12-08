@@ -12,22 +12,16 @@ import pantryDishesReducer from '../../reducers/pantry-dishes'
 import database from '../../firebase/firebase'
 
 const IngredientsPage = () => {
-    const [dishes, dishDispatch] = useReducer(dishesReducer, [])
-    const [ingredients, dispatch] = useReducer(ingredientsReducer, [])
-    const [pantryIngredients, pantryDispatch] = useReducer(pantryReducer, [])
-    const [pantryDishes, pantryDishDispatch] = useReducer(pantryDishesReducer, [])
+    // const [dishes, dishDispatch] = useReducer(dishesReducer, [])
+    // const [ingredients, dispatch] = useReducer(ingredientsReducer, [])
+    // const [pantryIngredients, pantryDispatch] = useReducer(pantryReducer, [])
+    // const [pantryDishes, pantryDishDispatch] = useReducer(pantryDishesReducer, [])
 
     return (
-        <PantryDishContext.Provider value={{ pantryDishes, pantryDishDispatch }}>
-            <DishesContext.Provider value={{ dishes, dishDispatch }}>
-                <PantryContext.Provider value={{ pantryIngredients, pantryDispatch }}>
-                    <IngredientsContext.Provider value={{ ingredients, dispatch }}>
-                        <AddIngredientForm />
-                        <IngredientsList />
-                    </IngredientsContext.Provider>
-                </PantryContext.Provider>
-            </DishesContext.Provider>
-        </PantryDishContext.Provider>
+        <div>
+            <AddIngredientForm />
+            <IngredientsList />
+        </div>
     )
 
 };

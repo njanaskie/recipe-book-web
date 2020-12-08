@@ -3,16 +3,20 @@ import RecipeList from './RecipeList'
 import RecipeListFilters from './RecipeListFilters'
 import useAllRecipes from '../hooks/useAllRecipes'
 import useIngredients from '../hooks/useIngredients'
-
+import { useRecipesContext } from '../../context/recipes-context'
+import { useIngredientsContext } from '../../context/ingredients-context'
 
 const HomePageContext = () => {
-    const results = useAllRecipes()
-    const allIngredients = useIngredients()
+    const { recipes } = useRecipesContext()
+    const { ingredients } = useIngredientsContext()
+
+    // const results = useAllRecipes()
+    // const allIngredients = useIngredients()
 
     return (
         <div>
-            <RecipeListFilters results={results} allIngredients={allIngredients}/>
-            <RecipeList results={results}/>
+            <RecipeListFilters results={recipes} allIngredients={ingredients}/>
+            <RecipeList results={recipes}/>
         </div>
     )
 

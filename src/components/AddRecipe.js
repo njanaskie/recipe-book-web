@@ -10,7 +10,7 @@ import IngredientsContext from '../../context/ingredients-context'
 import ingredientsReducer from '../reducers/ingredients'
 
 const AddRecipe = ({ handleModalClose }) => {
-    const { recipeDispatch } = useRecipesContext()
+    const { recipes, recipeDispatch } = useRecipesContext()
     const { user } = useContext(FirebaseContext)
     const history = useHistory()
 
@@ -26,6 +26,7 @@ const AddRecipe = ({ handleModalClose }) => {
         <div>
             <RecipeForm
                 onSubmit={onSubmit}
+                results={recipes}
             />
         </div>
     )

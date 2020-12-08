@@ -16,9 +16,9 @@ const IngredientListItem = ({ ingredient }) => {
   const [checked, setChecked] = useState(ingredient.isPantry)
   const { user } = useFirebaseContext()
   const { dispatch } = useIngredientsContext()
-  const { pantryIngredients, pantryDispatch } = usePantryContext()
-  const { dishDispatch } = useDishesContext()
-  const { pantryDishDispatch } = usePantryDishContext()
+  // const { pantryIngredients, pantryDispatch } = usePantryContext()
+  // const { dishDispatch } = useDishesContext()
+  // const { pantryDishDispatch } = usePantryDishContext()
   // const dishes = useDishes()
   // const existingPantry = existingPantryDishes
   // const selectedPantry = selectedPantryDishes
@@ -43,21 +43,21 @@ const IngredientListItem = ({ ingredient }) => {
   // }
 
   // useEffect(() => {
-  const addPantryIngredient = () => {
-    const uid = user.uid
+  // const addPantryIngredient = () => {
+  //   const uid = user.uid
 
-    database.collection('users').doc(uid).collection('pantry').doc(ingredient.id).set(ingredient).then(() => {
-      pantryDispatch(({ type: 'ADD_PANTRY_INGREDIENT', pantryIngredient: {...ingredient} }))
-    })
-  }
+  //   database.collection('users').doc(uid).collection('pantry').doc(ingredient.id).set(ingredient).then(() => {
+  //     pantryDispatch(({ type: 'ADD_PANTRY_INGREDIENT', pantryIngredient: {...ingredient} }))
+  //   })
+  // }
 
-  const removePantryIngredient = () => {
-    const uid = user.uid
+  // const removePantryIngredient = () => {
+  //   const uid = user.uid
 
-    database.collection('users').doc(uid).collection('pantry').doc(ingredient.id).delete().then(() => {
-      dispatch({ type: 'REMOVE_PANTRY_INGREDIENT', id: ingredient.id })
-    })
-  }
+  //   database.collection('users').doc(uid).collection('pantry').doc(ingredient.id).delete().then(() => {
+  //     dispatch({ type: 'REMOVE_PANTRY_INGREDIENT', id: ingredient.id })
+  //   })
+  // }
 
 
 

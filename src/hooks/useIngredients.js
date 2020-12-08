@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import database from '../firebase/firebase'
 import { useIngredientsContext } from '../../context/ingredients-context'
 
@@ -21,25 +21,27 @@ const useIngredients = () => {
                     ...doc.data()
                 }))
 
-                localStorage.setItem('myValueInLocalStorageIngs', JSON.stringify(ingredients));
+                // localStorage.setItem('myValueInLocalStorageIngs', JSON.stringify(ingredients));
                 dispatch({ type: 'SET_INGREDIENTS', ingredients})
+                console.log('ings snap')
             }
         }, (e) => {
             console.log('Error with array. ', e)
         });
 
 
-        const cachedHits = JSON.parse(localStorage.getItem('myValueInLocalStorageIngs'))
-
-        return () => {
-            if (cachedHits) {
-                console.log('ings cached hits')
-                dispatch({ type: 'SET_INGREDIENTS', ingredients: cachedHits})
-            } else {
-                console.log('ings api hits')
-                unsubscribe()
-            }
-        }
+        // const cachedHits = JSON.parse(localStorage.getItem('myValueInLocalStorageIngs'))
+        console.log('ings api hits')
+        return () => unsubscribe()
+        // return () => {
+            // if (JSON.stringify(cachedHits) === JSON.stringify(prevIngredients)) {
+            //     console.log('ings cached hits')
+            //     dispatch({ type: 'SET_INGREDIENTS', ingredients: cachedHits})
+            // } else {
+            //     console.log('ings api hits')
+            //     unsubscribe()
+            // }
+        // }
         
     }, [])
 

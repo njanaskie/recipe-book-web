@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { List } from 'semantic-ui-react'
 import IngredientListItem from './IngredientListItem'
 import IngredientListHeader from './IngredientListHeader'
-import IngredientsContext from '../../../context/ingredients-context'
+import IngredientsContext, { useIngredientsContext } from '../../../context/ingredients-context'
 import PantryContext from '../../../context/pantry-context'
 import FirebaseContext from '../../../context/firebase-context'
 import database from '../../firebase/firebase'
@@ -58,11 +58,11 @@ export const syncIngredientsWithPantry = (ings, pIngs) => {
 //     })
 
 export const IngredientsList = (props) => {
-    const ingredients = selectIngredients(useIngredients())
-    const pantryIngredients = usePantryIngredients()
-    const syncedIngredients = syncIngredientsWithPantry(ingredients, pantryIngredients)
-    const { dishDispatch } = useDishesContext()
-    const { pantryDishes, pantryDishDispatch } = usePantryDishContext()
+    const { ingredients } = useIngredientsContext()
+    // const pantryIngredients = usePantryIngredients()
+    // const syncedIngredients = syncIngredientsWithPantry(ingredients, pantryIngredients)
+    // const { dishDispatch } = useDishesContext()
+    // const { pantryDishes, pantryDishDispatch } = usePantryDishContext()
     // const dishes = useDishes()
     // const existingPantryDishes = useExistingPantryDishes()
     // const selectedPantryDishes = selectPantryDishes(pantryIngredients, dishes)
@@ -72,7 +72,7 @@ export const IngredientsList = (props) => {
     // console.log(existingPantryDishes)
     // console.log(selectedPantryDishes)
     
-    const groupedIngredients = _.groupBy(syncedIngredients, 'category')
+    // const groupedIngredients = _.groupBy(syncedIngredients, 'category')
 
     return (
         <div className="content-container">

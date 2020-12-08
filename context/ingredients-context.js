@@ -1,7 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useReducer } from 'react';
+import ingredientsReducer from '../src/reducers/ingredients'
 
 const IngredientsContext = React.createContext()
 
 export const useIngredientsContext = () => useContext(IngredientsContext)
 
-export { IngredientsContext as default }
+const IngredientsProvider = ({ children }) => {
+    const [ingredients, dispatch ] = useReducer(ingredientsReducer, [])
+
+    return (
+        <IngredientsContext.Provider value={{ ingredients, dispatch }}>
+            {children}
+        </IngredientsContext.Provider>
+    )
+}
+
+export { IngredientsProvider, IngredientsContext as default }

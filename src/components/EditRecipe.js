@@ -11,12 +11,11 @@ import ingredientsReducer from '../reducers/ingredients'
 import useAllRecipes from '../hooks/useAllRecipes'
 
 const EditRecipe = () => {
-    const { recipeDispatch } = useRecipesContext()
+    const { recipes, recipeDispatch } = useRecipesContext()
     const history = useHistory()
     const { user } = useFirebaseContext()
     const { id } = useParams()
-    const results = useAllRecipes()
-    const recipe = results.recipes.find((recipe) => recipe.id === id)
+    const recipe = recipes.find((recipe) => recipe.id === id)
 
     const onSubmit = (editRecipe) => {
         database.collection('users').doc(user.uid).collection('recipes').doc(recipe.id).update(editRecipe).then(() => {
@@ -36,7 +35,7 @@ const EditRecipe = () => {
             <RecipeForm
                 {...recipe}
                 onSubmit={onSubmit}
-                results={results}
+                results={recipes}
             />
         </div>
     )

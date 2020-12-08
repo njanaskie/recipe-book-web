@@ -6,9 +6,11 @@ import { useFirebaseContext } from '../../context/firebase-context'
 import { startLogout } from '../actions/auth';
 import RecipeInputModal from './RecipeInputModal';
 import AddRecipe from './AddRecipe'
+import { useIngredientsContext } from '../../context/ingredients-context'
 
 export const SubHeader = ({ startLogout }) => {
     const { isAdmin } = useFirebaseContext()
+    const { ingredients } = useIngredientsContext()
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const handleModalOpen = () => {
