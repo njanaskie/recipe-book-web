@@ -6,10 +6,12 @@ import { useFirebaseContext } from '../../../../context/firebase-context'
 import UserRecipeItem from './UserRecipes/UserRecipeItem';
 import AddUserRecipe from './UserRecipes/AddUserRecipe';
 import UserRecipeModal from './UserRecipes/UserRecipeModal'
+import { useRecipesContext } from '../../context/recipes-context'
 
 const RecipePage = ({ dish = {}, userRecipes = [], ingredients = [] }) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const { isAdmin } = useFirebaseContext()
+    const { recipes } = useRecipesContext()
 
 
     return (

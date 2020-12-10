@@ -22,13 +22,20 @@ export const RecipeList = ({ results }) => {
     }
     const [pageState, setPageState] = useState(initialFormState)
     const { filters } = useFiltersContext()
-    const { recipes } = useRecipesContext()
+    const { recipes, recipeDispatch } = useRecipesContext()
     // const results = useRecipes(pageState)
     // const nextResult = useNextRecipe(results)
     const startIndex = (pageState.activePage * config.itemsPerPage) - config.itemsPerPage
     const endIndex = startIndex + config.itemsPerPage
     const selectedRecipes = selectRecipes(recipes, filters)
     const paginatedItems = selectedRecipes && selectedRecipes.slice(startIndex, endIndex)
+
+    // console.log(recipes)
+
+    // React.useEffect(() => {
+    //     console.log('test')
+    //     recipeDispatch({ type: 'SET_RECIPES', recipes})
+    // }, [])
 
     // if (results.lastVisible && results.nextHidden) {
     //     console.log(results.lastVisible.id)

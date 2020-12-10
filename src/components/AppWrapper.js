@@ -1,9 +1,9 @@
 import React from 'react';
-import Header from '../components/Header'
+import Header from './Header'
 import useAllRecipes from '../hooks/useAllRecipes'
 import useIngredients from '../hooks/useIngredients'
 
-const AppShell = (props) => {
+const AppWrapper = (props) => {
     const recipes = useAllRecipes()
     const ingredients = useIngredients()
 
@@ -14,4 +14,4 @@ const AppShell = (props) => {
     );
 }
 
-export default AppShell;
+export default AppWrapper;

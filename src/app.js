@@ -13,9 +13,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { firebase } from './firebase/firebase';
 import LoadingPage from './components/LoadingPage';
-import FirebaseContext, { FirebaseProvider }from '../context/firebase-context'
+import FirebaseContext, { FirebaseProvider } from '../context/firebase-context'
 
 const store = configureStore()
+
+// React.useEffect(() => {
+//     const recipes = useAllRecipes()
+//     const ingredients = useIngredients()
+// }, [])
 
 const jsx = (
     <Provider store={store}>

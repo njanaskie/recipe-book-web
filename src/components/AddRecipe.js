@@ -18,7 +18,7 @@ const AddRecipe = ({ handleModalClose }) => {
         database.collection('users').doc(user.uid).collection('recipes').add(recipe).then((ref) => {
             recipeDispatch({ type: 'ADD_RECIPE', recipe: {id: ref.key, ...recipe} })
             history.push('/')
-            handleModalClose()
+            // handleModalClose()
         })
     }
 

@@ -35,7 +35,7 @@ const RecipeForm = (props) => {
     // const selectableIngredients = allIngredients && Object.values(allIngredients).filter((ingredient) => !(props.dish.keyIngredients.includes(ingredient['name'])))
 
     // console.log(customTagOptions)
-    // console.log(props)
+    console.log(state)
     
     useEffect(() => {
         setState({
@@ -108,6 +108,7 @@ const RecipeForm = (props) => {
     }
 
     return (
+        <>
             <Form onSubmit={onSubmit} className='form-container'>
                 {state.error && <p>{state.error}</p>}
                 <Form.Input
@@ -188,6 +189,7 @@ const RecipeForm = (props) => {
                     <Form.Button fluid basic color='green' type='submit' disabled={isGuest ? true : false}>Save Recipe</Form.Button>
                 </Form.Group>
             </Form>
+        </>
         
     )
 }

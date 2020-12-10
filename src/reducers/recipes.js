@@ -17,7 +17,7 @@ const recipesReducer = (state = recipesReducerDefaultState, action) => {
                 if (recipe.id === action.id) {
                     return {
                         ...recipe,
-                        ...action.updates
+                        ...action.editRecipe
                     };
                 } else {
                     return recipe;

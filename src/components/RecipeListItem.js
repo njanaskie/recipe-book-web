@@ -7,12 +7,16 @@ import { useRecipesContext } from '../../context/recipes-context'
 import database from '../firebase/firebase'
 import RecipeIngredientsCarousel from './RecipeIngredientsCarousel'
 import RecipeCarousel from './RecipeCarousel'
+import RecipeInputModal from './RecipeInputModal';
+import EditRecipe from './EditRecipe'
 
 const RecipeListItem = ({ recipe }) => {
     const [open, setOpen] = useState(false)
+    const [isEdit, setIsEdit] = useState(false)
     const { user, isGuest } = useFirebaseContext()
-    const { recipeDispatch } = useRecipesContext()
+    const { recipes, recipeDispatch } = useRecipesContext()
     const pathname = window.location.pathname
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     const show = () => setOpen(true)
 
@@ -24,7 +28,15 @@ const RecipeListItem = ({ recipe }) => {
     }
     const handleCancel = () => setOpen(false)
 
+    const handleModalOpen = () => {
+        setIsModalOpen(true)
+        setIsEdit(true)
+    }
 
+    const handleModalClose = () => {
+        setIsModalOpen(false)
+        setIsEdit(false)
+    }
     // const removeRecipe = () => {
     // }
 
@@ -36,9 +48,12 @@ const RecipeListItem = ({ recipe }) => {
                         <div className='recipe-group__dropdown'>
                             <Dropdown item icon='ellipsis horizontal' simple>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item as={Link} to={`/edit-recipe/${recipe.id}`} disabled={isGuest ? true : false}>
+                                    <Dropdown.Item onClick={handleModalOpen} disabled={isGuest ? true : false}>
                                         Edit
                                     </Dropdown.Item>
+                                    <RecipeInputModal isModalOpen={isModalOpen} handleModalClose={handleModalClose} isEdit={isEdit}>
+                                        <EditRecipe handleModalClose={handleModalClose} recipe={recipe}/>
+                                    </RecipeInputModal>
                                     <Dropdown.Item onClick={show} disabled={isGuest ? true : false}>
                                         Remove
                                     </Dropdown.Item>

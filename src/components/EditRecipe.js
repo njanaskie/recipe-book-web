@@ -10,28 +10,24 @@ import IngredientsContext from '../../context/ingredients-context'
 import ingredientsReducer from '../reducers/ingredients'
 import useAllRecipes from '../hooks/useAllRecipes'
 
-const EditRecipe = () => {
+const EditRecipe = ({ recipe, handleModalClose }) => {
     const { recipes, recipeDispatch } = useRecipesContext()
     const history = useHistory()
     const { user } = useFirebaseContext()
     const { id } = useParams()
-    const recipe = recipes.find((recipe) => recipe.id === id)
+    // const recipe = recipes.find((recipe) => recipe.id === id)
 
     const onSubmit = (editRecipe) => {
         database.collection('users').doc(user.uid).collection('recipes').doc(recipe.id).update(editRecipe).then(() => {
-            recipeDispatch({ type: 'EDIT_RECIPE', id: editRecipe.id, editRecipe })
-            history.push('/')
+            recipeDispatch({ type: 'EDIT_RECIPE', id: recipe.id, editRecipe })
 
+            history.push('/')
             // handleModalClose()
-            // console.log('edit user recipe', editRecipe)
         })
     }
 
     return (
         <div className='content-container'>
-            <div className='form-container form-title'>
-                <h3>Edit recipe details...</h3>
-            </div>
             <RecipeForm
                 {...recipe}
                 onSubmit={onSubmit}

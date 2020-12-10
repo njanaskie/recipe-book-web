@@ -7,6 +7,7 @@ import { useRecipesContext } from '../../context/recipes-context'
 const useAllRecipes = () => {
     const [count, setCount] = useState(0)
     const { recipes, recipeDispatch } = useRecipesContext()
+    // const [isLoading, setIsLoading] = useState(false)
     const isCurrent = useRef(true)
     const { user } = useFirebaseContext()
 
@@ -30,7 +31,7 @@ const useAllRecipes = () => {
                         ...doc.data()
                         }))
 
-                    // localStorage.setItem('myValueInLocalStorage', JSON.stringify(recipes));
+                    localStorage.setItem('recipes', JSON.stringify(recipes));
                     recipeDispatch({ type: 'SET_RECIPES', recipes})
                     setCount(docCount)
                     console.log('recipes snap')
@@ -56,6 +57,14 @@ const useAllRecipes = () => {
         fetchData()
 
     }, [])
+
+    // React.useEffect(() => {
+
+    //     if (isCurrent.current) {
+    //         recipeDispatch({ type: 'SET_RECIPES', recipes})
+    //         console.log('testing', recipes)
+    //     }
+    // }, [recipes])
 
     return { recipes, count }
 }

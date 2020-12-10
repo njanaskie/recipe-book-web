@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Button, Modal } from 'semantic-ui-react'
 
-const RecipeInputModal = ({ children, isModalOpen, handleModalClose }) => {
+const RecipeInputModal = ({ children, isModalOpen, handleModalClose, isEdit }) => {
 
     return (
         <Modal dimmer='inverted' open={isModalOpen} onClose={handleModalClose}>
-            <Modal.Header>Add to your recipe book...</Modal.Header>
+            {isEdit ? <Modal.Header>Edit recipe details...</Modal.Header> : <Modal.Header>Add to your recipe book...</Modal.Header>}
             <Modal.Content>
                 {children}
             </Modal.Content>

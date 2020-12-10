@@ -23,7 +23,9 @@ import EditRecipe from '../components/EditRecipe';
 import { IngredientsProvider } from '../../context/ingredients-context';
 import { RecipesProvider } from '../../context/recipes-context';
 import { FiltersProvider } from '../../context/filters-context';
-import AppShell from '../components/AppShell'
+import AppWrapper from '../components/AppWrapper'
+import useAllRecipes from '../hooks/useAllRecipes'
+import useIngredients from '../hooks/useIngredients'
 
 export const history = createHistory();
 
@@ -33,28 +35,28 @@ export const history = createHistory();
 // <SpecialUserRoute path='/dishes' component={DishesPage} />
 // <PrivateRoute path='/dish/:id' component={DishDetailPage} />
 // <SpecialUserRoute path='/add-dish' component={AddDishPage} />
+// <SpecialUserRoute path='/edit-recipe/:id' component={EditRecipe} />
 
 const AppRouter = () => (
     <FirebaseProvider >
-        <IngredientsProvider>
-            <RecipesProvider>
+        <RecipesProvider>
+            <IngredientsProvider>
                 <FiltersProvider>
                     <Router history={history}>
                         <div>
-                            <AppShell>
+                            <AppWrapper>
                                 <Switch>
                                     <PublicRoute path='/' component={LoginPage} exact={true}/>
                                     <PrivateRoute path='/home' component={HomePage} />
                                     <SpecialUserRoute path='/ingredients' component={IngredientsPage} />
-                                    <SpecialUserRoute path='/edit-recipe/:id' component={EditRecipe} />
                                     <Route component={NotFoundPage}/>
                                 </Switch>
-                            </AppShell>
+                            </AppWrapper>
                         </div>
                     </Router>
                 </FiltersProvider>
-            </RecipesProvider>
-        </IngredientsProvider>
+            </IngredientsProvider>
+        </RecipesProvider>
     </FirebaseProvider>
 )
 
