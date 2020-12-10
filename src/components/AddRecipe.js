@@ -1,5 +1,6 @@
 import React, { useContext, useReducer } from 'react'
 import { useHistory } from 'react-router-dom'
+import uuid from 'uuid'
 import RecipeForm from './RecipeForm'
 import database from '../firebase/firebase'
 import FirebaseContext from '../../context/firebase-context'
@@ -13,10 +14,11 @@ const AddRecipe = ({ handleModalClose }) => {
     const { recipes, recipeDispatch } = useRecipesContext()
     const { user } = useContext(FirebaseContext)
     const history = useHistory()
+    const customId = uuid()
 
     const onSubmit = (recipe) => {
-        database.collection('users').doc(user.uid).collection('recipes').add(recipe).then((ref) => {
-            recipeDispatch({ type: 'ADD_RECIPE', recipe: {id: ref.key, ...recipe} })
+        database.collection('users').doc(user.uid).collection('recipes').doc(customId).set(recipe).then((ref) => {
+            recipeDispatch({ type: 'ADD_RECIPE', recipe: {id: customId, ...recipe} })
             history.push('/')
             // handleModalClose()
         })

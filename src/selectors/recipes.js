@@ -5,7 +5,7 @@ export default (recipes, filters) => {
         const typeMatch = recipe.type.toLowerCase().includes(filters.recipeType.toLowerCase())
         const customTagMatch = filters.customTags.length > 0 ? recipe.customTags.some(tag => tag.includes(filters.customTags)) : true
         return ingredientMatch && cuisineMatch && typeMatch && customTagMatch
-    })
+    }).sort((a, b) =>  a.createdAt < b.createdAt ? 1 : -1)
     :
     recipes
 }
