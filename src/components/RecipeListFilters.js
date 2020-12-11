@@ -1,25 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { Input, Dropdown } from 'semantic-ui-react'
+import React from 'react'
+import { Dropdown } from 'semantic-ui-react'
 import { useFiltersContext } from '../../context/filters-context'
-// import { usePantryContext } from '../../../context/pantry-context'
 import recipeCuisines from '../fixtures/recipeCuisines'
 import recipeTypes from '../fixtures/recipeTypes'
 import selectCustomTags from '../selectors/custom-tags'
-import useAllRecipes from '../hooks/useAllRecipes'
 import { useRecipesContext } from '../../context/recipes-context'
 
-export const RecipeListFilters = ({ results, allIngredients }) => {
+export const RecipeListFilters = ({ allIngredients }) => {
     const { filters, filtersDispatch } = useFiltersContext()
     const { recipes } = useRecipesContext()
-    // const allIngredients = useIngredients()
-    // const results = useAllRecipes()
     const allCustomTags = selectCustomTags(recipes)
-    // const { pantryIngredients } = usePantryContext()
-
-    const onTextChange = (e) => {
-        filtersDispatch({ type: 'SET_TEXT_FILTER', text: e.target.value })
-    }
-
+    
     const onIngredientChange = (e, result) => {
         const { value } = result || e.target
         filtersDispatch({ type: 'SET_INGREDIENT_FILTER', ingredients: value })
@@ -39,16 +30,6 @@ export const RecipeListFilters = ({ results, allIngredients }) => {
         const { value } = result || e.target
         filtersDispatch({ type: 'SET_CUSTOM_TAG_FILTER', customTags: value })
     }
-
-//     <div className="input-group__input">                
-//     <Input
-//         placeholder='Search...'
-//         size='big'
-//         value={filters ? filters.text : ''}
-//         onChange={onTextChange}
-//         style={{ width:"100%" }}
-//     />
-// </div>
 
     return (
         <div className="content-container">

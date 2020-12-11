@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react'
-import { Form, Button, Dropdown } from 'semantic-ui-react'
-import IngredientsContext, { useIngredientsContext } from '../../context/ingredients-context'
+import React from 'react'
+import { Form } from 'semantic-ui-react'
+import { useIngredientsContext } from '../../context/ingredients-context'
 import database from '../firebase/firebase'
 
 const AddIngredientForm = (props) => {

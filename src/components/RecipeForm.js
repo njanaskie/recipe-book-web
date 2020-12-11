@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Tab, Button, Modal, Dropdown, Form, Select, Option } from 'semantic-ui-react'
+import { Form } from 'semantic-ui-react'
 import moment from 'moment'
 import { useFirebaseContext } from '../../context/firebase-context'
-import useIngredients from '../hooks/useIngredients'
 import recipeTypes from '../fixtures/recipeTypes'
 import recipeCuisines from '../fixtures/recipeCuisines'
-import useCustomTags from '../hooks/useCustomTags'
-import useAllRecipes from '../hooks/useAllRecipes'
 import selectCustomTags from '../selectors/custom-tags'
 import { useIngredientsContext } from '../../context/ingredients-context'
 import { useRecipesContext } from '../../context/recipes-context'
@@ -22,20 +19,12 @@ const RecipeForm = (props) => {
         cuisine: '',
         createdAt: '',
         customTags: [],
-        // recipeDish: props.recipeDish ? props.recipeDish : props.dish.name,
         error: '',
         customTagOptions: []
     }
     const [state, setState] = useState(initialFormState)
-    // const [tagState, setTagState] = useState()
     const { ingredients } = useIngredientsContext()
     const allCustomTags = selectCustomTags(formResults)
-    // const [customTagOptions, setCustomTagOptions] = useState(allCustomTags)
-    // const allCustomTags = useCustomTags()
-    // const selectableIngredients = allIngredients && Object.values(allIngredients).filter((ingredient) => !(props.dish.keyIngredients.includes(ingredient['name'])))
-
-    // console.log(customTagOptions)
-    console.log(state)
     
     useEffect(() => {
         setState({
@@ -45,7 +34,6 @@ const RecipeForm = (props) => {
             cuisine: props.cuisine || '',
             createdAt: moment(props.createdAt) || moment(),
             customTags: props.customTags || [],
-            // recipeDish: props.recipeDish ? props.recipeDish : props.dish.name,
             customTagOptions: props.customTagOptions || allCustomTags,
             error: '',
         })
@@ -61,7 +49,6 @@ const RecipeForm = (props) => {
             cuisine: state.cuisine,
             createdAt: state.createdAt.valueOf(),
             customTags: state.customTags
-            // recipeDish: state.recipeDish
         }
 
         if (!state.url) {
@@ -118,7 +105,6 @@ const RecipeForm = (props) => {
                     value={state.url}
                     onChange={onURLChange}
                     fluid
-                    // width={8}
                 />
                 <Form.Dropdown
                     placeholder='Add ingredients'

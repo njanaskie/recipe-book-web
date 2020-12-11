@@ -1,16 +1,12 @@
-import React, { useContext, useReducer } from 'react'
+import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import uuid from 'uuid'
 import RecipeForm from './RecipeForm'
 import database from '../firebase/firebase'
 import FirebaseContext from '../../context/firebase-context'
 import { useRecipesContext } from '../../context/recipes-context'
-import RecipesContext from '../../context/recipes-context'
-import recipesReducer from '../reducers/recipes'
-import IngredientsContext from '../../context/ingredients-context'
-import ingredientsReducer from '../reducers/ingredients'
 
-const AddRecipe = ({ handleModalClose }) => {
+const AddRecipe = () => {
     const { recipes, recipeDispatch } = useRecipesContext()
     const { user } = useContext(FirebaseContext)
     const history = useHistory()
@@ -20,7 +16,6 @@ const AddRecipe = ({ handleModalClose }) => {
         database.collection('users').doc(user.uid).collection('recipes').doc(customId).set(recipe).then((ref) => {
             recipeDispatch({ type: 'ADD_RECIPE', recipe: {id: customId, ...recipe} })
             history.push('/')
-            // handleModalClose()
         })
     }
 

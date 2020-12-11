@@ -1,10 +1,9 @@
-import React, { useContext, useEffect } from 'react'
-import _ from 'lodash'
+import React  from 'react'
 import { List } from 'semantic-ui-react'
 import IngredientListItem from './IngredientListItem'
 import { useIngredientsContext } from '../../context/ingredients-context'
 
-export const IngredientsList = (props) => {
+export const IngredientsList = () => {
     const { ingredients } = useIngredientsContext()
 
     return (

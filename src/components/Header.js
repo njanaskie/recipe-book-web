@@ -1,16 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { Menu } from 'semantic-ui-react'
-import { startLogout } from '../actions/auth';
-import { firebase } from '../firebase/firebase';
 import SubHeader from './SubHeader'
 
-// export const signOut = () => firebase.auth().signOut()
-
 export const Header = ({ startLogout }) => {
-    
-    // const signOut = () => firebase.auth().signOut()
 
     return (
         <header className="header">

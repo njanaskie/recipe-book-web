@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from './Header'
 import useAllRecipes from '../hooks/useAllRecipes'
 import useIngredients from '../hooks/useIngredients'
 

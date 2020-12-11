@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
 import { ReactTinyLink } from 'react-tiny-link'
-import { Button, Label, Segment, Dropdown, Menu, Confirm, Container } from 'semantic-ui-react'
+import { Label, Segment, Dropdown, Confirm } from 'semantic-ui-react'
 import { useFirebaseContext } from '../../context/firebase-context'
 import { useRecipesContext } from '../../context/recipes-context'
 import database from '../firebase/firebase'
-import RecipeIngredientsCarousel from './RecipeIngredientsCarousel'
 import RecipeCarousel from './RecipeCarousel'
 import RecipeInputModal from './RecipeInputModal';
 import EditRecipe from './EditRecipe'
@@ -14,8 +12,7 @@ const RecipeListItem = ({ recipe }) => {
     const [open, setOpen] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
     const { user, isGuest } = useFirebaseContext()
-    const { recipes, recipeDispatch } = useRecipesContext()
-    const pathname = window.location.pathname
+    const { recipeDispatch } = useRecipesContext()
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const show = () => setOpen(true)
@@ -37,8 +34,6 @@ const RecipeListItem = ({ recipe }) => {
         setIsModalOpen(false)
         setIsEdit(false)
     }
-    // const removeRecipe = () => {
-    // }
 
     return (
         <div className='recipe-group__list'>
@@ -67,7 +62,6 @@ const RecipeListItem = ({ recipe }) => {
                         </div>
                         <div className='recipe-group__tiny-link'>
                             <ReactTinyLink
-                                // cardSize="large"
                                 url={recipe.url}
                                 width='100%'
                                 defaultMedia="/images/image-placeholder.png"
@@ -115,20 +109,6 @@ const RecipeListItem = ({ recipe }) => {
                 </div>
             </div>
         </div>
-
-        // <Link to={`/recipe/${recipe.id}`}>
-        //     <div className='dish-preview'>
-        //         <div className='image-container'>
-        //             <Image size='small' rounded src="/images/image-placeholder.png" />
-        //             <div className='dish-label'>
-        //                 <span>{recipe.name}</span>
-        //             </div>
-        //         </div>
-        //     </div>
-        // </Link>
-
-
-
     )
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Icon, Label, List } from 'semantic-ui-react'
+import { Button, List } from 'semantic-ui-react'
 import { useIngredientsContext } from '../../context/ingredients-context'
 import database from '../firebase/firebase'
 
