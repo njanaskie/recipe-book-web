@@ -14,11 +14,8 @@ export default () => {
     const store = createStore(
         combineReducers({
             ingredients: ingredientsReducer,
-            pantry: pantryReducer,
-            dishes: dishesReducer,
             filters: filtersReducer,
             recipes: recipesReducer,
-            pantryDishes: pantryDishesReducer,
             auth: authReducer
         }),
         composeEnhancers(applyMiddleware(thunk))

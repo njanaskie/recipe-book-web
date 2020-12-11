@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Form, Button, Dropdown } from 'semantic-ui-react'
-import IngredientsContext, { useIngredientsContext } from '../../../context/ingredients-context'
-import database from '../../firebase/firebase'
+import IngredientsContext, { useIngredientsContext } from '../../context/ingredients-context'
+import database from '../firebase/firebase'
 
 const AddIngredientForm = (props) => {
     const initialFormState = {

@@ -8,7 +8,7 @@ import LoginPage from '../components/LoginPage';
 import PrivateRoute from '../routers/PrivateRoute';
 import PublicRoute from '../routers/PublicRoute';
 import SpecialUserRoute from './SpecialUserRoute'
-import IngredientsPage from '../components/Ingredients/IngredientsPage';
+import IngredientsPage from '../components/IngredientsPage';
 import PantryPage from '../components/Pantry/PantryPage'
 import AddDishPage from '../components/Dishes/AddDishPage'
 import DishesPage from '../components/Dishes/DishesPage'
