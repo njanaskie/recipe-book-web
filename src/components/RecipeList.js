@@ -32,7 +32,7 @@ export const RecipeList = () => {
     
     return (
         <div className="content-container">
-                <div className='dish-table'>
+                <div className='recipe-table'>
                     {tableItems}
                 </div>
                 <div className='list-pagination'>

@@ -81,7 +81,7 @@ const AddIngredientForm = (props) => {
                 <h4>Add an ingredient to the site</h4>
             </div>
                 <Form onSubmit={addIngredient} className='form-container'>
-                    {state.error && <p>{state.error}</p>}
+                    {state.error && <p className='form__error'>{state.error}</p>}
                     <Form.Group widths='equal' inline>
                             <Form.Input
                                 id='set-name'

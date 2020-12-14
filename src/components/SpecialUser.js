@@ -6,7 +6,7 @@ export const SpecialUser = () => {
 
     return (
         <div className="content-container">
-            <div className="page-header__admin">
+            <div className="page-header">
                 {isAdmin && <span>You are logged in as an Admin</span>}
                 {isGuest && <span>You are logged in as a guest</span>}
             </div>

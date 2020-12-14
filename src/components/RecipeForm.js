@@ -97,7 +97,7 @@ const RecipeForm = (props) => {
     return (
         <>
             <Form onSubmit={onSubmit} className='form-container'>
-                {state.error && <p>{state.error}</p>}
+                {state.error && <p className='form__error'>{state.error}</p>}
                 <Form.Input
                     type='url'
                     name='url'
