@@ -36,7 +36,7 @@ const RecipeListItem = ({ recipe }) => {
     }
 
     return (
-        <div className='list'>
+        <div className='recipe-list-item'>
             <div className='recipe-segment'>
                 <Segment>
                     <div className='recipe-dropdown'>
