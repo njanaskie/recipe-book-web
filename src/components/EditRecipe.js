@@ -6,15 +6,13 @@ import { useFirebaseContext } from '../../context/firebase-context'
 import { useRecipesContext } from '../../context/recipes-context'
 
 const EditRecipe = ({ recipe }) => {
-    const { recipes, recipeDispatch } = useRecipesContext()
+    const { recipes, editRecipe } = useRecipesContext()
     const history = useHistory()
     const { user } = useFirebaseContext()
 
-    const onSubmit = (editRecipe) => {
-        database.collection('users').doc(user.uid).collection('recipes').doc(recipe.id).update(editRecipe).then(() => {
-            recipeDispatch({ type: 'EDIT_RECIPE', id: recipe.id, editRecipe })
-            history.push('/')
-        })
+    const onSubmit = (recipeEdits) => {
+        editRecipe(recipe.id, recipeEdits)
+        history.push('/')
     }
 
     return (

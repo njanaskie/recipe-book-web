@@ -11,9 +11,9 @@ const AddIngredientForm = (props) => {
         error: ''
     }
     const [state, setState] = React.useState(initialFormState)
-    const { dispatch } = useIngredientsContext()
+    const { dispatch, addIngredient } = useIngredientsContext()
 
-    const addIngredient = (e) => {
+    const handleAddIngredient = (e) => {
         e.preventDefault()
         const ingredient = {
             name: state.name,
@@ -24,9 +24,7 @@ const AddIngredientForm = (props) => {
         if (!state.name || !state.category || !state.price) {
             setState({ error: 'Please provide name, category, and price'})
         } else {
-            database.collection('ingredients').add(ingredient).then((ref) => {
-                dispatch(({ type: 'ADD_INGREDIENT', ingredient: {id: ref.key, ...ingredient} }))
-            })
+            addIngredient(ingredient)
             setState(initialFormState)
         }
     }
@@ -80,7 +78,7 @@ const AddIngredientForm = (props) => {
             <div className='form-container form-title'>
                 <h4>Add an ingredient to the site</h4>
             </div>
-                <Form onSubmit={addIngredient} className='form-container'>
+                <Form onSubmit={handleAddIngredient} className='form-container'>
                     {state.error && <p className='form__error'>{state.error}</p>}
                     <Form.Group widths='equal' inline>
                             <Form.Input

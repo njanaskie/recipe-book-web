@@ -1,18 +1,40 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { firebase } from '../src/firebase/firebase';
+import React, { useEffect, useState, useContext, useReducer } from 'react';
+import database, { firebase, googleAuthProvider } from '../src/firebase/firebase';
 import { history } from '../src/routers/AppRouter';
+import authReducer from '../src/reducers/auth'
 import LoadingPage from '../src/components/LoadingPage'
-import database from '../src/firebase/firebase'
 
 const FirebaseContext = React.createContext()
 
 export const useFirebaseContext = () => useContext(FirebaseContext)
 
 const FirebaseProvider = ({ children }) => {
+    const [auth, authDispatch] = useReducer(authReducer, [])
+    // const authDispatch = useDispatch()
     const [user, setUser] = useState('')
     const [loading, setLoading] = useState(true)
     const [isAdmin, setIsAdmin] = useState()
     const [isGuest, setIsGuest] = useState()
+    const email = process.env.GUEST_EMAIL
+    const password = process.env.GUEST_PASSWORD
+
+    const login = () => {
+        firebase.auth().signInWithPopup(googleAuthProvider).then(() => {
+            authDispatch({ type: 'LOGIN' })
+        })
+    }
+
+    const loginAsGuest = () => {
+        firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
+            authDispatch({ type: 'LOGIN_AS_GUEST' })
+        })
+    }
+
+    const logout = () => {
+        firebase.auth().signOut().then(() => {
+            authDispatch({ type: 'LOGOUT' })
+        });
+    }
 
     useEffect(() => {
         const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
@@ -55,7 +77,7 @@ const FirebaseProvider = ({ children }) => {
     // }
 
     return (
-        <FirebaseContext.Provider value={{ user, isAdmin, isGuest }}>
+        <FirebaseContext.Provider value={{ user, isAdmin, isGuest, login, loginAsGuest, logout }}>
             {children}
         </FirebaseContext.Provider>
     )

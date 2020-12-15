@@ -12,16 +12,14 @@ const RecipeListItem = ({ recipe }) => {
     const [open, setOpen] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
     const { user, isGuest } = useFirebaseContext()
-    const { recipeDispatch } = useRecipesContext()
+    const { removeRecipe } = useRecipesContext()
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const show = () => setOpen(true)
 
     const handleConfirm = () => {
         setOpen(false)
-        database.collection('users').doc(user.uid).collection('recipes').doc(recipe.id).delete().then(() => {
-            recipeDispatch({ type: 'REMOVE_RECIPE', id: recipe.id })
-        })
+        removeRecipe(recipe.id)
     }
     const handleCancel = () => setOpen(false)
 

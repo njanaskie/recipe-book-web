@@ -4,6 +4,10 @@ export default (state = {}, action) => {
             return {
                 uid: action.uid
             };
+        case 'LOGIN_AS_GUEST':
+            return {
+                uid: action.uid
+            };
         case 'LOGOUT':
             return {};
         default:
