@@ -31,15 +31,18 @@ const useAllRecipes = () => {
 
                     recipeDispatch({ type: 'SET_RECIPES', recipes})
                     setCount(docCount)
+                    console.log('api recipe hits')
 
                 }
             }, (e) => {
                 console.log('Error with array. ', e)
             });
 
-        fetchData()
+        if (user) {
+            fetchData()
+        }
 
-    }, [])
+    }, [user])
 
     return { recipes, count }
 }

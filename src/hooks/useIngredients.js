@@ -1,10 +1,12 @@
 import React, { useRef } from 'react'
 import database from '../firebase/firebase'
 import { useIngredientsContext } from '../../context/ingredients-context'
+import { useFirebaseContext } from '../../context/firebase-context'
 
 const useIngredients = () => {
     const { ingredients, dispatch } = useIngredientsContext()
     const isCurrent = useRef(true)
+    const { user } = useFirebaseContext()
 
     React.useEffect(() => {
         return () => {
@@ -22,12 +24,15 @@ const useIngredients = () => {
                 }))
 
                 dispatch({ type: 'SET_INGREDIENTS', ingredients})
+                console.log('api ings hits')
             }
         }, (e) => {
             console.log('Error with array. ', e)
         });
 
-        return () => unsubscribe()
+        if (user) {
+            return () => unsubscribe()
+        }
         
     }, [])
 

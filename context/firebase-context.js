@@ -3,6 +3,7 @@ import database, { firebase, googleAuthProvider } from '../src/firebase/firebase
 import { history } from '../src/routers/AppRouter';
 import authReducer from '../src/reducers/auth'
 import LoadingPage from '../src/components/LoadingPage'
+import useAllRecipes from '../src/hooks/useAllRecipes'
 
 const FirebaseContext = React.createContext()
 
@@ -35,6 +36,12 @@ const FirebaseProvider = ({ children }) => {
             authDispatch({ type: 'LOGOUT' })
         });
     }
+
+    // const isInitialized = () => {
+    //     return new Promise(resolve => {
+    //       firebase.auth.onAuthStateChanged(resolve)
+    //     })
+    //   };
 
     useEffect(() => {
         const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
@@ -77,7 +84,7 @@ const FirebaseProvider = ({ children }) => {
     // }
 
     return (
-        <FirebaseContext.Provider value={{ user, isAdmin, isGuest, login, loginAsGuest, logout }}>
+        <FirebaseContext.Provider value={{ user, loading, isAdmin, isGuest, login, loginAsGuest, logout }}>
             {children}
         </FirebaseContext.Provider>
     )
