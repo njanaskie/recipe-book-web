@@ -1,7 +1,6 @@
 import React from 'react'
 import { Form } from 'semantic-ui-react'
 import { useIngredientsContext } from '../../context/ingredients-context'
-import database from '../firebase/firebase'
 
 const AddIngredientForm = (props) => {
     const initialFormState = {

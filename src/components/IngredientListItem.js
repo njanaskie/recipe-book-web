@@ -1,10 +1,9 @@
 import React from 'react'
 import { Button, List } from 'semantic-ui-react'
 import { useIngredientsContext } from '../../context/ingredients-context'
-import database from '../firebase/firebase'
 
 const IngredientListItem = ({ ingredient }) => {
-  const { dispatch, removeIngredient } = useIngredientsContext()
+  const { removeIngredient } = useIngredientsContext()
 
   const handleRemoveIngredient = () => {
     removeIngredient({ id: ingredient.id })

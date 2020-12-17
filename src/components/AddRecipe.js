@@ -1,8 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useHistory } from 'react-router-dom'
 import RecipeForm from './RecipeForm'
-import database from '../firebase/firebase'
-import FirebaseContext from '../../context/firebase-context'
 import { useRecipesContext } from '../../context/recipes-context'
 
 const AddRecipe = () => {

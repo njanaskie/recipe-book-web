@@ -8,7 +8,6 @@ import PublicRoute from '../routers/PublicRoute';
 import SpecialUserRoute from './SpecialUserRoute'
 import IngredientsPage from '../components/IngredientsPage';
 import HomePage from '../components/HomePage';
-// import AppWrapper from '../components/App'
 
 export const history = createHistory();
 

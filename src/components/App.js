@@ -1,8 +1,6 @@
 import React from 'react';
-import { firebase, isInitialized } from '../firebase/firebase'
 import AppRouter from '../routers/AppRouter'
-import LoadingPage from '../components/LoadingPage'
-import { FirebaseProvider, useFirebaseContext } from '../../context/firebase-context'
+import { FirebaseProvider } from '../../context/firebase-context'
 import { IngredientsProvider } from '../../context/ingredients-context';
 import { RecipesProvider } from '../../context/recipes-context';
 import { FiltersProvider } from '../../context/filters-context';

@@ -1,10 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react'
 import { useFirebaseContext } from '../../context/firebase-context'
 
 
-export const LoginPage = ({ startLogin, startLoginAsGuest }) => {
+export const LoginPage = () => {
     const { login, loginAsGuest } = useFirebaseContext()
 
     const handleLogin = () => {
@@ -30,15 +29,5 @@ export const LoginPage = ({ startLogin, startLoginAsGuest }) => {
         </div>
     )
 }
-
-// const mapDispatchToProps = (dispatch) => {
-//     const email = process.env.GUEST_EMAIL
-//     const password = process.env.GUEST_PASSWORD
-
-//     return {
-//         startLogin: () => dispatch(startLogin()),
-//         startLoginAsGuest: () => dispatch(startLoginAsGuest(email, password))
-//     }
-// };
 
 export default LoginPage;

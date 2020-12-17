@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SubHeader from './SubHeader'
 
-export const Header = ({ startLogout }) => {
+export const Header = () => {
 
     return (
         <header className="header">

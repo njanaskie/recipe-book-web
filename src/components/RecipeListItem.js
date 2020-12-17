@@ -3,7 +3,6 @@ import { ReactTinyLink } from 'react-tiny-link'
 import { Label, Segment, Dropdown, Confirm } from 'semantic-ui-react'
 import { useFirebaseContext } from '../../context/firebase-context'
 import { useRecipesContext } from '../../context/recipes-context'
-import database from '../firebase/firebase'
 import RecipeCarousel from './RecipeCarousel'
 import RecipeInputModal from './RecipeInputModal';
 import EditRecipe from './EditRecipe'

@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { Button, Menu, Icon } from 'semantic-ui-react'
 import { useFirebaseContext } from '../../context/firebase-context'
-import { startLogout } from '../actions/auth';
 import RecipeInputModal from './RecipeInputModal';
 import AddRecipe from './AddRecipe'
-import { useIngredientsContext } from '../../context/ingredients-context'
 
-export const SubHeader = ({ startLogout }) => {
+export const SubHeader = () => {
     const { isAdmin, logout } = useFirebaseContext()
-    const { ingredients } = useIngredientsContext()
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const handleModalOpen = () => {
@@ -38,9 +34,5 @@ export const SubHeader = ({ startLogout }) => {
         </div>
     )
 }
-
-// const mapDispatchToProps = (dispatch) => ({
-//     startLogout: () => dispatch(startLogout())
-// });
 
 export default SubHeader;
