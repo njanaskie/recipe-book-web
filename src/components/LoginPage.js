@@ -20,10 +20,10 @@ export const LoginPage = () => {
                 <img className="logo__image" src="/images/app-logo.png" />
                 <p className='box-layout__subtitle'>Save your favorite recipes</p>
                 <div className='box-layout__button'>
-                    <Button color='google plus' onClick={handleLogin}>Login with Google</Button>
+                    <Button color='google plus' onClick={handleLogin}>Log in with Google</Button>
                 </div>
                 <div className='box-layout__button'>
-                    <Button onClick={handleLoginAsGuest}>Login as a Guest</Button>
+                    <Button onClick={handleLoginAsGuest}>Log in as a Guest</Button>
                 </div>
             </div>
         </div>

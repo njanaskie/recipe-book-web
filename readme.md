@@ -1,18 +1,7 @@
-# To Run Locally
+# Recipe Book - Save and Search Online Recipes
 
-yarn run dev-server
+React Hooks, Context API, Firebase Firestore. Styled with Semantic UI React.
 
-Go to http://localhost:8080/. 
-
-# Git Commands
-
-git init - Create a new git repo
-git status - View the changes to your project code
-git add - Add files to staging area
-git commit - Creates a new commit with files from staging area
-git log - View recent commits
-
-
-# Test Commands
-
-watch - yarn test -- --watch
+Deployed on Heroku.
+https://recipe-book-8534.herokuapp.com/
+To log in with a demo account, select 'Log in as a Guest'
