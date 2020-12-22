@@ -10,11 +10,11 @@
     display: flex;
     position: relative;
     justify-content: center;
-    bottom: 0;
-    margin-bottom: $m-size;
+    // bottom: 0;
+    padding-bottom: $m-size;
 
     @media (min-width: $desktop-breakpoint) {
-        margin-bottom: $l-size;
+        padding-bottom: $l-size;
     }
 }
 
