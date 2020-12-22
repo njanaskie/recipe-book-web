@@ -2,7 +2,6 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    // justify-content: space-between;
     width: 50%
 }
 
@@ -10,7 +9,6 @@
     display: flex;
     position: relative;
     justify-content: center;
-    // bottom: 0;
     padding-bottom: $m-size;
 
     @media (min-width: $desktop-breakpoint) {
