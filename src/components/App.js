@@ -5,7 +5,6 @@ import { IngredientsProvider } from '../../context/ingredients-context';
 import { RecipesProvider } from '../../context/recipes-context';
 import { FiltersProvider } from '../../context/filters-context';
 import AppWrapper from '../components/AppWrapper';
-import { firebase } from '../firebase/firebase';
 
 const App = () => {
 
