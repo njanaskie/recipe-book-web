@@ -31,7 +31,6 @@ const useAllRecipes = () => {
 
                     recipeDispatch({ type: 'SET_RECIPES', recipes})
                     setCount(docCount)
-                    console.log('api recipe hits')
 
                 }
             }, (e) => {

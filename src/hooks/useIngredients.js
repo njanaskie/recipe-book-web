@@ -24,7 +24,6 @@ const useIngredients = () => {
                 }))
 
                 dispatch({ type: 'SET_INGREDIENTS', ingredients})
-                console.log('api ings hits')
             }
         }, (e) => {
             console.log('Error with array. ', e)
