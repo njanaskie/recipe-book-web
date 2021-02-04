@@ -1,5 +1,6 @@
 node_modules/
 public/dist/
+src/server/serviceAccount.json
 .env.test
 .env.development
 .env
