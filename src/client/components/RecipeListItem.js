@@ -20,7 +20,7 @@ const RecipeListItem = ({ recipe }) => {
     const handleConfirm = () => {
         setOpen(false)
         // removeRecipe(recipe.id)
-        removeRecipeService(recipe.id)
+        removeRecipeService({ id: recipe.id })
         recipeDispatch({ type: 'REMOVE_RECIPE', id: recipe.id })
     }
     const handleCancel = () => setOpen(false)
@@ -92,6 +92,7 @@ const RecipeListItem = ({ recipe }) => {
                                 </div>
                             )
                         }
+                        <div>{recipe.id}</div>
                     </div>
                     <RecipeCarousel items={recipe.ingredients}>
                         {recipe.ingredients &&

@@ -15,13 +15,13 @@ getRecipes = async (req, res) => {
 
 }
 
-createRecipe = (req, res) => {
+createRecipe = async (req, res) => {
     const auth = req.currentUser;
 
     if (auth) {
         console.log('authenticated!', auth);
         const recipe = new Recipe(req.body)
-        const savedRecipe = recipe.save()
+        const savedRecipe = await recipe.save()
 
         return res.status(201).json(savedRecipe);
     }
@@ -33,21 +33,44 @@ removeRecipe = async (req, res) => {
     const auth = req.currentUser;
 
     if (auth) {
-        await Recipe.findOneAndDelete({ _id: req.params.id }, (err, recipe) => {
-            if (err) {
-                return res.status(400).json({ success: false, error: err })
-            }
-
+        try {
+            console.log(req.params);
+        
+            const recipe = await Recipe.findById(req.params.id);
             if (!recipe) {
-                return res
-                    .status(404)
-                    .json({ success: false, error: `Recipe not found` })
+              res.status(404).json({
+                success: false,
+                error: 'Not Found'
+              });
             }
-
-            return res.status(200).json({ success: true, data: recipe })
-        }).catch(err => console.log(err))
+        
+            await recipe.delete();
+            return res.status(200).json({
+              success: true,
+              data: {}
+            });
+          } catch (error) {
+            console.log(error)
+          }
     }   
     return res.status(403).send('Not authorized post')
+
+    // if (auth) {
+    //     await Recipe.findOneAndDelete({ _id: req.params.id }, (err, recipe) => {
+    //         if (err) {
+    //             return res.status(400).json({ success: false, error: err })
+    //         }
+
+    //         if (!recipe) {
+    //             return res
+    //                 .status(404)
+    //                 .json({ success: false, error: `Recipe not found` })
+    //         }
+
+    //         return res.status(200).json({ success: true, data: recipe })
+    //     }).catch(err => console.log(err))
+    // }   
+    // return res.status(403).send('Not authorized post')
 
 }
 
