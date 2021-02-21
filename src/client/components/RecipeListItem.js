@@ -92,7 +92,6 @@ const RecipeListItem = ({ recipe }) => {
                                 </div>
                             )
                         }
-                        <div>{recipe.id}</div>
                     </div>
                     <RecipeCarousel items={recipe.ingredients}>
                         {recipe.ingredients &&
