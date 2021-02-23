@@ -80,6 +80,7 @@ module.exports = (env) => {
                 'process.env.FIREBASE_MEASUREMENT_ID': JSON.stringify(process.env.FIREBASE_MEASUREMENT_ID),
                 'process.env.GUEST_EMAIL': JSON.stringify(process.env.GUEST_EMAIL),
                 'process.env.GUEST_PASSWORD': JSON.stringify(process.env.GUEST_PASSWORD),
+                'process.env.PROXY_SERVER': JSON.stringify(process.env.PROXY_SERVER),
             })
         ],
         devtool: isProduction ? 'source-map' : 'inline-source-map',

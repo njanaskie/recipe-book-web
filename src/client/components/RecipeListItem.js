@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ReactTinyLink } from 'react-tiny-link'
+import { ReactTinyLink, useScrapper } from 'react-tiny-link'
 import { Label, Segment, Dropdown, Confirm } from 'semantic-ui-react'
 import { useFirebaseContext } from '../context/firebase-context'
 import { useRecipesContext } from '../context/recipes-context'
@@ -62,6 +62,7 @@ const RecipeListItem = ({ recipe }) => {
                     <div className='recipe-group__tiny-link'>
                         <ReactTinyLink
                             url={recipe.url}
+                            proxyUrl={process.env.PROXY_SERVER}
                             width='100%'
                             defaultMedia="/images/image-placeholder.png"
                         >
