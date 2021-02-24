@@ -3,8 +3,13 @@ const Ingredient = require('../models/ingredient')
 
 
 getIngredients = async (req, res) => {
+    const auth = req.currentUser;
+
+    if (auth) {
         const ingredients = await Ingredient.find({}).sort( { name: 1 } )
         return res.json(ingredients.map((ingredient) => ingredient.toJSON() ));
+    }
+    return res.status(403).send('Not authorized get')
 }
 // ingredientsRouter.get('/ingredients', (req, res) => {
 //     // const auth = req.currentUser;
@@ -19,16 +24,16 @@ getIngredients = async (req, res) => {
 // });
 
 createIngredient = (req, res) => {
-    // const auth = req.currentUser;
+    const auth = req.currentUser;
 
-    // if (auth) {
-    //     console.log('authenticated!', auth);
+    if (auth) {
+        // console.log('authenticated!', auth);
         const ingredient = new Ingredient(req.body)
         const savedIngredient = ingredient.save()
 
         return res.status(201).json(savedIngredient);
-    // }
-    // return res.status(403).send('Not authorized post')
+    }
+    return res.status(403).send('Not authorized post')
 
 }
 // ingredientsRouter.post('/ingredients', (req, res) => {
@@ -45,9 +50,9 @@ createIngredient = (req, res) => {
 // });
 
 removeIngredient = async (req, res) => {
-    // const auth = req.currentUser;
+    const auth = req.currentUser;
 
-    // if (auth) {
+    if (auth) {
 
         await Ingredient.findOneAndDelete({ _id: req.params.id }, (err, ingredient) => {
             if (err) {
@@ -63,7 +68,8 @@ removeIngredient = async (req, res) => {
             return res.status(200).json({ success: true, data: ingredient })
         }).catch(err => console.log(err))
 
-// }
+    }
+    return res.status(403).send('Not authorized post')
 
 }
 

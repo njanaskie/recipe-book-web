@@ -22,7 +22,7 @@ export const addRecipeService = async (recipe) => {
     const payload = recipe
 
     try {
-        console.log(payload);
+        // console.log(payload);
         const res = await api.post('/recipes', payload, header)
         return res.data
     } catch (e) {

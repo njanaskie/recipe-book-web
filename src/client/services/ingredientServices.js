@@ -35,7 +35,7 @@ export const addIngredientService = async (ingredient, dispatch) => {
     //             console.log(e)
     //         })
     try {
-        console.log(payload);
+        // console.log(payload);
         const res = await api.post('/ingredients', payload, header)
         return res.data
     } catch (e) {

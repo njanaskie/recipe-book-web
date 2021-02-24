@@ -4,7 +4,6 @@ const Recipe = require('../models/recipe')
 
 getRecipes = async (req, res) => {
         const auth = req.currentUser;
-        console.log(auth)
 
         if (auth) {
             const recipes = await Recipe.find({ savedBy: auth.uid })
@@ -19,7 +18,7 @@ createRecipe = async (req, res) => {
     const auth = req.currentUser;
 
     if (auth) {
-        console.log('authenticated!', auth);
+        // console.log('authenticated!', auth);
         const recipe = new Recipe(req.body)
         const savedRecipe = await recipe.save()
 
@@ -34,8 +33,6 @@ removeRecipe = async (req, res) => {
 
     if (auth) {
         try {
-            console.log(req.params);
-        
             const recipe = await Recipe.findById(req.params.id);
             if (!recipe) {
               res.status(404).json({
