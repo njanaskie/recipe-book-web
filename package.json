@@ -8,13 +8,15 @@
     "npm": "6.13.4",
     "yarn": "1.22.0"
   },
+  "proxy": "http://localhost:3001",
   "scripts": {
     "build:dev": "webpack",
     "build:prod": "webpack -p --env production",
     "dev-client": "webpack-dev-server",
-    "start": "nodemon src/server/server.js",
-    "dev": "concurrently --kill-others-on-fail \"yarn run start\" \"yarn run dev-client\"",
+    "dev-server": "nodemon src/server/server.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn run dev-server\" \"yarn run dev-client\"",
     "test": "cross-env NODE_ENV=test jest --config=jest.config.json",
+    "start": "node src/server/server.js",
     "heroku-postbuild": "yarn run build:prod"
   },
   "dependencies": {
