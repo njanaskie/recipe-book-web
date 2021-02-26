@@ -3,11 +3,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    // width: 100%;
-
-    // @media (min-width: $desktop-breakpoint) {
-    //     width: 75%
-    // }
 }
 
 .recipe-dropdown {
@@ -21,11 +16,7 @@
     justify-content: flex-start;
     padding-top: 0.5rem;
     margin-left: $s-size;
-    flex-direction: column;
-
-    @media (min-width: $desktop-breakpoint) {
-        flex-direction: row;
-    }
+    flex-direction: row;
 }
 
 .recipe-group__tag-item {
