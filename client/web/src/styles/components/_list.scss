@@ -2,7 +2,11 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    width: 50%
+    width: 100%;
+
+    @media (min-width: $desktop-breakpoint) {
+        width: 50%
+    }
 }
 
 .list-pagination {

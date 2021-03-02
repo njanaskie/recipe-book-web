@@ -24,6 +24,8 @@ app.use(cors());
 app.use(express.json());
 app.use(decodeIDToken);
 
+app.use('/api', router);
+
 if(process.env.NODE_ENV === 'production') {
   app.use(express.static(publicPath));
 
@@ -31,8 +33,6 @@ if(process.env.NODE_ENV === 'production') {
       res.sendFile(path.join(publicPath, 'index.html'));
   });
 }
-
-app.use('/api', router);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
