@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Pagination } from 'semantic-ui-react'
 import RecipeListItem from './RecipeListItem'
 import { useFiltersContext } from '../context/filters-context'
-import { config } from '../../../config'
+import { config } from '../config/config'
 import selectRecipes from '../selectors/recipes'
 import { useRecipesContext } from '../context/recipes-context'
 

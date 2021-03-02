@@ -1,5 +1,5 @@
 node_modules/
-public/dist/
+client/web/public/dist/
 .env.test
 .env.development
 .env

@@ -2,11 +2,11 @@ const path = require('path');
 const express = require('express');
 const app = express();
 require('dotenv').config({ path: '.env.development' });
-const router = require('./routes/router')
+const router = require('./server/routes/router')
 const mongoose = require('mongoose');
 const cors = require('cors');
-const decodeIDToken = require('./middleware/authenticateToken');
-const publicPath = path.join(__dirname, '..', '..', 'public');
+const decodeIDToken = require('./server/middleware/authenticateToken');
+const publicPath = path.join(__dirname, 'client', 'web', 'public');
 const port = process.env.PORT || 3000;
 
 mongoose.connect(
