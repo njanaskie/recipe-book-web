@@ -10,6 +10,8 @@ const useAllRecipes = () => {
     const isCurrent = useRef(true)
     const { user } = useFirebaseContext()
 
+    console.log(recipes)
+
     React.useEffect(() => {
         return () => {
             isCurrent.current = false

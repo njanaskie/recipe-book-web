@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Form } from 'semantic-ui-react'
-import moment from 'moment'
 import { useFirebaseContext } from '../context/firebase-context'
 import recipeTypes from '../fixtures/recipeTypes'
 import recipeCuisines from '../fixtures/recipeCuisines'
 import selectCustomTags from '../selectors/custom-tags'
 import { useIngredientsContext } from '../context/ingredients-context'
 import { useRecipesContext } from '../context/recipes-context'
+import { TextInput } from 'react-native-gesture-handler'
 
 const RecipeForm = (props) => {
     const { isGuest, user } = useFirebaseContext()
@@ -99,87 +98,19 @@ const RecipeForm = (props) => {
     }
 
     return (
-        <>
-            <Form onSubmit={onSubmit} className='form-container'>
-                {state.error && <p className='form__error'>{state.error}</p>}
-                <Form.Input
-                    type='url'
-                    name='url'
-                    placeholder='Insert URL'
-                    value={state.url}
-                    onChange={onURLChange}
-                    fluid
-                />
-                <Form.Dropdown
-                    placeholder='Add ingredients'
-                    name='ingredients'
-                    fluid multiple search selection
-                    multiple={true}
-                    value={state.ingredients.sort((a,b) => a.localeCompare(b))}
-                    onChange={onIngredientChange}
-                    options={ingredients.map(ingredient => {
-                        return {
-                            key: ingredient.name,
-                            text: ingredient.name,
-                            value: ingredient.name
-                        }
-                    })}
-                />
-                <Form.Dropdown
-                    placeholder='Add custom tags'
-                    name='customTags'
-                    fluid multiple search selection
-                    allowAdditions
-                    // multiple={true}
-                    value={state.customTags}
-                    onChange={onCustomTagChange}
-                    onAddItem={onAddCustomTag}
-                    options={state.customTagOptions.map(tag => {
-                        return {
-                            key: tag,
-                            text: tag,
-                            value: tag.toLocaleString()
-                        }
-                    })}
-                />
-
-                <Form.Group widths='equal'>
-                    <Form.Dropdown
-                        placeholder='Select recipe type'
-                        name='type'
-                        clearable
-                        fluid selection
-                        clearable={true}
-                        value={state.type}
-                        onChange={onTypeChange}
-                        options={recipeTypes.map(recipeType => {
-                            return {
-                                key: recipeType,
-                                text: recipeType,
-                                value: recipeType
-                            }
-                        })}
-                    />
-                    <Form.Dropdown
-                        placeholder='Select cuisine'
-                        name='cuisine'
-                        clearable
-                        fluid selection
-                        clearable={true}
-                        value={state.cuisine}
-                        onChange={onCuisineChange}
-                        options={recipeCuisines.map(recipeCuisine => {
-                            return {
-                                key: recipeCuisine,
-                                text: recipeCuisine,
-                                value: recipeCuisine
-                            }
-                        })}
-                    />
-                    <Form.Button fluid basic color='green' type='submit' disabled={isGuest ? true : false}>Save Recipe</Form.Button>
-                </Form.Group>
-            </Form>
-        </>
+        <View onSubmit={onSubmit}>
+            {state.error && <Text>{state.error}</Text>}
+            <TextInput
+                secureTextEntry={true}
+                placeholder='Insert URL'
+            />
+            <Text
+                // style={styles.closeText}
+                // onPress={toggleModal}
+            >
+                Close Modal
+            </Text>
+        </View>
         
     )
 }
