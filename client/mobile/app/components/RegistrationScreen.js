@@ -1,20 +1,38 @@
 import React, { useState } from 'react'
 import { StyleSheet, Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-// import { useFirebaseContext } from '../context/firebase-context'
+import { firebase } from '../firebase/firebase';
 
-export default function LoginScreen({navigation}) {
+export default function RegistrationScreen({navigation}) {
+    const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    // const { login } = useFirebaseContext()
-
+    const [confirmPassword, setConfirmPassword] = useState('')
 
     const onFooterLinkPress = () => {
-        navigation.navigate('Registration')
+        navigation.navigate('Login')
     }
 
-    const onGoogleLoginPress = () => {
-        // login()
+    const onRegisterPress = () => {
+        if (password !== confirmPassword) {
+            alert("Passwords don't match.")
+            return
+        }
+        firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then((response) => {
+                const uid = response.user.uid
+                const data = {
+                    id: uid,
+                    email,
+                    fullName,
+                };
+                navigation.navigate('PlaceholderScreen', {user: data})
+            })
+            .catch((error) => {
+                alert(error)
+        });
     }
 
     return (
@@ -25,6 +43,15 @@ export default function LoginScreen({navigation}) {
                 <Image
                     style={styles.logo}
                     source={require('../assets/app-logo.png')}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder='Full Name'
+                    placeholderTextColor="#aaaaaa"
+                    onChangeText={(text) => setFullName(text)}
+                    value={fullName}
+                    underlineColorAndroid="transparent"
+                    autoCapitalize="none"
                 />
                 <TextInput
                     style={styles.input}
@@ -45,23 +72,24 @@ export default function LoginScreen({navigation}) {
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
+                <TextInput
+                    style={styles.input}
+                    placeholderTextColor="#aaaaaa"
+                    secureTextEntry
+                    placeholder='Confirm Password'
+                    onChangeText={(text) => setConfirmPassword(text)}
+                    value={confirmPassword}
+                    underlineColorAndroid="transparent"
+                    autoCapitalize="none"
+                />
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={() => onLoginPress()}>
-                    <Text style={styles.buttonTitle}>Log in</Text>
+                    onPress={() => onRegisterPress()}>
+                    <Text style={styles.buttonTitle}>Create account</Text>
                 </TouchableOpacity>
                 <View style={styles.footerView}>
-                    <Text style={styles.footerText}>Don't have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign up</Text></Text>
+                    <Text style={styles.footerText}>Already got an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Log in</Text></Text>
                 </View>
-                <View style={styles.line} />
-                <View style={styles.footerView}>
-                    <Text style={styles.subTitle}>Or sign in with</Text>
-                </View>              
-                <TouchableOpacity
-                    style={styles.buttonGoogle}
-                    onPress={() => onGoogleLoginPress()}>
-                    <Text style={styles.buttonTitle}>Google</Text>
-            </TouchableOpacity>
             </KeyboardAwareScrollView>
         </View>
     )
@@ -74,13 +102,6 @@ const styles = StyleSheet.create({
     },
     title: {
 
-    },
-    line: {
-        alignSelf: 'center',
-        borderBottomColor: '#101010',
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        paddingTop: 60,
-        width: '80%'
     },
     logo: {
         flex: 1,
@@ -128,20 +149,5 @@ const styles = StyleSheet.create({
         color: "#788eec",
         fontWeight: "bold",
         fontSize: 16
-    },
-    buttonGoogle: {
-        backgroundColor: '#db4a39',
-        marginLeft: 120,
-        marginRight: 120,
-        marginTop: 20,
-        height: 48,
-        borderRadius: 5,
-        alignItems: "center",
-        justifyContent: 'center'
-    },
-    subTitle: {
-        fontSize: 12,
-        color: '#101010',
-        marginTop: 20,
-    },
+    }
 })

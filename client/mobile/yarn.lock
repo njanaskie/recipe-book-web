@@ -3931,6 +3931,11 @@ dot-prop@^5.2.0:
   dependencies:
     is-obj "^2.0.0"
 
+dotenv@^8.0.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
+  integrity sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
+
 duplexify@^4.0.0, duplexify@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/duplexify/-/duplexify-4.1.1.tgz#7027dc374f157b122a8ae08c2d3ea4d2d953aa61"
@@ -7780,6 +7785,13 @@ react-native-bottomsheet-reanimated@^0.0.22:
   version "0.0.22"
   resolved "https://registry.yarnpkg.com/react-native-bottomsheet-reanimated/-/react-native-bottomsheet-reanimated-0.0.22.tgz#bc694887f6da06cf43f3ee0d58b7f88c175963f4"
   integrity sha512-aR+8VpmxF5l/mD3yBRr7aV8ddSaVBZxmF+ZT5zYlpDTx5OzGW3jrtt595JBGSv2FzXIi5OnWkekQTCCosGXR6A==
+
+react-native-dotenv@^2.5.3:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-2.5.3.tgz#ec70186d2b1491b0519647c53bf91f34395377a3"
+  integrity sha512-Fibw5q6vy91aRwol7yO6U9Om+EyE7Vs4pO70AYGRkDuMkaQ4EIyYw9mmiPcKo6VFCwlpE8y1AZImxoKREFASXA==
+  dependencies:
+    dotenv "^8.0.0"
 
 react-native-gesture-handler@^1.10.3:
   version "1.10.3"

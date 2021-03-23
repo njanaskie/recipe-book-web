@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext, useReducer } from 'react';
 import database, { firebase, googleAuthProvider } from '../firebase/firebase';
-import { history } from '../routers/AppRouter';
+// import { history } from '../routers/AppRouter';
 import authReducer from '../reducers/auth'
-import LoadingPage from '../components/LoadingPage'
+import LoadingScreen from '../components/LoadingScreen'
 
 const FirebaseContext = React.createContext()
 
@@ -12,10 +12,10 @@ const FirebaseProvider = ({ children }) => {
     const [auth, authDispatch] = useReducer(authReducer, [])
     const [user, setUser] = useState('')
     const [loading, setLoading] = useState(true)
-    const [isAdmin, setIsAdmin] = useState()
-    const [isGuest, setIsGuest] = useState()
-    const email = process.env.GUEST_EMAIL
-    const password = process.env.GUEST_PASSWORD
+    // const [isAdmin, setIsAdmin] = useState()
+    // const [isGuest, setIsGuest] = useState()
+    // const email = process.env.GUEST_EMAIL
+    // const password = process.env.GUEST_PASSWORD
 
     const login = () => {
         firebase.auth().signInWithPopup(googleAuthProvider).then(() => {
@@ -23,11 +23,11 @@ const FirebaseProvider = ({ children }) => {
         })
     }
 
-    const loginAsGuest = () => {
-        firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-            authDispatch({ type: 'LOGIN_AS_GUEST' })
-        })
-    }
+    // const loginAsGuest = () => {
+    //     firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
+    //         authDispatch({ type: 'LOGIN_AS_GUEST' })
+    //     })
+    // }
 
     const logout = () => {
         firebase.auth().signOut().then(() => {
@@ -39,34 +39,34 @@ const FirebaseProvider = ({ children }) => {
         const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
             setUser(user)
             setLoading(false)
-            setIsAdmin()
-            setIsGuest()
+            // setIsAdmin()
+            // setIsGuest()
         })
 
         return () => unsubscribe()
     }, [])
 
-    useEffect(() => {
-        if (user) {
-            database.collection('users').doc(user.uid).get()
-            .then((doc) => {
-                const userData = doc.data()
-                if (userData) {
-                    if (userData.isAdmin === true) {
-                        const isAdmin = userData.isAdmin
-                        setIsAdmin(isAdmin)
-                    } else if (userData.isGuest === true) {
-                        const isGuest = userData.isGuest
-                        setIsGuest(isGuest)
-                    }
-                }
-            })
-        }
-    }, [user])
+    // useEffect(() => {
+    //     if (user) {
+    //         database.collection('users').doc(user.uid).get()
+    //         .then((doc) => {
+    //             const userData = doc.data()
+    //             if (userData) {
+    //                 if (userData.isAdmin === true) {
+    //                     const isAdmin = userData.isAdmin
+    //                     setIsAdmin(isAdmin)
+    //                 } else if (userData.isGuest === true) {
+    //                     const isGuest = userData.isGuest
+    //                     setIsGuest(isGuest)
+    //                 }
+    //             }
+    //         })
+    //     }
+    // }, [user])
 
-    if (loading) {
-        return <LoadingPage />
-    }
+    // if (loading) {
+    //     return <LoadingScreen />
+    // }
     // if (user) {
     //     if (history.location.pathname === '/') {
     //         history.push('/home')
@@ -76,7 +76,7 @@ const FirebaseProvider = ({ children }) => {
     // }
 
     return (
-        <FirebaseContext.Provider value={{ user, loading, isAdmin, isGuest, login, loginAsGuest, logout }}>
+        <FirebaseContext.Provider value={{ user, loading, login, loginAsGuest, logout }}>
             {children}
         </FirebaseContext.Provider>
     )

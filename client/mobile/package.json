@@ -26,6 +26,7 @@
     "react-dom": "16.13.1",
     "react-native": "~0.63.4",
     "react-native-bottomsheet-reanimated": "^0.0.22",
+    "react-native-dotenv": "^2.5.3",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-interactable-reanimated": "^0.0.8",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",

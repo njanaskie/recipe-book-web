@@ -24,7 +24,9 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import AddRecipe from "./components/AddRecipe";
 import LoginScreen from './components/LoginScreen'
-import AppWrapper from './components/AppWrapper'
+// import AppWrapper from './components/AppWrapper'
+import RegistrationScreen from './components/RegistrationScreen'
+import PlaceholderScreen from './components/PlaceholderScreen'
 
 import { useFirebaseContext } from './context/firebase-context'
 
@@ -40,7 +42,7 @@ export default function App() {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  const renderContent = () => (
+  renderContent = () => (
     <View style={styles.modal}>
       <Text>List items here</Text>
     </View>
@@ -62,40 +64,51 @@ export default function App() {
     BottomSheet.snapTo(index);
   };
 
+  // <Stack.Screen name='LoginScreen' component={
+  //   <SafeAreaView style={styles.container}>
+  //     <View>
+  //       <TouchableOpacity
+  //         style={{ padding: 20 }}
+  //         onPress={toggleModal}
+  //       >
+  //         <Feather name="plus-circle" size={150} color='#3eb489'/>
+  //       </TouchableOpacity>
+  //       <Modal
+  //         isVisible={isModalVisible}
+  //       >
+  //         <AddRecipe />
+  //       </Modal>
+  //     </View>
+  //     <BottomSheet
+  //       enabledBottomInitialAnimation={true}
+  //       ref={sheetRef}
+  //       initialSnap={0}
+  //       snapPoints={snapPoints}
+  //       // borderRadius={10} 
+  //       renderContent={renderContent}
+  //       renderHeader={renderHeader}
+  //       />
+  //   </SafeAreaView>
+  // }
+  // />
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        { user ? (
-          <SafeAreaView style={styles.container}>
-            <View>
-              <TouchableOpacity
-                style={{ padding: 20 }}
-                onPress={toggleModal}
-              >
-                <Feather name="plus-circle" size={150} color='#3eb489'/>
-              </TouchableOpacity>
-              <Modal
-                isVisible={isModalVisible}
-              >
-                <AddRecipe />
-              </Modal>
-            </View>
-            <BottomSheet
-              enabledBottomInitialAnimation={true}
-              ref={sheetRef}
-              initialSnap={0}
-              snapPoints={snapPoints}
-              // borderRadius={10} 
-              renderContent={renderContent}
-              renderHeader={renderHeader}
-              />
-          </SafeAreaView>
-        ) : (
-          <Stack.Screen name='LoginScreen' component={LoginScreen}/>
-        )}
-      
-      </Stack.Navigator>
-    </NavigationContainer>
+    // <AppWrapper>
+      <NavigationContainer>
+        <Stack.Navigator>
+          { user ? (
+            <Stack.Screen name='PlaceholderScreen' component={PlaceholderScreen} />
+          ) : (
+            <React.Fragment>
+              <Stack.Screen name='LoginScreen' component={LoginScreen}/>
+              <Stack.Screen name="Registration" component={RegistrationScreen} />
+            </React.Fragment>
+          )}
+        
+        </Stack.Navigator>
+      </NavigationContainer>
+    
+    // </AppWrapper>
   );
 }
 
