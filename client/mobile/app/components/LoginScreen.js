@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import { StyleSheet, Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { firebase, googleAuthProvider } from '../firebase/firebase';
+import { GoogleSignin } from '@react-native-community/google-signin';
 // import { useFirebaseContext } from '../context/firebase-context'
+
+
 
 export default function LoginScreen({navigation}) {
     const [email, setEmail] = useState('')
@@ -13,9 +17,41 @@ export default function LoginScreen({navigation}) {
         navigation.navigate('Registration')
     }
 
-    const onGoogleLoginPress = () => {
-        // login()
+    const onLoginPress = () => {
+        firebase
+            .auth()
+            .signInWithEmailAndPassword(email, password)
+            .then((response) => {
+                const uid = response.user.uid
+                if (response && uid) {
+                    navigation.navigate('PlaceholderScreen', {response})
+                }
+            })
+            .catch(error => {
+                alert(error)
+            })
     }
+
+    const onGoogleLoginPress = async () => {
+        try {
+            // Get the users ID token
+            const { idToken } = await GoogleSignin.signIn();
+
+            // Create a Google credential with the token
+            const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+            // Sign-in the user with the credential
+            await auth().signInWithCredential(googleCredential)
+            //we need to catch the whole sign up process if it fails too.
+            .catch(error => {
+                console.log('Something went wrong with sign up: ', error);
+            });
+
+        } catch(error) {
+            console.log({error});
+        }
+    }
+    
 
     return (
         <View style={styles.container}>

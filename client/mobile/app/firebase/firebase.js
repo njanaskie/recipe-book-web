@@ -11,6 +11,7 @@ import {
   FIREBASE_APP_ID,
   FIREBASE_MEASUREMENT_ID,
 } from '@env';
+import { GoogleSignin } from '@react-native-community/google-signin';
 
 const config = {
     apiKey: FIREBASE_API_KEY,
@@ -25,6 +26,7 @@ const config = {
 
   try {
     firebase.initializeApp(config);
+    GoogleSignin.configure();
   } catch (err) {
     if (!/already exists/.test(err.message)) {
       console.error('Firebase initialization error', err.stack);

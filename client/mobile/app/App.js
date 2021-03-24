@@ -100,7 +100,7 @@ export default function App() {
             <Stack.Screen name='PlaceholderScreen' component={PlaceholderScreen} />
           ) : (
             <React.Fragment>
-              <Stack.Screen name='LoginScreen' component={LoginScreen}/>
+              <Stack.Screen name='Login' component={LoginScreen}/>
               <Stack.Screen name="Registration" component={RegistrationScreen} />
             </React.Fragment>
           )}
