@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -24,9 +24,10 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import AddRecipe from "./components/AddRecipe";
 import LoginScreen from './components/LoginScreen'
-// import AppWrapper from './components/AppWrapper'
+import AppWrapper from './components/AppWrapper'
 import RegistrationScreen from './components/RegistrationScreen'
 import PlaceholderScreen from './components/PlaceholderScreen'
+import { firebase } from './firebase/firebase';
 
 import { useFirebaseContext } from './context/firebase-context'
 
@@ -64,6 +65,17 @@ export default function App() {
     BottomSheet.snapTo(index);
   };
 
+  useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+        setUser(user)
+        setLoading(false)
+        // setIsAdmin()
+        // setIsGuest()
+    })
+
+    return () => unsubscribe()
+}, [])
+
   // <Stack.Screen name='LoginScreen' component={
   //   <SafeAreaView style={styles.container}>
   //     <View>
@@ -97,7 +109,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           { user ? (
-            <Stack.Screen name='PlaceholderScreen' component={PlaceholderScreen} />
+              <Stack.Screen name='Placeholder' component={PlaceholderScreen} />
           ) : (
             <React.Fragment>
               <Stack.Screen name='Login' component={LoginScreen}/>

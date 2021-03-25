@@ -1,7 +1,7 @@
-// import React from 'react';
-// import { View } from 'react-native'
+import React from 'react';
+import { View } from 'react-native'
 // import AppRouter from '../routers/AppRouter'
-// import { FirebaseProvider } from '../context/firebase-context'
+import { FirebaseProvider } from '../context/firebase-context'
 // import { IngredientsProvider } from '../context/ingredients-context';
 // import { RecipesProvider } from '../context/recipes-context';
 // import { FiltersProvider } from '../context/filters-context';
@@ -9,24 +9,18 @@
 // import useAllRecipes from '../hooks/useAllRecipes'
 // import useIngredients from '../hooks/useIngredients'
 
-// const AppWrapper = (props) => {
-//     // const recipes = useAllRecipes()
-//     // const ingredients = useIngredients()
+const AppWrapper = (props) => {
+    // const recipes = useAllRecipes()
+    // const ingredients = useIngredients()
 
-//     return (
-//         // <FirebaseProvider >
-//         //     <RecipesProvider>
-//         //         <IngredientsProvider>
-//         //             <FiltersProvider>
-//                         // <View>
-//                         //     {props.children}
-//                         // </View>
-//         //             </FiltersProvider>
-//         //         </IngredientsProvider>
-//         //     </RecipesProvider>
-//         // </FirebaseProvider>
-//     )
+    return (
+        <FirebaseProvider >
+            <View>
+                {props.children}
+            </View>
+        </FirebaseProvider>
+    )
     
-// }
+}
 
-// export default AppWrapper;
+export default AppWrapper;

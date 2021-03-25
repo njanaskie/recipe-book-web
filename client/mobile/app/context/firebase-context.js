@@ -23,11 +23,11 @@ const FirebaseProvider = ({ children }) => {
         })
     }
 
-    // const loginAsGuest = () => {
-    //     firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-    //         authDispatch({ type: 'LOGIN_AS_GUEST' })
-    //     })
-    // }
+    const loginAsGuest = () => {
+        firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
+            authDispatch({ type: 'LOGIN_AS_GUEST' })
+        })
+    }
 
     const logout = () => {
         firebase.auth().signOut().then(() => {

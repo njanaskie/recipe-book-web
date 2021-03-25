@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase, googleAuthProvider } from '../firebase/firebase';
-import { GoogleSignin } from '@react-native-community/google-signin';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 // import { useFirebaseContext } from '../context/firebase-context'
 
 
@@ -24,7 +24,8 @@ export default function LoginScreen({navigation}) {
             .then((response) => {
                 const uid = response.user.uid
                 if (response && uid) {
-                    navigation.navigate('PlaceholderScreen', {response})
+                    console.log(response)
+                    navigation.navigate('Placeholder', {user: response.user})
                 }
             })
             .catch(error => {
@@ -41,7 +42,7 @@ export default function LoginScreen({navigation}) {
             const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
             // Sign-in the user with the credential
-            await auth().signInWithCredential(googleCredential)
+            await auth().signInWithCredential(googleCredential).then(() => navigation.navigate('Placeholder', {user: response.user}))
             //we need to catch the whole sign up process if it fails too.
             .catch(error => {
                 console.log('Something went wrong with sign up: ', error);
