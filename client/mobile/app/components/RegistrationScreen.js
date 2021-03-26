@@ -28,7 +28,7 @@ export default function RegistrationScreen({navigation}) {
                     email,
                     fullName,
                 };
-                navigation.navigate('Placeholder', {user: data})
+                navigation.navigate('Home', {user: data})
             })
             .catch((error) => {
                 alert(error)

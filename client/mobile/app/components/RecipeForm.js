@@ -1,4 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import {
+    StyleSheet,
+    View,
+    SafeAreaView,
+    Text,
+    } from "react-native";
 import { useFirebaseContext } from '../context/firebase-context'
 import recipeTypes from '../fixtures/recipeTypes'
 import recipeCuisines from '../fixtures/recipeCuisines'
@@ -6,8 +12,10 @@ import selectCustomTags from '../selectors/custom-tags'
 import { useIngredientsContext } from '../context/ingredients-context'
 import { useRecipesContext } from '../context/recipes-context'
 import { TextInput } from 'react-native-gesture-handler'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import MultiSelect from 'react-native-multiple-select';
 
-const RecipeForm = (props) => {
+export default RecipeForm = (props) => {
     const { isGuest, user } = useFirebaseContext()
     const { recipes } = useRecipesContext()
     const formResults = props.results ? props.results : recipes
@@ -99,20 +107,85 @@ const RecipeForm = (props) => {
 
     return (
         <View onSubmit={onSubmit}>
-            {state.error && <Text>{state.error}</Text>}
             <TextInput
+                style={styles.input}
                 secureTextEntry={true}
                 placeholder='Insert URL'
+                placeholderTextColor="#aaaaaa"
+                onChangeText={(url) => setState({ ...state, url })}
+                value={state.url}
+                underlineColorAndroid="transparent"
+                autoCapitalize="none"
             />
-            <Text
-                // style={styles.closeText}
-                // onPress={toggleModal}
-            >
-                Close Modal
-            </Text>
+            <MultiSelect
+                hideTags
+                items={ingredients}
+                uniqueKey="id"
+                // ref={(component) => { this.multiSelect = component }}
+                onSelectedItemsChange={(selectedItems) => setState({ ...state, ingredients: selectedItems })}
+                selectedItems={state.ingredients}
+                selectText="Pick Ingredients"
+                searchInputPlaceholderText="Search Ingredients..."
+                onChangeInput={ (text)=> console.log(text)}
+                // altFontFamily="ProximaNova-Light"
+                tagRemoveIconColor="#CCC"
+                tagBorderColor="#CCC"
+                tagTextColor="#CCC"
+                selectedItemTextColor="#CCC"
+                selectedItemIconColor="#CCC"
+                itemTextColor="#000"
+                displayKey="name"
+                searchInputStyle={{ color: '#CCC' }}
+                submitButtonColor="#CCC"
+                submitButtonText="Submit"
+            />
+                <Text
+                    style={styles.closeText}
+                    // onPress={toggleModal}
+                >
+                    Close Modal
+                </Text>
         </View>
         
     )
 }
 
-export default RecipeForm
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center'
+    },
+    title: {
+
+    },
+    line: {
+        alignSelf: 'center',
+        borderBottomColor: '#101010',
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        paddingTop: 60,
+        width: '80%'
+    },
+    logo: {
+        flex: 1,
+        height: 120,
+        width: 120,
+        alignSelf: "center",
+        margin: 30
+    },
+    input: {
+        height: 48,
+        borderRadius: 5,
+        overflow: 'hidden',
+        backgroundColor: 'white',
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 30,
+        marginRight: 30,
+        paddingLeft: 16
+    },
+    closeText: {
+        fontSize: 24,
+        color: '#00479e',
+        textAlign: 'center',
+    }
+})

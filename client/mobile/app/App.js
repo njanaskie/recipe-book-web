@@ -22,11 +22,11 @@ import * as Linking from "expo-linking";
 import { Feather } from "@expo/vector-icons";
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import AddRecipe from "./components/AddRecipe";
 import LoginScreen from './components/LoginScreen'
 import AppWrapper from './components/AppWrapper'
 import RegistrationScreen from './components/RegistrationScreen'
 import PlaceholderScreen from './components/PlaceholderScreen'
+import HomeScreen from './components/HomeScreen'
 import { firebase } from './firebase/firebase';
 
 import { useFirebaseContext } from './context/firebase-context'
@@ -42,28 +42,8 @@ export default function App() {
   const sheetRef = React.useRef(null);
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  // const { user, loading } = useFirebaseContext()
 
-  renderContent = () => (
-    <View style={styles.modal}>
-      <Text>List items here</Text>
-    </View>
-  )
-
-  renderHeader = () => (
-    <View style={styles.header}>
-      <View style={styles.panelHeader}>
-        <View style={styles.panelHandle} />
-      </View>
-    </View>
-  );
-
-  const toggleModal = () => {
-    setIsModalVisible(!isModalVisible);
-  };
-
-  onOpenBottomSheetHandler = (index) => {
-    BottomSheet.snapTo(index);
-  };
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
@@ -105,11 +85,15 @@ export default function App() {
   // />
 
   return (
-    // <AppWrapper>
+    <AppWrapper>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false
+          }}
+        >
           { user ? (
-              <Stack.Screen name='Placeholder' component={PlaceholderScreen} />
+              <Stack.Screen name='Home' component={HomeScreen} />
           ) : (
             <React.Fragment>
               <Stack.Screen name='Login' component={LoginScreen}/>
@@ -120,7 +104,7 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     
-    // </AppWrapper>
+    </AppWrapper>
   );
 }
 

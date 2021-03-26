@@ -1,26 +1,27 @@
 import React from 'react'
+import { View } from "react-native";
 import RecipeForm from './RecipeForm'
 import { useRecipesContext } from '../context/recipes-context'
 import { addRecipeService } from '../services/recipeServices'
 
 const AddRecipe = () => {
-    const { recipes, addRecipe, recipeDispatch } = useRecipesContext()
-    const history = useHistory()
+    const { recipes, recipeDispatch } = useRecipesContext()
+    // const history = useHistory()
 
     const onSubmit = async (recipe) => {
         // addRecipe(recipe)
         const newRecipe = await addRecipeService(recipe)
         recipeDispatch({ type: 'ADD_RECIPE', recipe: {id: newRecipe.id, ...recipe} })
-        history.push('/')
+        // history.push('/')
     }
 
     return (
-        <div>
+        <View>
             <RecipeForm
                 onSubmit={onSubmit}
-                results={recipes}
+                // results={recipes}
             />
-        </div>
+        </View>
     )
 }
 

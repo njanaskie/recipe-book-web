@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase, googleAuthProvider } from '../firebase/firebase';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 // import { useFirebaseContext } from '../context/firebase-context'
 
 
@@ -25,7 +25,7 @@ export default function LoginScreen({navigation}) {
                 const uid = response.user.uid
                 if (response && uid) {
                     console.log(response)
-                    navigation.navigate('Placeholder', {user: response.user})
+                    navigation.navigate('Home', {user: response.user})
                 }
             })
             .catch(error => {
@@ -34,23 +34,43 @@ export default function LoginScreen({navigation}) {
     }
 
     const onGoogleLoginPress = async () => {
-        try {
-            // Get the users ID token
-            const { idToken } = await GoogleSignin.signIn();
+        GoogleSignin.signIn()
+        .then((data) => {
+          // Create a new Firebase credential with the token
+          const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken);
+          // Login with the credential
+          return firebase.auth().signInWithCredential(credential);
+        })
+        .then((user) => {
+          // If you need to do anything with the user, do it here
+          // The user will be logged in automatically by the
+          // `onAuthStateChanged` listener we set up in App.js earlier
+          navigation.navigate('Home', {user})
+        })
+        .catch((error) => {
+        //   const { code, message } = error;
+          // For details of error codes, see the docs
+          // The message contains the default Firebase string
+          // representation of the error
+          alert(error)
+        });
 
-            // Create a Google credential with the token
-            const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-            // Sign-in the user with the credential
-            await auth().signInWithCredential(googleCredential).then(() => navigation.navigate('Placeholder', {user: response.user}))
-            //we need to catch the whole sign up process if it fails too.
-            .catch(error => {
-                console.log('Something went wrong with sign up: ', error);
-            });
-
-        } catch(error) {
-            console.log({error});
-        }
+        // try {
+        //     await GoogleSignin.hasPlayServices();
+        //     const userInfo = await GoogleSignin.signIn();
+        //     navigation.navigate('Placeholder', {user: userInfo})
+        //     // this.setState({ userInfo: userInfo, loggedIn: true });
+        // } catch (error) {
+        //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        //       // user cancelled the login flow
+        //     } else if (error.code === statusCodes.IN_PROGRESS) {
+        //       // operation (f.e. sign in) is in progress already
+        //     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        //       // play services not available or outdated
+        //     } else {
+        //       // some other error happened
+        //     }
+        // }
     }
     
 
