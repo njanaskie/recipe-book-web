@@ -23,14 +23,14 @@ import {
 import AddRecipe from './AddRecipe';
 import LogoutButton from './LogoutButton'
 import { firebase } from '../firebase/firebase'
-// import useAllRecipes from '../hooks/useAllRecipes'
+import useAllRecipes from '../hooks/useAllRecipes'
 import useIngredients from '../hooks/useIngredients'
 
 const { width, height } = Dimensions.get("window");
 const snapPoints = ["10%", "90%"];
 
 export default function HomeScreen() {
-    // const recipes = useAllRecipes()
+    const recipes = useAllRecipes()
     const ingredients = useIngredients()
     // const { recipes } = useRecipesContext()
     // const { ingredients } = useIngredientsContext()

@@ -31,8 +31,8 @@ export default RecipeForm = (props) => {
     const initialFormState = {
         url: '',
         ingredients: [],
-        type: '',
-        cuisine: '',
+        type: [],
+        cuisine: [],
         // createdAt: '',
         customTags: [],
         savedBy: '',
@@ -41,9 +41,8 @@ export default RecipeForm = (props) => {
     }
     const [state, setState] = useState(initialFormState)
     const { ingredients } = useIngredientsContext()
-    const allCustomTags = selectCustomTags(formResults)
+    const allCustomTags = formResults ? selectCustomTags(formResults) : []
     const uid = user.uid
-    let cuisineController;
 
     console.log(state)
     
@@ -51,8 +50,8 @@ export default RecipeForm = (props) => {
         setState({
             url: props.url || '',
             ingredients: props.ingredients || [],
-            type: props.type || '',
-            cuisine: props.cuisine || '',
+            type: props.type || [],
+            cuisine: props.cuisine || [],
             // createdAt: moment(props.createdAt) || moment(),
             savedBy: props.savedBy || uid,
             customTags: props.customTags || [],
@@ -109,17 +108,28 @@ export default RecipeForm = (props) => {
         setState({ ...state, customTags: value })
     }
 
-    const onAddCustomTag = (e, result) => {
-        const { value } = result || e.target
-        setState((prevState) => ({
-            ...state,
-            customTagOptions: [...prevState.customTagOptions, value]
-        }))
+    const onAddCustomTag = (newItem) => {
+        console.log(newItem, 'vs', state.customTagOptions)
+        if (newItem.every(tag => state.customTagOptions.includes(tag))) {
+            console.log('1')
+            setState({ ...state, customTags: newItem })
+        } else {
+            console.log('2')
+            setState((prevState) => ({
+                ...state,
+                customTagOptions: [...prevState.customTagOptions, newItem[newItem.length - 1]]
+            }))
+        }
     }
 
-    clearSelectedCategories = () => {
-        _multiSelect._removeAllItems();
+    clearSelectedTypes = () => {
+        _multiSelectType._removeAllItems();
+    };
+
+    clearSelectedCuisines = () => {
+        _multiSelectCuisine._removeAllItems();
      };
+
 
     return (
         <SafeAreaView style={styles.container} onSubmit={onSubmit}>
@@ -132,23 +142,39 @@ export default RecipeForm = (props) => {
                 underlineColorAndroid="transparent"
                 autoCapitalize="none"
             />
-            <DropDownPicker
+            <MultiSelect
+                single
                 items={recipeTypes.map(recipeType => {
                     return {
-                        label: recipeType,
-                        value: recipeType
+                        id: recipeType,
+                        name: recipeType
                     }
                 })}
-                defaultValue={null}
-                placeholder='Select recipe type'
-                containerStyle={{height: 40}}
-                style={{backgroundColor: '#fafafa'}}
-                itemStyle={{
-                    justifyContent: 'flex-start'
-                }}
-                dropDownStyle={{backgroundColor: '#fafafa'}}
-                onChangeItem={(selectedItem) => setState({ ...state, type: selectedItem.value })}
+                ref={c => _multiSelectType = c}
+                uniqueKey="id"
+                onSelectedItemsChange={(selectedItems) => setState({ ...state, type: selectedItems })}
+                selectedItems={state.type}
+                selectText="Select Type"
+                // searchInputPlaceholderText="Search Ingredients..."
+                // onChangeInput={ (text)=> console.log(text)}
+                tagRemoveIconColor="#CCC"
+                tagBorderColor="#CCC"
+                tagTextColor="#CCC"
+                tagContainerStyle={{ height: 30 }}
+                selectedItemTextColor="#CCC"
+                selectedItemIconColor="#CCC"
+                // displayKey="name"
+                styleMainWrapper={styles.multiSelectContainer}
+                // styleInputGroup={}
+                searchInputStyle={styles.multiSelectSearchInputStyle}
+                styleDropdownMenu={styles.multiSelectDropdownMenu}
+                hideSubmitButton={true}
+                textInputProps={{ editable: false, autoFocus: false }}
+                searchInputPlaceholderText="Select Type"
+                searchIcon={false}
+                hideDropdown={true}
             />
+            <Button title='Clear type' onPress={clearSelectedTypes}/>
             <MultiSelect
                 single
                 items={recipeCuisines.map(recipeCuisine => {
@@ -157,7 +183,7 @@ export default RecipeForm = (props) => {
                         name: recipeCuisine
                     }
                 })}
-                ref={c => _multiSelect = c}
+                ref={c => _multiSelectCuisine = c}
                 uniqueKey="id"
                 onSelectedItemsChange={(selectedItems) => setState({ ...state, cuisine: selectedItems })}
                 selectedItems={state.cuisine}
@@ -176,8 +202,12 @@ export default RecipeForm = (props) => {
                 searchInputStyle={styles.multiSelectSearchInputStyle}
                 styleDropdownMenu={styles.multiSelectDropdownMenu}
                 hideSubmitButton={true}
+                textInputProps={{ editable: false, autoFocus: false }}
+                searchInputPlaceholderText="Select Cuisine"
+                searchIcon={false}
+                hideDropdown={true}
             />
-            <Button title='Clear cuisines' onPress={clearSelectedCategories}/>
+            <Button title='Clear cuisines' onPress={clearSelectedCuisines}/>
             <MultiSelect
                 items={ingredients || []}
                 uniqueKey="id"
@@ -198,17 +228,21 @@ export default RecipeForm = (props) => {
                 searchInputStyle={styles.multiSelectSearchInputStyle}
                 styleDropdownMenu={styles.multiSelectDropdownMenu}
                 hideSubmitButton={true}
+                hideDropdown={true}
             />
             <MultiSelect
-                items={state.customTagOptions}
-                canAddItems={true}
-                onAddItem={(newItem) => setState((prevState) => ({
-                    ...state,
-                    customTagOptions: [...prevState.customTagOptions, newItem ]
-                }))}
+                items={state.customTagOptions.map(option => {
+                    return {
+                        id: option,
+                        name: option
+                    }
+                })}
                 uniqueKey="id"
-                onSelectedItemsChange={(selectedItems) => setState({ ...state, customTags: selectedItems })}
+                onSelectedItemsChange={onAddCustomTag}
                 selectedItems={state.customTags}
+                canAddItems={true}
+                // onAddItem={(selectedItems) => setState({ ...state, customTags: selectedItems })}
+                // onAddItem={(newItem) => setState({ ...state, customTagOptions: newItem })}
                 selectText="Pick Custom Tags"
                 searchInputPlaceholderText="Search Custom Tags..."
                 tagRemoveIconColor="#CCC"
@@ -222,7 +256,8 @@ export default RecipeForm = (props) => {
                 styleInputGroup={styles.multiSelectInputGroup}
                 searchInputStyle={styles.multiSelectSearchInputStyle}
                 styleDropdownMenu={styles.multiSelectDropdownMenu}
-                hideSubmitButton={true}
+                // hideSubmitButton={true}
+                hideDropdown={true}
             />
         </SafeAreaView>
         
