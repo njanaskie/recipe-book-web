@@ -4,8 +4,18 @@ import { View } from 'react-native'
 import { FirebaseProvider } from '../context/firebase-context'
 import { IngredientsProvider } from '../context/ingredients-context';
 import { RecipesProvider } from '../context/recipes-context';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 // import { FiltersProvider } from '../context/filters-context';
 // // import AppWrapper from './AppWrapper_old';
+
+const theme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: 'tomato',
+      accent: 'yellow',
+    },
+  };
 
 const AppWrapper = (props) => {
 
@@ -13,7 +23,9 @@ const AppWrapper = (props) => {
         <FirebaseProvider >
             <RecipesProvider>
                 <IngredientsProvider>
-                    {props.children}
+                    <PaperProvider theme={theme}>
+                        {props.children}
+                    </PaperProvider>
                 </IngredientsProvider>
             </RecipesProvider>
         </FirebaseProvider>

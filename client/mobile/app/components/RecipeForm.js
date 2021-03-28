@@ -4,6 +4,9 @@ import {
     View,
     SafeAreaView,
     Text,
+    Button,
+    Dimensions,
+    Platform
     } from "react-native";
 import { useFirebaseContext } from '../context/firebase-context'
 import recipeTypes from '../fixtures/recipeTypes'
@@ -14,6 +17,12 @@ import { useRecipesContext } from '../context/recipes-context'
 import { TextInput } from 'react-native-gesture-handler'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import MultiSelect from 'react-native-multiple-select';
+import DropDownPicker from 'react-native-dropdown-picker';
+import Icon from 'react-native-vector-icons/Feather';
+import { Feather } from "@expo/vector-icons";
+import { RadioButton } from 'react-native-paper';
+
+const { width, height } = Dimensions.get("window");
 
 export default RecipeForm = (props) => {
     const { isGuest, user } = useFirebaseContext()
@@ -34,6 +43,9 @@ export default RecipeForm = (props) => {
     const { ingredients } = useIngredientsContext()
     const allCustomTags = selectCustomTags(formResults)
     const uid = user.uid
+    let cuisineController;
+
+    console.log(state)
     
     useEffect(() => {
         setState({
@@ -105,11 +117,14 @@ export default RecipeForm = (props) => {
         }))
     }
 
+    clearSelectedCategories = () => {
+        _multiSelect._removeAllItems();
+     };
+
     return (
-        <View onSubmit={onSubmit}>
+        <SafeAreaView style={styles.container} onSubmit={onSubmit}>
             <TextInput
                 style={styles.input}
-                secureTextEntry={true}
                 placeholder='Insert URL'
                 placeholderTextColor="#aaaaaa"
                 onChangeText={(url) => setState({ ...state, url })}
@@ -117,43 +132,108 @@ export default RecipeForm = (props) => {
                 underlineColorAndroid="transparent"
                 autoCapitalize="none"
             />
+            <DropDownPicker
+                items={recipeTypes.map(recipeType => {
+                    return {
+                        label: recipeType,
+                        value: recipeType
+                    }
+                })}
+                defaultValue={null}
+                placeholder='Select recipe type'
+                containerStyle={{height: 40}}
+                style={{backgroundColor: '#fafafa'}}
+                itemStyle={{
+                    justifyContent: 'flex-start'
+                }}
+                dropDownStyle={{backgroundColor: '#fafafa'}}
+                onChangeItem={(selectedItem) => setState({ ...state, type: selectedItem.value })}
+            />
             <MultiSelect
-                hideTags
-                items={ingredients}
+                single
+                items={recipeCuisines.map(recipeCuisine => {
+                    return {
+                        id: recipeCuisine,
+                        name: recipeCuisine
+                    }
+                })}
+                ref={c => _multiSelect = c}
                 uniqueKey="id"
-                // ref={(component) => { this.multiSelect = component }}
+                onSelectedItemsChange={(selectedItems) => setState({ ...state, cuisine: selectedItems })}
+                selectedItems={state.cuisine}
+                selectText="Select Cuisine"
+                // searchInputPlaceholderText="Search Ingredients..."
+                // onChangeInput={ (text)=> console.log(text)}
+                tagRemoveIconColor="#CCC"
+                tagBorderColor="#CCC"
+                tagTextColor="#CCC"
+                tagContainerStyle={{ height: 30 }}
+                selectedItemTextColor="#CCC"
+                selectedItemIconColor="#CCC"
+                // displayKey="name"
+                styleMainWrapper={styles.multiSelectContainer}
+                // styleInputGroup={}
+                searchInputStyle={styles.multiSelectSearchInputStyle}
+                styleDropdownMenu={styles.multiSelectDropdownMenu}
+                hideSubmitButton={true}
+            />
+            <Button title='Clear cuisines' onPress={clearSelectedCategories}/>
+            <MultiSelect
+                items={ingredients || []}
+                uniqueKey="id"
                 onSelectedItemsChange={(selectedItems) => setState({ ...state, ingredients: selectedItems })}
                 selectedItems={state.ingredients}
                 selectText="Pick Ingredients"
                 searchInputPlaceholderText="Search Ingredients..."
-                onChangeInput={ (text)=> console.log(text)}
-                // altFontFamily="ProximaNova-Light"
+                // onChangeInput={ (text)=> console.log(text)}
                 tagRemoveIconColor="#CCC"
                 tagBorderColor="#CCC"
                 tagTextColor="#CCC"
+                tagContainerStyle={{ height: 30 }}
                 selectedItemTextColor="#CCC"
                 selectedItemIconColor="#CCC"
-                itemTextColor="#000"
-                displayKey="name"
-                searchInputStyle={{ color: '#CCC' }}
-                submitButtonColor="#CCC"
-                submitButtonText="Submit"
+                // displayKey="name"
+                styleMainWrapper={styles.multiSelectContainer}
+                styleInputGroup={styles.multiSelectInputGroup}
+                searchInputStyle={styles.multiSelectSearchInputStyle}
+                styleDropdownMenu={styles.multiSelectDropdownMenu}
+                hideSubmitButton={true}
             />
-                <Text
-                    style={styles.closeText}
-                    // onPress={toggleModal}
-                >
-                    Close Modal
-                </Text>
-        </View>
+            <MultiSelect
+                items={state.customTagOptions}
+                canAddItems={true}
+                onAddItem={(newItem) => setState((prevState) => ({
+                    ...state,
+                    customTagOptions: [...prevState.customTagOptions, newItem ]
+                }))}
+                uniqueKey="id"
+                onSelectedItemsChange={(selectedItems) => setState({ ...state, customTags: selectedItems })}
+                selectedItems={state.customTags}
+                selectText="Pick Custom Tags"
+                searchInputPlaceholderText="Search Custom Tags..."
+                tagRemoveIconColor="#CCC"
+                tagBorderColor="#CCC"
+                tagTextColor="#CCC"
+                tagContainerStyle={{ height: 30 }}
+                selectedItemTextColor="#CCC"
+                selectedItemIconColor="#CCC"
+                // displayKey="name"
+                styleMainWrapper={styles.multiSelectContainer}
+                styleInputGroup={styles.multiSelectInputGroup}
+                searchInputStyle={styles.multiSelectSearchInputStyle}
+                styleDropdownMenu={styles.multiSelectDropdownMenu}
+                hideSubmitButton={true}
+            />
+        </SafeAreaView>
         
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center'
+        // flex: 1,
+        // justifyContent: 'center',
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
     title: {
 
@@ -179,13 +259,30 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         marginTop: 10,
         marginBottom: 10,
-        marginLeft: 30,
-        marginRight: 30,
         paddingLeft: 16
     },
     closeText: {
         fontSize: 24,
         color: '#00479e',
         textAlign: 'center',
-    }
+    },
+    multiSelectContainer: {
+        // height: 48,
+        borderRadius: 5,
+        overflow: 'hidden',
+        backgroundColor: 'white',
+        marginTop: 10,
+        marginBottom: 10,
+    },
+    multiSelectInputGroup: {
+        paddingRight: 20
+    },
+    multiSelectDropdownMenu: {
+        justifyContent: 'center',
+        marginRight: 20,
+        marginLeft: 20
+    },
+    multiSelectSearchInputStyle: {
+        padding: 20,
+        paddingRight: 10 }
 })

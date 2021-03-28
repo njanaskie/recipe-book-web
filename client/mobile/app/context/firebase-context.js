@@ -17,23 +17,23 @@ const FirebaseProvider = ({ children }) => {
     // const email = process.env.GUEST_EMAIL
     // const password = process.env.GUEST_PASSWORD
 
-    const login = () => {
-        firebase.auth().signInWithPopup(googleAuthProvider).then(() => {
-            authDispatch({ type: 'LOGIN' })
-        })
-    }
+    // const login = () => {
+    //     firebase.auth().signInWithPopup(googleAuthProvider).then(() => {
+    //         authDispatch({ type: 'LOGIN' })
+    //     })
+    // }
 
-    const loginAsGuest = () => {
-        firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-            authDispatch({ type: 'LOGIN_AS_GUEST' })
-        })
-    }
+    // const loginAsGuest = () => {
+    //     firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
+    //         authDispatch({ type: 'LOGIN_AS_GUEST' })
+    //     })
+    // }
 
-    const logout = () => {
-        firebase.auth().signOut().then(() => {
-            authDispatch({ type: 'LOGOUT' })
-        });
-    }
+    // const logout = () => {
+    //     firebase.auth().signOut().then(() => {
+    //         authDispatch({ type: 'LOGOUT' })
+    //     });
+    // }
 
     useEffect(() => {
         const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
@@ -76,7 +76,7 @@ const FirebaseProvider = ({ children }) => {
     // }
 
     return (
-        <FirebaseContext.Provider value={{ user, loading, login, loginAsGuest, logout }}>
+        <FirebaseContext.Provider value={{ user, loading }}>
             {children}
         </FirebaseContext.Provider>
     )

@@ -10,7 +10,8 @@ import {
   TextInput,
   Platform,
   StatusBar,
-  Button
+  Button,
+  // Modal
   } from "react-native";
   import { Feather } from "@expo/vector-icons";
   import Modal from 'react-native-modal';
@@ -62,30 +63,34 @@ export default function HomeScreen() {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View>
-                <TouchableOpacity
-                    style={{ padding: 20 }}
-                    onPress={toggleModal}
-                >
-                    <Feather name="plus-circle" size={150} color='#3eb489'/>
-                </TouchableOpacity>
-                <Modal
-                    isVisible={isModalVisible}
-                >
-                    <AddRecipe />
-                </Modal>
+      <SafeAreaView style={styles.container}>
+        <View>
+          <TouchableOpacity
+              style={{ padding: 20 }}
+              onPress={toggleModal}
+          >
+              <Feather name="plus-circle" size={150} color='#3eb489'/>
+          </TouchableOpacity>
+          <Modal
+              isVisible={isModalVisible}
+              style={{ margin: 0 }}
+          >
+            <View style={{ flex: 1, backgroundColor: 'white', borderRadius: 5 }}>
+              <AddRecipe />
+              <Button title="Hide modal" onPress={toggleModal} />
             </View>
-            <BottomSheet
-                enabledBottomInitialAnimation={true}
-                ref={sheetRef}
-                initialSnap={0}
-                snapPoints={snapPoints}
-                // borderRadius={10} 
-                renderContent={renderContent}
-                renderHeader={renderHeader}
-            />
-        </SafeAreaView>
+          </Modal>
+        </View>
+        <BottomSheet
+            enabledBottomInitialAnimation={true}
+            ref={sheetRef}
+            initialSnap={0}
+            snapPoints={snapPoints}
+            // borderRadius={10} 
+            renderContent={renderContent}
+            renderHeader={renderHeader}
+        />
+      </SafeAreaView>
     )
 
 };

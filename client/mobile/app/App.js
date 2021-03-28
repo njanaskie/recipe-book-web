@@ -28,33 +28,34 @@ import RegistrationScreen from './components/RegistrationScreen'
 import PlaceholderScreen from './components/PlaceholderScreen'
 import HomeScreen from './components/HomeScreen'
 import { firebase } from './firebase/firebase';
+import AppNavigator from './components/AppNavigator'
 
 import { useFirebaseContext } from './context/firebase-context'
 
 LogBox.ignoreAllLogs();
 
-const { width, height } = Dimensions.get("window");
-const snapPoints = ["10%", "90%"];
-const Stack = createStackNavigator();
+// const { width, height } = Dimensions.get("window");
+// const snapPoints = ["10%", "90%"];
+// const Stack = createStackNavigator();
 
 export default function App() {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const sheetRef = React.useRef(null);
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+  // const [isModalVisible, setIsModalVisible] = useState(false);
+  // const sheetRef = React.useRef(null);
+  // // const [user, setUser] = useState(null)
+  // // const [loading, setLoading] = useState(true)
   // const { user, loading } = useFirebaseContext()
 
 
-  useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-        setUser(user)
-        setLoading(false)
-        // setIsAdmin()
-        // setIsGuest()
-    })
+//   useEffect(() => {
+//     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+//         setUser(user)
+//         setLoading(false)
+//         // setIsAdmin()
+//         // setIsGuest()
+//     })
 
-    return () => unsubscribe()
-}, [])
+//     return () => unsubscribe()
+// }, [])
 
   // <Stack.Screen name='LoginScreen' component={
   //   <SafeAreaView style={styles.container}>
@@ -86,24 +87,7 @@ export default function App() {
 
   return (
     <AppWrapper>
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false
-          }}
-        >
-          { user ? (
-              <Stack.Screen name='Home' component={HomeScreen} />
-          ) : (
-            <React.Fragment>
-              <Stack.Screen name='Login' component={LoginScreen}/>
-              <Stack.Screen name="Registration" component={RegistrationScreen} />
-            </React.Fragment>
-          )}
-        
-        </Stack.Navigator>
-      </NavigationContainer>
-    
+      <AppNavigator />
     </AppWrapper>
   );
 }
@@ -147,7 +131,7 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#FFFFFF',
     paddingTop: 20,
-    height: height
+    // height: height
   },
   header: {
     backgroundColor: '#FFFFFF',

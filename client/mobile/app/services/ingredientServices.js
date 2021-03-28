@@ -5,7 +5,7 @@ import { firebase } from '../firebase/firebase';
 //     baseURL: 'http://localhost:3001/api',
 // })
 
-// const url = 'http://localhost:3001/api';
+const url = 'http://localhost:3001';
 
 const createToken = async () => {
     const user = firebase.auth().currentUser;
@@ -36,7 +36,7 @@ export const addIngredientService = async (ingredient, dispatch) => {
     //         })
     try {
         // console.log(payload);
-        const res = await axios.post('/api/ingredients', payload, header)
+        const res = await axios.post(`${url}/api/ingredients`, payload, header)
         return res.data
     } catch (e) {
         console.log(e)
@@ -54,11 +54,12 @@ export const getIngredientsService = async (dispatch) => {
     // .catch(e => {
     //     console.log(e)
     // })
+
     try {
-        const res = await axios.get('/api/ingredients', header)
+        const res = await axios.get(`${url}/api/ingredients`, header)
         return res.data
     } catch(e) {
-        console.log(e)
+        console.log('error', e)
     }
 }
 
@@ -66,7 +67,7 @@ export const removeIngredientService = async ({ id }) => {
     const header = await createToken();
 
     try {
-        const res = await axios.delete(`/api/ingredients/${id}`, header)
+        const res = await axios.delete(`${url}/api/ingredients/${id}`, header)
         return res.data
     } catch(e) {
         console.log(e)
