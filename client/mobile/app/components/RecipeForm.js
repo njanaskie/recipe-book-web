@@ -3,10 +3,10 @@ import {
     StyleSheet,
     View,
     SafeAreaView,
-    Text,
     Button,
     Dimensions,
-    Platform
+    Platform,
+    TouchableOpacity
     } from "react-native";
 import { useFirebaseContext } from '../context/firebase-context'
 import recipeTypes from '../fixtures/recipeTypes'
@@ -20,7 +20,7 @@ import MultiSelect from 'react-native-multiple-select';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Feather';
 import { Feather } from "@expo/vector-icons";
-import { RadioButton } from 'react-native-paper';
+import { Divider, Text, Title, Subheading } from 'react-native-paper';
 
 const { width, height } = Dimensions.get("window");
 
@@ -43,8 +43,6 @@ export default RecipeForm = (props) => {
     const { ingredients } = useIngredientsContext()
     const allCustomTags = formResults ? selectCustomTags(formResults) : []
     const uid = user.uid
-
-    console.log(state)
     
     useEffect(() => {
         setState({
@@ -109,12 +107,12 @@ export default RecipeForm = (props) => {
     }
 
     const onAddCustomTag = (newItem) => {
-        console.log(newItem, 'vs', state.customTagOptions)
+        // console.log(newItem, 'vs', state.customTagOptions)
         if (newItem.every(tag => state.customTagOptions.includes(tag))) {
-            console.log('1')
+            // console.log('1')
             setState({ ...state, customTags: newItem })
         } else {
-            console.log('2')
+            // console.log('2')
             setState((prevState) => ({
                 ...state,
                 customTagOptions: [...prevState.customTagOptions, newItem[newItem.length - 1]]
@@ -133,6 +131,8 @@ export default RecipeForm = (props) => {
 
     return (
         <SafeAreaView style={styles.container} onSubmit={onSubmit}>
+            <Title style={styles.title}>I want to save...</Title>
+            <Text style={styles.subtitle}>Copy the recipe URL link into the text bar</Text>
             <TextInput
                 style={styles.input}
                 placeholder='Insert URL'
@@ -142,6 +142,12 @@ export default RecipeForm = (props) => {
                 underlineColorAndroid="transparent"
                 autoCapitalize="none"
             />
+            <View style={styles.subtitleGroup}>
+                <Text style={styles.subtitle}>Add the type of recipe</Text>
+                <TouchableOpacity onPress={clearSelectedTypes}>
+                    <Text style={styles.clearButton} >Clear selection</Text>
+                </TouchableOpacity>
+            </View>
             <MultiSelect
                 single
                 items={recipeTypes.map(recipeType => {
@@ -165,16 +171,23 @@ export default RecipeForm = (props) => {
                 selectedItemIconColor="#CCC"
                 // displayKey="name"
                 styleMainWrapper={styles.multiSelectContainer}
-                // styleInputGroup={}
+                styleInputGroup={styles.multiSelectInputGroup}
                 searchInputStyle={styles.multiSelectSearchInputStyle}
                 styleDropdownMenu={styles.multiSelectDropdownMenu}
+                styleSelectorContainer={styles.multiSelectSelector}
+                styleTextDropdown={styles.multiSelectTextDropdown}
                 hideSubmitButton={true}
                 textInputProps={{ editable: false, autoFocus: false }}
                 searchInputPlaceholderText="Select Type"
                 searchIcon={false}
                 hideDropdown={true}
             />
-            <Button title='Clear type' onPress={clearSelectedTypes}/>
+            <View style={styles.subtitleGroup}>
+                <Text style={styles.subtitle}>Add the recipe cuisine</Text>
+                <TouchableOpacity onPress={clearSelectedCuisines}>
+                    <Text style={styles.clearButton} >Clear selection</Text>
+                </TouchableOpacity>
+            </View>
             <MultiSelect
                 single
                 items={recipeCuisines.map(recipeCuisine => {
@@ -198,22 +211,24 @@ export default RecipeForm = (props) => {
                 selectedItemIconColor="#CCC"
                 // displayKey="name"
                 styleMainWrapper={styles.multiSelectContainer}
-                // styleInputGroup={}
+                styleInputGroup={styles.multiSelectInputGroup}
                 searchInputStyle={styles.multiSelectSearchInputStyle}
                 styleDropdownMenu={styles.multiSelectDropdownMenu}
+                styleSelectorContainer={styles.multiSelectSelector}
+                styleTextDropdown={styles.multiSelectTextDropdown}
                 hideSubmitButton={true}
-                textInputProps={{ editable: false, autoFocus: false }}
+                textInputProps={{ editable: false, autoFocus: false, paddingRight: 20 }}
                 searchInputPlaceholderText="Select Cuisine"
                 searchIcon={false}
                 hideDropdown={true}
             />
-            <Button title='Clear cuisines' onPress={clearSelectedCuisines}/>
+            <Text style={styles.subtitle}>Add all or some of the ingredients used in the recipe. This can be used to search for recipes in the future.</Text>
             <MultiSelect
                 items={ingredients || []}
                 uniqueKey="id"
                 onSelectedItemsChange={(selectedItems) => setState({ ...state, ingredients: selectedItems })}
                 selectedItems={state.ingredients}
-                selectText="Pick Ingredients"
+                selectText="Select Ingredients"
                 searchInputPlaceholderText="Search Ingredients..."
                 // onChangeInput={ (text)=> console.log(text)}
                 tagRemoveIconColor="#CCC"
@@ -227,9 +242,12 @@ export default RecipeForm = (props) => {
                 styleInputGroup={styles.multiSelectInputGroup}
                 searchInputStyle={styles.multiSelectSearchInputStyle}
                 styleDropdownMenu={styles.multiSelectDropdownMenu}
+                styleSelectorContainer={styles.multiSelectSelector}
+                styleTextDropdown={styles.multiSelectTextDropdown}
                 hideSubmitButton={true}
                 hideDropdown={true}
             />
+            <Text style={styles.subtitle}>Add your own tags to categorize recipes however you want</Text>
             <MultiSelect
                 items={state.customTagOptions.map(option => {
                     return {
@@ -243,7 +261,7 @@ export default RecipeForm = (props) => {
                 canAddItems={true}
                 // onAddItem={(selectedItems) => setState({ ...state, customTags: selectedItems })}
                 // onAddItem={(newItem) => setState({ ...state, customTagOptions: newItem })}
-                selectText="Pick Custom Tags"
+                selectText="Select Custom Tags"
                 searchInputPlaceholderText="Search Custom Tags..."
                 tagRemoveIconColor="#CCC"
                 tagBorderColor="#CCC"
@@ -256,7 +274,9 @@ export default RecipeForm = (props) => {
                 styleInputGroup={styles.multiSelectInputGroup}
                 searchInputStyle={styles.multiSelectSearchInputStyle}
                 styleDropdownMenu={styles.multiSelectDropdownMenu}
-                // hideSubmitButton={true}
+                styleSelectorContainer={styles.multiSelectSelector}
+                styleTextDropdown={styles.multiSelectTextDropdown}
+                hideSubmitButton={true}
                 hideDropdown={true}
             />
         </SafeAreaView>
@@ -267,11 +287,17 @@ export default RecipeForm = (props) => {
 const styles = StyleSheet.create({
     container: {
         // flex: 1,
-        // justifyContent: 'center',
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
+    clearButton: {
+        flex: 3,
+        fontSize: 12,
+        color: 'darkgrey',
+        marginRight: 16,
+        marginTop: 10
+    },
     title: {
-
+        alignSelf: 'center'
     },
     line: {
         alignSelf: 'center',
@@ -293,7 +319,9 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         backgroundColor: 'white',
         marginTop: 10,
-        marginBottom: 10,
+        // marginBottom: 30,
+        marginRight: 20,
+        marginLeft: 20,
         paddingLeft: 16
     },
     closeText: {
@@ -307,17 +335,45 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         backgroundColor: 'white',
         marginTop: 10,
-        marginBottom: 10,
+        // marginBottom: 30,
+        marginRight: 20,
+        marginLeft: 20,
     },
     multiSelectInputGroup: {
-        paddingRight: 20
+        marginRight: 20
     },
     multiSelectDropdownMenu: {
         justifyContent: 'center',
-        marginRight: 20,
-        marginLeft: 20
+        alignItems: 'center',
+        // marginRight: 16,
+        // marginLeft: 16,
+        marginTop: 10,
+        marginBottom: 10
+    },
+    multiSelectSelector: {
+        justifyContent: 'center',
+        marginRight: 16,
+        marginLeft: 16,
+        marginTop: 16
     },
     multiSelectSearchInputStyle: {
+        justifyContent: 'center',
         padding: 20,
-        paddingRight: 10 }
+        paddingRight: 10
+    },
+    multiSelectTextDropdown: {
+        paddingLeft: 16,
+    },
+    subtitle: {
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 10
+    },
+    subtitleGroup: {
+        // flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingRight: 10
+    }
 })

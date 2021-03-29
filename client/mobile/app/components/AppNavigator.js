@@ -44,8 +44,6 @@ export default function App() {
 //   const [loading, setLoading] = useState(true)
   const { user, loading } = useFirebaseContext()
 
-  console.log(user.uid)
-
   // <Stack.Screen name='LoginScreen' component={
   //   <SafeAreaView style={styles.container}>
   //     <View>
