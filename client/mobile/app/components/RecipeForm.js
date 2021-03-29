@@ -6,7 +6,8 @@ import {
     Button,
     Dimensions,
     Platform,
-    TouchableOpacity
+    TouchableOpacity,
+    FlatList
     } from "react-native";
 import { useFirebaseContext } from '../context/firebase-context'
 import recipeTypes from '../fixtures/recipeTypes'
@@ -17,12 +18,45 @@ import { useRecipesContext } from '../context/recipes-context'
 import { TextInput } from 'react-native-gesture-handler'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import MultiSelect from 'react-native-multiple-select';
+import Modal from 'react-native-modal';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Feather';
 import { Feather } from "@expo/vector-icons";
 import { Divider, Text, Title, Subheading } from 'react-native-paper';
+import MultiSelectForm from './MultiSelectForm';
 
 const { width, height } = Dimensions.get("window");
+const Item = ({item}) => (
+    <View
+        // key={tag}
+        style={[
+            styles.selectedItem,
+            {
+            width: item.length * 6 + 50,
+            justifyContent: 'center',
+            height: 30,
+            borderColor: '#e9e9e9'
+            },
+            // tagContainerStyle || {}
+            ]
+        }
+    >
+        <Text
+            style={[
+                {
+                flex: 1,
+                color: '#525966',
+                fontSize: 15
+                },
+                // styleTextTag && styleTextTag,
+                // fontFamily ? { fontFamily } : {}
+            ]}
+            numberOfLines={1}
+        >
+            {item}
+        </Text>
+    </View>
+)
 
 export default RecipeForm = (props) => {
     const { isGuest, user } = useFirebaseContext()
@@ -43,7 +77,14 @@ export default RecipeForm = (props) => {
     const { ingredients } = useIngredientsContext()
     const allCustomTags = formResults ? selectCustomTags(formResults) : []
     const uid = user.uid
+    const [isTagModalVisible, setIsTagModalVisible] = useState(false);
+
+    console.log(state)
     
+    const toggleTagModal = () => {
+        setIsTagModalVisible(!isTagModalVisible);
+      };
+
     useEffect(() => {
         setState({
             url: props.url || '',
@@ -128,6 +169,10 @@ export default RecipeForm = (props) => {
         _multiSelectCuisine._removeAllItems();
      };
 
+    const renderItem = ({item}) => (
+        <Item item={item} />
+    )
+
 
     return (
         <SafeAreaView style={styles.container} onSubmit={onSubmit}>
@@ -181,6 +226,7 @@ export default RecipeForm = (props) => {
                 searchInputPlaceholderText="Select Type"
                 searchIcon={false}
                 hideDropdown={true}
+                textInputProps={{ autoFocus: false }}
             />
             <View style={styles.subtitleGroup}>
                 <Text style={styles.subtitle}>Add the recipe cuisine</Text>
@@ -221,6 +267,7 @@ export default RecipeForm = (props) => {
                 searchInputPlaceholderText="Select Cuisine"
                 searchIcon={false}
                 hideDropdown={true}
+                textInputProps={{ autoFocus: false }}
             />
             <Text style={styles.subtitle}>Add all or some of the ingredients used in the recipe. This can be used to search for recipes in the future.</Text>
             <MultiSelect
@@ -246,39 +293,55 @@ export default RecipeForm = (props) => {
                 styleTextDropdown={styles.multiSelectTextDropdown}
                 hideSubmitButton={true}
                 hideDropdown={true}
+                textInputProps={{ autoFocus: false }}
             />
             <Text style={styles.subtitle}>Add your own tags to categorize recipes however you want</Text>
-            <MultiSelect
-                items={state.customTagOptions.map(option => {
-                    return {
-                        id: option,
-                        name: option
-                    }
-                })}
-                uniqueKey="id"
-                onSelectedItemsChange={onAddCustomTag}
-                selectedItems={state.customTags}
-                canAddItems={true}
-                // onAddItem={(selectedItems) => setState({ ...state, customTags: selectedItems })}
-                // onAddItem={(newItem) => setState({ ...state, customTagOptions: newItem })}
-                selectText="Select Custom Tags"
-                searchInputPlaceholderText="Search Custom Tags..."
-                tagRemoveIconColor="#CCC"
-                tagBorderColor="#CCC"
-                tagTextColor="#CCC"
-                tagContainerStyle={{ height: 30 }}
-                selectedItemTextColor="#CCC"
-                selectedItemIconColor="#CCC"
-                // displayKey="name"
-                styleMainWrapper={styles.multiSelectContainer}
-                styleInputGroup={styles.multiSelectInputGroup}
-                searchInputStyle={styles.multiSelectSearchInputStyle}
-                styleDropdownMenu={styles.multiSelectDropdownMenu}
-                styleSelectorContainer={styles.multiSelectSelector}
-                styleTextDropdown={styles.multiSelectTextDropdown}
-                hideSubmitButton={true}
-                hideDropdown={true}
-            />
+            <Button title='Add tags' onPress={toggleTagModal}/>
+            <Modal
+                isVisible={isTagModalVisible}
+                onBackdropPress={toggleTagModal}
+            >
+                <MultiSelect
+                    items={state.customTagOptions.map(option => {
+                        return {
+                            id: option,
+                            name: option
+                        }
+                    })}
+                    uniqueKey="id"
+                    onSelectedItemsChange={onAddCustomTag}
+                    selectedItems={state.customTags}
+                    canAddItems={true}
+                    // onAddItem={(selectedItems) => setState({ ...state, customTags: selectedItems })}
+                    // onAddItem={(newItem) => setState({ ...state, customTagOptions: newItem })}
+                    selectText="Select Custom Tags"
+                    searchInputPlaceholderText="Search Custom Tags..."
+                    tagRemoveIconColor="#CCC"
+                    tagBorderColor="#CCC"
+                    tagTextColor="#CCC"
+                    tagContainerStyle={{ height: 30 }}
+                    selectedItemTextColor="#CCC"
+                    selectedItemIconColor="#CCC"
+                    // displayKey="name"
+                    styleMainWrapper={styles.multiSelectContainer}
+                    styleInputGroup={styles.multiSelectInputGroup}
+                    searchInputStyle={styles.multiSelectSearchInputStyle}
+                    styleDropdownMenu={styles.multiSelectDropdownMenu}
+                    styleSelectorContainer={styles.multiSelectSelector}
+                    styleTextDropdown={styles.multiSelectTextDropdown}
+                    hideSubmitButton={true}
+                    hideDropdown={true}
+                    textInputProps={{ autoFocus: false }}
+                />
+            </Modal>
+            <View>
+                <FlatList
+                    horizontal
+                    data={state.customTags}
+                    renderItem={renderItem}
+                    keyExtractor={item => item}
+                />
+            </View>
         </SafeAreaView>
         
     )
@@ -322,7 +385,7 @@ const styles = StyleSheet.create({
         // marginBottom: 30,
         marginRight: 20,
         marginLeft: 20,
-        paddingLeft: 16
+        paddingLeft: 16,
     },
     closeText: {
         fontSize: 24,
@@ -362,7 +425,18 @@ const styles = StyleSheet.create({
         paddingRight: 10
     },
     multiSelectTextDropdown: {
-        paddingLeft: 16,
+        paddingLeft: 16
+    },
+    selectedItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingLeft: 15,
+        paddingTop: 3,
+        paddingRight: 3,
+        paddingBottom: 3,
+        margin: 3,
+        borderRadius: 20,
+        borderWidth: 2,
     },
     subtitle: {
         marginLeft: 20,
