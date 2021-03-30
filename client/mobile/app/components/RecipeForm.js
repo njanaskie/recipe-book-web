@@ -7,7 +7,9 @@ import {
     Dimensions,
     Platform,
     TouchableOpacity,
-    FlatList
+    FlatList,
+    StatusBar,
+    Text
     } from "react-native";
 import { useFirebaseContext } from '../context/firebase-context'
 import recipeTypes from '../fixtures/recipeTypes'
@@ -22,7 +24,7 @@ import Modal from 'react-native-modal';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Feather';
 import { Feather } from "@expo/vector-icons";
-import { Divider, Text, Title, Subheading } from 'react-native-paper';
+import { Divider, Title, Subheading } from 'react-native-paper';
 import MultiSelectForm from './MultiSelectForm';
 
 const { width, height } = Dimensions.get("window");
@@ -78,12 +80,17 @@ export default RecipeForm = (props) => {
     const allCustomTags = formResults ? selectCustomTags(formResults) : []
     const uid = user.uid
     const [isTagModalVisible, setIsTagModalVisible] = useState(false);
+    const [isIngredientModalVisible, setIsIngredientTagModalVisible] = useState(false);
 
     console.log(state)
     
     const toggleTagModal = () => {
         setIsTagModalVisible(!isTagModalVisible);
       };
+    
+    const toggleIngredientModal = () => {
+        setIsIngredientTagModalVisible(!isIngredientModalVisible);
+    };
 
     useEffect(() => {
         setState({
@@ -270,69 +277,95 @@ export default RecipeForm = (props) => {
                 textInputProps={{ autoFocus: false }}
             />
             <Text style={styles.subtitle}>Add all or some of the ingredients used in the recipe. This can be used to search for recipes in the future.</Text>
-            <MultiSelect
-                items={ingredients || []}
-                uniqueKey="id"
-                onSelectedItemsChange={(selectedItems) => setState({ ...state, ingredients: selectedItems })}
-                selectedItems={state.ingredients}
-                selectText="Select Ingredients"
-                searchInputPlaceholderText="Search Ingredients..."
-                // onChangeInput={ (text)=> console.log(text)}
-                tagRemoveIconColor="#CCC"
-                tagBorderColor="#CCC"
-                tagTextColor="#CCC"
-                tagContainerStyle={{ height: 30 }}
-                selectedItemTextColor="#CCC"
-                selectedItemIconColor="#CCC"
-                // displayKey="name"
-                styleMainWrapper={styles.multiSelectContainer}
-                styleInputGroup={styles.multiSelectInputGroup}
-                searchInputStyle={styles.multiSelectSearchInputStyle}
-                styleDropdownMenu={styles.multiSelectDropdownMenu}
-                styleSelectorContainer={styles.multiSelectSelector}
-                styleTextDropdown={styles.multiSelectTextDropdown}
-                hideSubmitButton={true}
-                hideDropdown={true}
-                textInputProps={{ autoFocus: false }}
-            />
+            <Button title='Add ingredients' onPress={toggleIngredientModal}/>
+            <Modal
+                isVisible={isIngredientModalVisible}
+                onBackdropPress={toggleIngredientModal}
+                style={styles.modal}
+            >
+                <View style={styles.header}>
+                    <View style={styles.panelHeader}>
+                        <Text style={styles.panelText}>Add Ingredients...</Text>
+                        <Button title='Done' onPress={toggleIngredientModal}/>
+                    </View>
+                </View>
+                <View style={styles.modalView}>
+                    <MultiSelect
+                        items={ingredients || []}
+                        uniqueKey="name"
+                        onSelectedItemsChange={(selectedItems) => setState({ ...state, ingredients: selectedItems })}
+                        selectedItems={state.ingredients}
+                        selectText="Select Ingredients"
+                        searchInputPlaceholderText="Search Ingredients..."
+                        tagRemoveIconColor="#3eb489"
+                        tagBorderColor="#3eb489"
+                        tagTextColor="#3eb489"
+                        selectedItemTextColor="#3eb489"
+                        selectedItemIconColor="#3eb489"
+                        styleMainWrapper={styles.multiSelectContainer}
+                        styleInputGroup={styles.multiSelectInputGroup}
+                        searchInputStyle={styles.multiSelectSearchInputStyle}
+                        styleTextDropdown={styles.multiSelectTextDropdown}
+                        styleListContainer={{ height: 680 }}
+                        hideDropdown={true}
+                        textInputProps={{ autoFocus: false }}
+                        fixedHeight
+                        submitButtonColor="#3eb489"
+                    />
+                </View>
+            </Modal>
+            <View>
+                <FlatList
+                    horizontal
+                    data={state.ingredients}
+                    renderItem={renderItem}
+                    keyExtractor={item => item}
+                />
+            </View>
             <Text style={styles.subtitle}>Add your own tags to categorize recipes however you want</Text>
             <Button title='Add tags' onPress={toggleTagModal}/>
             <Modal
                 isVisible={isTagModalVisible}
                 onBackdropPress={toggleTagModal}
+                style={styles.modal}
             >
-                <MultiSelect
-                    items={state.customTagOptions.map(option => {
-                        return {
-                            id: option,
-                            name: option
-                        }
-                    })}
-                    uniqueKey="id"
-                    onSelectedItemsChange={onAddCustomTag}
-                    selectedItems={state.customTags}
-                    canAddItems={true}
-                    // onAddItem={(selectedItems) => setState({ ...state, customTags: selectedItems })}
-                    // onAddItem={(newItem) => setState({ ...state, customTagOptions: newItem })}
-                    selectText="Select Custom Tags"
-                    searchInputPlaceholderText="Search Custom Tags..."
-                    tagRemoveIconColor="#CCC"
-                    tagBorderColor="#CCC"
-                    tagTextColor="#CCC"
-                    tagContainerStyle={{ height: 30 }}
-                    selectedItemTextColor="#CCC"
-                    selectedItemIconColor="#CCC"
-                    // displayKey="name"
-                    styleMainWrapper={styles.multiSelectContainer}
-                    styleInputGroup={styles.multiSelectInputGroup}
-                    searchInputStyle={styles.multiSelectSearchInputStyle}
-                    styleDropdownMenu={styles.multiSelectDropdownMenu}
-                    styleSelectorContainer={styles.multiSelectSelector}
-                    styleTextDropdown={styles.multiSelectTextDropdown}
-                    hideSubmitButton={true}
-                    hideDropdown={true}
-                    textInputProps={{ autoFocus: false }}
-                />
+                <View style={styles.header}>
+                    <View style={styles.panelHeader}>
+                        <Text style={styles.panelText}>Add Tags...</Text>
+                        <Button title='Done' onPress={toggleTagModal}/>
+                    </View>
+                </View>
+                <View style={styles.modalView}>
+                    <MultiSelect
+                        items={state.customTagOptions.map(option => {
+                            return {
+                                id: option,
+                                name: option
+                            }
+                        })}
+                        uniqueKey="id"
+                        onSelectedItemsChange={onAddCustomTag}
+                        selectedItems={state.customTags}
+                        canAddItems={true}
+                        // onAddItem={(newItem) => setState({ ...state, customTagOptions: newItem })}
+                        selectText="Select Custom Tags"
+                        searchInputPlaceholderText="Search Custom Tags..."
+                        tagRemoveIconColor="#3eb489"
+                        tagBorderColor="#3eb489"
+                        tagTextColor="#3eb489"
+                        selectedItemTextColor="#3eb489"
+                        selectedItemIconColor="#3eb489"
+                        styleMainWrapper={styles.multiSelectContainer}
+                        styleInputGroup={styles.multiSelectInputGroup}
+                        searchInputStyle={styles.multiSelectSearchInputStyle}
+                        styleTextDropdown={styles.multiSelectTextDropdown}
+                        styleListContainer={{ height: 680 }}
+                        hideDropdown={true}
+                        textInputProps={{ autoFocus: false }}
+                        fixedHeight
+                        submitButtonColor="#3eb489"
+                    />
+                </View>
             </Modal>
             <View>
                 <FlatList
@@ -350,7 +383,7 @@ export default RecipeForm = (props) => {
 const styles = StyleSheet.create({
     container: {
         // flex: 1,
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 20,
     },
     clearButton: {
         flex: 3,
@@ -387,23 +420,41 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         paddingLeft: 16,
     },
+    modal: {
+        margin: 0,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 35,
+    },
+    modalView: {
+        flex: 1,
+        backgroundColor: 'white',
+        // borderRadius: 5,
+        paddingTop: 10
+        // // alignItems: 'center',
+        // justifyContent: 'center'
+    },
     closeText: {
         fontSize: 24,
         color: '#00479e',
         textAlign: 'center',
     },
     multiSelectContainer: {
-        // height: 48,
-        borderRadius: 5,
-        overflow: 'hidden',
-        backgroundColor: 'white',
-        marginTop: 10,
+        // borderRadius: 5,
+        // overflow: 'hidden',
+        // backgroundColor: 'black',
         // marginBottom: 30,
-        marginRight: 20,
-        marginLeft: 20,
+        paddingRight: 10,
+        paddingLeft: 10,
+        // paddingTop: 10,
+        justifyContent: 'center',
+        // alignItems: 'center',
     },
     multiSelectInputGroup: {
-        marginRight: 20
+        paddingRight: 10,
+        paddingLeft: 10,
+        paddingTop: 10,
+        justifyContent: 'center',
+        height: 40,
+        // backgroundColor: 'orange',
     },
     multiSelectDropdownMenu: {
         justifyContent: 'center',
@@ -411,21 +462,22 @@ const styles = StyleSheet.create({
         // marginRight: 16,
         // marginLeft: 16,
         marginTop: 10,
-        marginBottom: 10
+        marginBottom: 10,
     },
     multiSelectSelector: {
         justifyContent: 'center',
         marginRight: 16,
         marginLeft: 16,
-        marginTop: 16
+        marginTop: 16,
     },
     multiSelectSearchInputStyle: {
-        justifyContent: 'center',
-        padding: 20,
-        paddingRight: 10
+        // fontSize: 16,
+        // lineHeight: 16,
     },
     multiSelectTextDropdown: {
-        paddingLeft: 16
+        // fontSize: 16,
+        // lineHeight: 16,
+        // paddingLeft: 8,
     },
     selectedItem: {
         flexDirection: 'row',
@@ -449,5 +501,26 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingRight: 10
+    },    
+    header: {
+        backgroundColor: '#FFFFFF',
+        shadowColor: '#333333',
+        shadowOffset: {width: -1, height: -3},
+        shadowRadius: 2,
+        shadowOpacity: 0.4,
+        // elevation: 5,
+        paddingTop: 20,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+    },
+    panelHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginRight: 10
+    },
+    panelText: {
+        marginLeft: 10,
+        fontSize: 18
     }
 })
