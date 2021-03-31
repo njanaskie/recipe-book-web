@@ -25,6 +25,9 @@ import LogoutButton from './LogoutButton'
 import { firebase } from '../firebase/firebase'
 import useAllRecipes from '../hooks/useAllRecipes'
 import useIngredients from '../hooks/useIngredients'
+import * as Animatable from 'react-native-animatable';
+import LinearGradient from 'react-native-linear-gradient';
+import { colorPack } from '../styles/styles'
 
 const { width, height } = Dimensions.get("window");
 const snapPoints = ["10%", "90%"];
@@ -63,34 +66,38 @@ export default function HomeScreen() {
     };
 
     return (
-      <SafeAreaView style={styles.container}>
-        <View>
-          <TouchableOpacity
-              style={{ padding: 20 }}
-              onPress={toggleModal}
-          >
-              <Feather name="plus-circle" size={150} color='#3eb489'/>
-          </TouchableOpacity>
-          <Modal
-              isVisible={isModalVisible}
-              style={{ margin: 0 }}
-          >
-            <View style={{ flex: 1, backgroundColor: 'white', borderRadius: 5 }}>
-              <AddRecipe />
-              <Button title="Hide modal" onPress={toggleModal} />
-            </View>
-          </Modal>
-        </View>
-        <BottomSheet
-            enabledBottomInitialAnimation={true}
-            ref={sheetRef}
-            initialSnap={0}
-            snapPoints={snapPoints}
-            // borderRadius={10} 
-            renderContent={renderContent}
-            renderHeader={renderHeader}
-        />
-      </SafeAreaView>
+      <LinearGradient colors={[colorPack.mint, colorPack.backgroundColor, colorPack.mint]} style={styles.linearGradient}>
+        <SafeAreaView style={styles.container}>
+          <View>
+            <Animatable.View animation="pulse" easing="ease-out" iterationCount="infinite">
+              <TouchableOpacity
+                  style={{ padding: 20 }}
+                  onPress={toggleModal}
+              >
+                  <Feather name="plus-circle" size={150} color={colorPack.mint}/>
+              </TouchableOpacity>
+            </Animatable.View>
+            <Modal
+                isVisible={isModalVisible}
+                style={{ margin: 0 }}
+            >
+              <View style={{ flex: 1, backgroundColor: colorPack.backgroundColor, borderRadius: 5 }}>
+                <AddRecipe />
+                <Button title="Hide modal" onPress={toggleModal} />
+              </View>
+            </Modal>
+          </View>
+          <BottomSheet
+              enabledBottomInitialAnimation={true}
+              ref={sheetRef}
+              initialSnap={0}
+              snapPoints={snapPoints}
+              // borderRadius={10} 
+              renderContent={renderContent}
+              renderHeader={renderHeader}
+          />
+        </SafeAreaView>
+      </LinearGradient>
     )
 
 };
@@ -132,12 +139,12 @@ const styles = StyleSheet.create({
     },
     modal: {
       padding: 20,
-      backgroundColor: '#FFFFFF',
+      backgroundColor: colorPack.backgroundColor,
       paddingTop: 20,
       height: height
     },
     header: {
-      backgroundColor: '#FFFFFF',
+      backgroundColor: colorPack.backgroundColor,
       shadowColor: '#333333',
       shadowOffset: {width: -1, height: -3},
       shadowRadius: 2,
@@ -156,6 +163,12 @@ const styles = StyleSheet.create({
       borderRadius: 4,
       backgroundColor: '#00000040',
       marginBottom: 10,
+    },
+    linearGradient: {
+      flex: 1,
+      // paddingLeft: 15,
+      // paddingRight: 15,
+      borderRadius: 5
     },
     
   });

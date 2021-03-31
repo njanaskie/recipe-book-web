@@ -26,6 +26,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { Feather } from "@expo/vector-icons";
 import { Divider, Title, Subheading } from 'react-native-paper';
 import MultiSelectForm from './MultiSelectForm';
+import { colorPack } from '../styles/styles'
 
 const { width, height } = Dimensions.get("window");
 const Item = ({item}) => (
@@ -127,33 +128,6 @@ export default RecipeForm = (props) => {
         }
     }
 
-    const onURLChange = (e) => {
-        const url = e.target.value
-        if (url) {
-            setState({ ...state, url })
-        }
-    }
-
-    const onIngredientChange = (e, result) => {
-        const { value } = result || e.target
-        setState({ ...state, ingredients: value })
-    }
-
-    const onTypeChange = (e, result) => {
-        const { value } = result || e.target
-        setState({ ...state, type: value })
-    }
-
-    const onCuisineChange = (e, result) => {
-        const { value } = result || e.target
-        setState({ ...state, cuisine: value })
-    }
-
-    const onCustomTagChange = (e, result) => {
-        const { value } = result || e.target
-        setState({ ...state, customTags: value })
-    }
-
     const onAddCustomTag = (newItem) => {
         // console.log(newItem, 'vs', state.customTagOptions)
         if (newItem.every(tag => state.customTagOptions.includes(tag))) {
@@ -179,7 +153,6 @@ export default RecipeForm = (props) => {
     const renderItem = ({item}) => (
         <Item item={item} />
     )
-
 
     return (
         <SafeAreaView style={styles.container} onSubmit={onSubmit}>
@@ -213,69 +186,65 @@ export default RecipeForm = (props) => {
                 onSelectedItemsChange={(selectedItems) => setState({ ...state, type: selectedItems })}
                 selectedItems={state.type}
                 selectText="Select Type"
-                // searchInputPlaceholderText="Search Ingredients..."
-                // onChangeInput={ (text)=> console.log(text)}
-                tagRemoveIconColor="#CCC"
-                tagBorderColor="#CCC"
-                tagTextColor="#CCC"
-                tagContainerStyle={{ height: 30 }}
-                selectedItemTextColor="#CCC"
-                selectedItemIconColor="#CCC"
+                // searchInputPlaceholderText="Search Type"
+                tagRemoveIconColor="#3eb489"
+                tagBorderColor="#3eb489"
+                tagTextColor="#3eb489"
+                selectedItemTextColor="#3eb489"
+                selectedItemIconColor="#3eb489"
                 // displayKey="name"
-                styleMainWrapper={styles.multiSelectContainer}
+                styleMainWrapper={styles.multiSelectContainer, { marginLeft: 20, marginRight: 20 }}
                 styleInputGroup={styles.multiSelectInputGroup}
                 searchInputStyle={styles.multiSelectSearchInputStyle}
                 styleDropdownMenu={styles.multiSelectDropdownMenu}
                 styleSelectorContainer={styles.multiSelectSelector}
                 styleTextDropdown={styles.multiSelectTextDropdown}
                 hideSubmitButton={true}
-                textInputProps={{ editable: false, autoFocus: false }}
-                searchInputPlaceholderText="Select Type"
+                textInputProps={{ editable: false, autoFocus: false, }}
                 searchIcon={false}
                 hideDropdown={true}
-                textInputProps={{ autoFocus: false }}
+                fixedHeight
+                submitButtonColor="#3eb489"
             />
-            <View style={styles.subtitleGroup}>
-                <Text style={styles.subtitle}>Add the recipe cuisine</Text>
-                <TouchableOpacity onPress={clearSelectedCuisines}>
-                    <Text style={styles.clearButton} >Clear selection</Text>
-                </TouchableOpacity>
-            </View>
-            <MultiSelect
-                single
-                items={recipeCuisines.map(recipeCuisine => {
-                    return {
-                        id: recipeCuisine,
-                        name: recipeCuisine
-                    }
-                })}
-                ref={c => _multiSelectCuisine = c}
-                uniqueKey="id"
-                onSelectedItemsChange={(selectedItems) => setState({ ...state, cuisine: selectedItems })}
-                selectedItems={state.cuisine}
-                selectText="Select Cuisine"
-                // searchInputPlaceholderText="Search Ingredients..."
-                // onChangeInput={ (text)=> console.log(text)}
-                tagRemoveIconColor="#CCC"
-                tagBorderColor="#CCC"
-                tagTextColor="#CCC"
-                tagContainerStyle={{ height: 30 }}
-                selectedItemTextColor="#CCC"
-                selectedItemIconColor="#CCC"
-                // displayKey="name"
-                styleMainWrapper={styles.multiSelectContainer}
-                styleInputGroup={styles.multiSelectInputGroup}
-                searchInputStyle={styles.multiSelectSearchInputStyle}
-                styleDropdownMenu={styles.multiSelectDropdownMenu}
-                styleSelectorContainer={styles.multiSelectSelector}
-                styleTextDropdown={styles.multiSelectTextDropdown}
-                hideSubmitButton={true}
-                textInputProps={{ editable: false, autoFocus: false, paddingRight: 20 }}
-                searchInputPlaceholderText="Select Cuisine"
-                searchIcon={false}
-                hideDropdown={true}
-                textInputProps={{ autoFocus: false }}
-            />
+                <View style={styles.subtitleGroup}>
+                    <Text style={styles.subtitle}>Add the recipe cuisine</Text>
+                    <TouchableOpacity onPress={clearSelectedCuisines}>
+                        <Text style={styles.clearButton} >Clear selection</Text>
+                    </TouchableOpacity>
+                </View>
+                <MultiSelect
+                    single
+                    items={recipeCuisines.map(recipeCuisine => {
+                        return {
+                            id: recipeCuisine,
+                            name: recipeCuisine
+                        }
+                    })}
+                    ref={c => _multiSelectCuisine = c}
+                    uniqueKey="id"
+                    onSelectedItemsChange={(selectedItems) => setState({ ...state, cuisine: selectedItems })}
+                    selectedItems={state.cuisine}
+                    selectText="Select Cuisine"
+                    // searchInputPlaceholderText="Search Cuisine"
+                    tagRemoveIconColor="#3eb489"
+                    tagBorderColor="#3eb489"
+                    tagTextColor="#3eb489"
+                    selectedItemTextColor="#3eb489"
+                    selectedItemIconColor="#3eb489"
+                    // displayKey="name"
+                    styleMainWrapper={styles.multiSelectContainer, { marginLeft: 20, marginRight: 20 }}
+                    styleInputGroup={styles.multiSelectInputGroup}
+                    searchInputStyle={styles.multiSelectSearchInputStyle}
+                    styleDropdownMenu={styles.multiSelectDropdownMenu}
+                    styleSelectorContainer={styles.multiSelectSelector}
+                    styleTextDropdown={styles.multiSelectTextDropdown}
+                    hideSubmitButton={true}
+                    textInputProps={{ editable: false, autoFocus: false, }}
+                    searchIcon={false}
+                    hideDropdown={true}
+                    fixedHeight
+                    submitButtonColor="#3eb489"
+                />
             <Text style={styles.subtitle}>Add all or some of the ingredients used in the recipe. This can be used to search for recipes in the future.</Text>
             <Button title='Add ingredients' onPress={toggleIngredientModal}/>
             <Modal
@@ -384,6 +353,7 @@ const styles = StyleSheet.create({
     container: {
         // flex: 1,
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 20,
+        // backgroundColor: 'black'
     },
     clearButton: {
         flex: 3,
@@ -426,7 +396,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: colorPack.backgroundColor,
         // borderRadius: 5,
         paddingTop: 10
         // // alignItems: 'center',
@@ -458,7 +428,7 @@ const styles = StyleSheet.create({
     },
     multiSelectDropdownMenu: {
         justifyContent: 'center',
-        alignItems: 'center',
+        // alignItems: 'center',
         // marginRight: 16,
         // marginLeft: 16,
         marginTop: 10,
@@ -503,7 +473,7 @@ const styles = StyleSheet.create({
         paddingRight: 10
     },    
     header: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: colorPack.backgroundColor,
         shadowColor: '#333333',
         shadowOffset: {width: -1, height: -3},
         shadowRadius: 2,
