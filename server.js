@@ -6,6 +6,7 @@ const router = require('./server/routes/router')
 const mongoose = require('mongoose');
 const cors = require('cors');
 const decodeIDToken = require('./server/middleware/authenticateToken');
+const scraper = require('./server/scraper/scraper')
 const publicPath = path.join(__dirname, 'client', 'web', 'public');
 const port = process.env.PORT || 3001;
 
@@ -23,6 +24,7 @@ mongoose.connect(
 app.use(cors());
 app.use(express.json());
 app.use(decodeIDToken);
+app.use(scraper)
 
 app.use('/api', router);
 

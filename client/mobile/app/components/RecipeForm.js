@@ -26,7 +26,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { Feather } from "@expo/vector-icons";
 import { Divider, Title, Subheading } from 'react-native-paper';
 import MultiSelectForm from './MultiSelectForm';
-import { colorPack } from '../styles/styles'
+import { colorPack } from '../styles/styles';
 
 const { width, height } = Dimensions.get("window");
 const Item = ({item}) => (
