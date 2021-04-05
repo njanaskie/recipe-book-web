@@ -1,27 +1,33 @@
 const axios = require("axios")
 const cheerio = require("cheerio")
 
-const url = 'https://www.youtube.com/watch?v=5BfZn9HHKI0'
+// const url = 'https://stackoverflow.com/questions/38884522/why-is-my-asynchronous-function-returning-promise-pending-instead-of-a-val'
 
 let getData = html => {
-    data = {}
     const $ = cheerio.load(html);
     // const title = /[^-]*/.exec($('title').first().text())[0]
-    const title = $('title').first().text().split(' - ', 1)[0]
+    const title = $('title').first().text().trim()
+    const site = /[^-]*$/.exec(title)[0].trim()
+    const img = $('img').attr('src')
 
-    return title
+    return { urlSite: site, urlTitle: title, urlImage: img }
 }
 
-async function fetchHTML(url) {
+module.exports = async (url) => {
+    let returnObject = {}
     await axios.get(url)
       .then(response => {
-        console.log(getData(response.data))
+        const fetchedData = getData(response.data)
+        returnObject = fetchedData
       })
       .catch(error => {
-        console.log(error)
+        console.log('scraper.js error', error)
       })
+    
+    console.log(returnObject)
+    return returnObject
   }
 
-const $ = fetchHTML(url)
+// const $ = fetchURL(url)
 
-module.exports = fetchHTML;
+// {fetchURL: fetchURL};

@@ -113,8 +113,8 @@ export default RecipeForm = (props) => {
         const recipe = {
             url: state.url,
             ingredients: state.ingredients,
-            type: state.type,
-            cuisine: state.cuisine,
+            type: state.type.toLocaleString(),
+            cuisine: state.cuisine.toLocaleString(),
             // createdAt: state.createdAt.valueOf(),
             customTags: state.customTags,
             savedBy: state.savedBy
@@ -344,6 +344,7 @@ export default RecipeForm = (props) => {
                     keyExtractor={item => item}
                 />
             </View>
+            <Button onPress={onSubmit} title='Submit' />
         </SafeAreaView>
         
     )

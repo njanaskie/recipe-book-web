@@ -19,12 +19,26 @@ const createToken = async () => {
     return payloadHeader;
 }
 
-export const addRecipeService = async (recipe) => {
+export const scrapeURLService = async (recipe) => {
     const header = await createToken();
     const payload = recipe
 
     try {
-        // console.log(payload);
+        const res = await axios.post(`${url}/api/recipes/scrape`, payload, header)
+        // console.log('scrape url service', res.data)
+        return res.data
+    } catch (e) {
+        console.log('scraper service error', e)
+    }
+}
+
+export const addRecipeService = async (recipe) => {
+    const header = await createToken();
+    // const scrapedData = await scrapeURLService(recipe)
+    const payload = recipe
+
+    try {
+        console.log('add recipe service', payload);
         const res = await axios.post(`${url}/api/recipes`, payload, header)
         return res.data
     } catch (e) {

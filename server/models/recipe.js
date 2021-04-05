@@ -7,6 +7,9 @@ const recipeSchema = new mongoose.Schema({
   type: String,
   url: String,
   savedBy: String,
+  urlSite: String,
+  urlTitle: String,
+  urlImage: String,
 },
 { timestamps: true });
 

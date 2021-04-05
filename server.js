@@ -24,7 +24,8 @@ mongoose.connect(
 app.use(cors());
 app.use(express.json());
 app.use(decodeIDToken);
-app.use(scraper)
+
+// scraper.fetchURL()
 
 app.use('/api', router);
 

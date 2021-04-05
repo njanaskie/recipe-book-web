@@ -1,6 +1,24 @@
 const recipesRouter = require('express').Router();
-const Recipe = require('../models/recipe')
+const Recipe = require('../models/recipe');
+const scraper = require('../scraper/scraper');
 
+
+scrapeURL = async (req, res) => {
+    const auth = req.currentUser;
+
+    if (auth) {
+        try {
+            const url = req.body.url
+            const scrapedData = await scraper(url)
+            console.log('scrapeURL', scrapedData)
+            return res.json(scrapedData)
+        } catch (error) {
+            console.log('scrapeURL error', error)
+        }
+
+    }
+    return res.status(403).send('Not authorized scrapeURL get')
+}
 
 getRecipes = async (req, res) => {
         const auth = req.currentUser;
@@ -16,10 +34,16 @@ getRecipes = async (req, res) => {
 
 createRecipe = async (req, res) => {
     const auth = req.currentUser;
+    const body = req.body
 
     if (auth) {
-        // console.log('authenticated!', auth);
-        const recipe = new Recipe(req.body)
+        // const scrapedData = await fetchURL(body.url)
+        // console.log(scrapedData)
+        // const data = {...body, ...scrapedData}
+        // console.log('saving...', data);
+
+        console.log('saving...', body);
+        const recipe = new Recipe(body)
         const savedRecipe = await recipe.save()
 
         return res.status(201).json(savedRecipe);
@@ -115,5 +139,6 @@ module.exports = {
     getRecipes,
     createRecipe,
     removeRecipe,
-    updateRecipe
+    updateRecipe,
+    scrapeURL,
 };

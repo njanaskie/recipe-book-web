@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from "react-native";
 import RecipeForm from './RecipeForm'
 import { useRecipesContext } from '../context/recipes-context'
-import { addRecipeService } from '../services/recipeServices'
+import { addRecipeService, scrapeURLService } from '../services/recipeServices'
 
 const AddRecipe = () => {
     const { recipes, recipeDispatch } = useRecipesContext()
@@ -10,8 +10,12 @@ const AddRecipe = () => {
 
     const onSubmit = async (recipe) => {
         // addRecipe(recipe)
-        const newRecipe = await addRecipeService(recipe)
-        recipeDispatch({ type: 'ADD_RECIPE', recipe: {id: newRecipe.id, ...recipe} })
+        const scrapedData = await scrapeURLService(recipe)
+        console.log('add recipe scrapedData', scrapedData)
+        const fullData = { ...recipe, ...scrapedData}
+        console.log('fullData', fullData)
+        const newRecipe = await addRecipeService(fullData)
+        recipeDispatch({ type: 'ADD_RECIPE', recipe: {id: newRecipe.id, ...fullData} })
         // history.push('/')
     }
 
