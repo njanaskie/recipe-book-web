@@ -9,7 +9,8 @@ import {
     TouchableOpacity,
     FlatList,
     StatusBar,
-    Text
+    Text,
+    TextInput
     } from "react-native";
 import { useFirebaseContext } from '../context/firebase-context'
 import recipeTypes from '../fixtures/recipeTypes'
@@ -17,7 +18,7 @@ import recipeCuisines from '../fixtures/recipeCuisines'
 import selectCustomTags from '../selectors/custom-tags'
 import { useIngredientsContext } from '../context/ingredients-context'
 import { useRecipesContext } from '../context/recipes-context'
-import { TextInput } from 'react-native-gesture-handler'
+// import { TextInput } from 'react-native-gesture-handler'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import MultiSelect from 'react-native-multiple-select';
 import Modal from 'react-native-modal';
@@ -27,6 +28,7 @@ import { Feather } from "@expo/vector-icons";
 import { Divider, Title, Subheading } from 'react-native-paper';
 import MultiSelectForm from './MultiSelectForm';
 import { colorPack } from '../styles/styles';
+import Clipboard, { useClipboard } from '@react-native-clipboard/clipboard';
 
 const { width, height } = Dimensions.get("window");
 const Item = ({item}) => (
@@ -82,7 +84,23 @@ export default RecipeForm = (props) => {
     const uid = user.uid
     const [isTagModalVisible, setIsTagModalVisible] = useState(false);
     const [isIngredientModalVisible, setIsIngredientTagModalVisible] = useState(false);
+    const [copiedText, setCopiedText] = useState('');
+    const [data, setString] = useClipboard();
 
+    useEffect(() => {
+        setString('hello world');
+      }, []);
+
+    const copyToClipboard = () => {
+      Clipboard.setString('hello world');
+    };
+  
+    const fetchCopiedText = async () => {
+      const text = await Clipboard.getString();
+      setCopiedText(text);
+    };
+
+    console.log('copied', copiedText)
     console.log(state)
     
     const toggleTagModal = () => {
@@ -95,7 +113,7 @@ export default RecipeForm = (props) => {
 
     useEffect(() => {
         setState({
-            url: props.url || '',
+            url: props.url || 'https://www.apple.com',
             ingredients: props.ingredients || [],
             type: props.type || [],
             cuisine: props.cuisine || [],
@@ -157,15 +175,26 @@ export default RecipeForm = (props) => {
     return (
         <SafeAreaView style={styles.container} onSubmit={onSubmit}>
             <Title style={styles.title}>I want to save...</Title>
+            <Text>{data}</Text>
+            <View >
+                <TouchableOpacity onPress={copyToClipboard}>
+                    <Text>Click here to copy to Clipboard</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={fetchCopiedText}>
+                    <Text>View copied text</Text>
+                </TouchableOpacity>
+
+                <Text>{copiedText}</Text>
+            </View>
             <Text style={styles.subtitle}>Copy the recipe URL link into the text bar</Text>
             <TextInput
                 style={styles.input}
                 placeholder='Insert URL'
-                placeholderTextColor="#aaaaaa"
+                // placeholderTextColor="#aaaaaa"
                 onChangeText={(url) => setState({ ...state, url })}
                 value={state.url}
-                underlineColorAndroid="transparent"
-                autoCapitalize="none"
+                // underlineColorAndroid="transparent"
+                // autoCapitalize="none"
             />
             <View style={styles.subtitleGroup}>
                 <Text style={styles.subtitle}>Add the type of recipe</Text>

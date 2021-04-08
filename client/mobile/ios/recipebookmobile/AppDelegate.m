@@ -1,5 +1,10 @@
 #import "AppDelegate.h"
 
+// put this condition after AppDelegate.h import
+// #if RCT_DEV
+// #import <React/RCTDevLoadingView.h>
+// #endif
+
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -75,7 +80,16 @@ static void InitializeFlipper(UIApplication *application) {
 - (RCTBridge *)initializeReactNativeApp
 {
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:self.launchOptions];
+  // RCTBridge *bridge = [[RCTBridge alloc] initWithBundleURL:[[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.js" fallbackResource:nil]
+  //                                         moduleProvider:nil
+  //                                           launchOptions:self.launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge moduleName:@"main" initialProperties:nil];
+  // #if RCT_DEV
+  // [bridge moduleForClass:[RCTDevLoadingView class]];
+  // #endif
+  //   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
+  //                                                   moduleName:@"main"
+  //                                             initialProperties:nil];
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
   UIViewController *rootViewController = [UIViewController new];

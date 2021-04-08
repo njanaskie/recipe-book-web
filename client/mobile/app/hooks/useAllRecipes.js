@@ -54,7 +54,7 @@ const useAllRecipes = () => {
 
     }, [user])
 
-    return { recipes, count }
+    return { recipes: recipes || [''], count }
 }
 
 export default useAllRecipes

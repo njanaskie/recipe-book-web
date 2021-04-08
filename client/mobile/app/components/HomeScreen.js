@@ -28,6 +28,7 @@ import useIngredients from '../hooks/useIngredients'
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import { colorPack } from '../styles/styles'
+import RecipeList from './RecipeList'
 
 const { width, height } = Dimensions.get("window");
 const snapPoints = ["10%", "90%"];
@@ -44,7 +45,7 @@ export default function HomeScreen() {
   
     renderContent = () => (
       <View style={styles.modal}>
-        <Text>List items here</Text>
+        <RecipeList />
         <LogoutButton />
       </View>
     )

@@ -3,3 +3,5 @@ client/web/public/dist/
 .env.test
 .env.development
 .env
+.yarn*
+.DS_Store
