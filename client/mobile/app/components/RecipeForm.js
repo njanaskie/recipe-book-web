@@ -87,20 +87,20 @@ export default RecipeForm = (props) => {
     const [copiedText, setCopiedText] = useState('');
     const [data, setString] = useClipboard();
 
-    useEffect(() => {
-        setString('hello world');
-      }, []);
+    // useEffect(() => {
+    //     setString('hello world');
+    //   }, []);
 
-    const copyToClipboard = () => {
-      Clipboard.setString('hello world');
-    };
+    // const copyToClipboard = () => {
+    //   Clipboard.setString('hello world');
+    // };
   
-    const fetchCopiedText = async () => {
-      const text = await Clipboard.getString();
-      setCopiedText(text);
-    };
+    // const fetchCopiedText = async () => {
+    //   const text = await Clipboard.getString();
+    //   setCopiedText(text);
+    // };
 
-    console.log('copied', copiedText)
+    // console.log('copied', copiedText)
     console.log(state)
     
     const toggleTagModal = () => {
@@ -113,7 +113,7 @@ export default RecipeForm = (props) => {
 
     useEffect(() => {
         setState({
-            url: props.url || 'https://www.apple.com',
+            url: props.url || 'https://www.youtube.com/watch?v=6GHPxpQcn_o',
             ingredients: props.ingredients || [],
             type: props.type || [],
             cuisine: props.cuisine || [],
@@ -175,7 +175,7 @@ export default RecipeForm = (props) => {
     return (
         <SafeAreaView style={styles.container} onSubmit={onSubmit}>
             <Title style={styles.title}>I want to save...</Title>
-            <Text>{data}</Text>
+            {/* <Text>{data}</Text>
             <View >
                 <TouchableOpacity onPress={copyToClipboard}>
                     <Text>Click here to copy to Clipboard</Text>
@@ -185,7 +185,7 @@ export default RecipeForm = (props) => {
                 </TouchableOpacity>
 
                 <Text>{copiedText}</Text>
-            </View>
+            </View> */}
             <Text style={styles.subtitle}>Copy the recipe URL link into the text bar</Text>
             <TextInput
                 style={styles.input}

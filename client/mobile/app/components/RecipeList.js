@@ -4,7 +4,7 @@ import RecipeListItem from './RecipeListItem'
 import { config } from '../config/config'
 // import selectRecipes from '../selectors/recipes'
 import { useRecipesContext } from '../context/recipes-context'
-import { FlatList, Text, View } from 'react-native'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 
 export const RecipeList = () => {
     const initialFormState = {
@@ -34,13 +34,22 @@ export const RecipeList = () => {
         // <View>
         //     {tableItems}
         // </View>
-        <FlatList 
-            data={recipes}
-            renderItem={({ item }) => <RecipeListItem recipe={item} />}
-            keyExtractor={item => item.id}
-            numColumns={2}
-        />
+        <View style={styles.containter}>
+            <FlatList 
+                data={recipes}
+                renderItem={({ item }) => <RecipeListItem recipe={item} />}
+                keyExtractor={item => item.id}
+                numColumns={2}
+            />
+        </View>
     )
 }
+
+const styles = StyleSheet.create({
+    containter: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+})
 
 export default RecipeList
