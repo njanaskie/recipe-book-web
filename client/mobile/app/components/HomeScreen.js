@@ -89,15 +89,15 @@ export default function HomeScreen() {
             </Modal>
           </View>
         </SafeAreaView>
-        <BottomSheet
+          <BottomSheet
               enabledBottomInitialAnimation={true}
+              // enabledBottomClamp={true}
               ref={sheetRef}
               initialSnap={1}
               snapPoints={snapPoints}
               // borderRadius={10} 
               renderContent={renderContent}
               renderHeader={renderHeader}
-              // style={{ zIndex: 1}}
           />
       </LinearGradient>
     )
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
       padding: 20,
       backgroundColor: colorPack.backgroundColor,
       paddingTop: 20,
-      // height: 1000
+      height: height
     },
     header: {
       backgroundColor: colorPack.backgroundColor,

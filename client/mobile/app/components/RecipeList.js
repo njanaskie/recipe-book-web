@@ -22,7 +22,7 @@ export const RecipeList = () => {
     // const handlePageChange = (e, { activePage }) => setPageState({ activePage })
 
     if (!recipes || !recipes.length) {
-        return <Text className="list-item--message">No recipes</Text>
+        return <Text>No recipes</Text>
     }
 
     const tableItems = recipes.map((recipe) => {
