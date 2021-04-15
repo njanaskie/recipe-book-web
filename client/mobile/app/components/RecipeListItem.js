@@ -15,7 +15,7 @@ const RecipeListItem = ({ recipe }) => {
     const { user, isGuest } = useFirebaseContext()
     const { removeRecipe, recipeDispatch } = useRecipesContext()
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [urlData, setUrlData] = useState({ title: '', image: '' })
+    const [urlData, setUrlData] = useState({ title: '', image: null })
 
     const show = () => setOpen(true)
 
@@ -41,36 +41,9 @@ const RecipeListItem = ({ recipe }) => {
     ,[])
 
     return (
-        // <Card style={styles.containter}>
-        //     {/* <Card.Content>
-        //         <Title>
-        //             {recipe.urlTitle}
-        //         </Title>
-        //     </Card.Content> */}
-        //     <Card.Cover style={styles.image} source={{ uri: recipe.urlImage }} />
-        //     <Card.Title title={recipe.urlTitle} />
-        // </Card>
-        // <View style={styles.containter}>
-        //     <Image source={{ uri: recipe.urlImage }} style={styles.image}/>
-        //     <Text style={styles.overflow} numberOfLines={2} ellipsizeMode='tail'>{recipe.urlTitle}</Text>
-        // </View>
         <Card style={styles.containter} >
-            {/* <LinkPreview
-                text={recipe.url}
-                // containerStyle={styles.preview}
-                // renderDescription={(desc) => null }
-                // renderText={text => null }
-                // renderMinimizedImage={img => null }
-                // renderLinkPreview={prev =>
-                //     // setUrlTitle(prev.previewData.title)
-                //     // console.log(prev.previewData.title)
-                //         <Text>{prev.previewData.title}</Text>
-                // }
-                // renderTitle={(title) => <Text>{title}</Text>}
-                // onPreviewDataFetched={(data) => console.log(data)}
-            /> */}
             <Card.Cover source={{ uri: urlData.image }} style={styles.image}/>
-            <Card.Title title={urlData.title} titleStyle={styles.title} titleNumberOfLines={2}/>
+            <Card.Title title={urlData.title} titleStyle={styles.title} titleNumberOfLines={3}/>
         </Card>
     )
 }
@@ -79,7 +52,8 @@ const styles = StyleSheet.create({
     containter: {
         height: 200,
         width: 150,
-        margin: 5,
+        marginBottom: 10,
+        marginTop: 10,
         // justifyContent: 'center',
         // alignSelf: 'center',
     },
@@ -96,6 +70,8 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         fontSize: 12,
         lineHeight: 20,
+        marginRight: 10,
+        marginTop: 5,
     },
     description: {
         display: 'none'

@@ -31,7 +31,7 @@ import { colorPack } from '../styles/styles'
 import RecipeList from './RecipeList'
 
 const { width, height } = Dimensions.get("window");
-const snapPoints = ["10%", "90%"];
+const snapPoints = [ '95%', '15%'];
 
 export default function HomeScreen() {
     const recipes = useAllRecipes()
@@ -46,7 +46,6 @@ export default function HomeScreen() {
     renderContent = () => (
       <View style={styles.modal}>
         <RecipeList />
-        <LogoutButton />
       </View>
     )
   
@@ -54,6 +53,7 @@ export default function HomeScreen() {
       <View style={styles.header}>
         <View style={styles.panelHeader}>
           <View style={styles.panelHandle} />
+          <LogoutButton />
         </View>
       </View>
     );
@@ -88,16 +88,17 @@ export default function HomeScreen() {
               </View>
             </Modal>
           </View>
-          <BottomSheet
+        </SafeAreaView>
+        <BottomSheet
               enabledBottomInitialAnimation={true}
               ref={sheetRef}
-              initialSnap={0}
+              initialSnap={1}
               snapPoints={snapPoints}
               // borderRadius={10} 
               renderContent={renderContent}
               renderHeader={renderHeader}
+              // style={{ zIndex: 1}}
           />
-        </SafeAreaView>
       </LinearGradient>
     )
 
@@ -107,8 +108,8 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-      justifyContent: "center",
-      alignItems: "center",
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     box: {
       height: 50,
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
       padding: 20,
       backgroundColor: colorPack.backgroundColor,
       paddingTop: 20,
-      height: height
+      // height: 1000
     },
     header: {
       backgroundColor: colorPack.backgroundColor,
