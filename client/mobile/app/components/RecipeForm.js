@@ -29,39 +29,9 @@ import { Divider, Title, Subheading } from 'react-native-paper';
 import MultiSelectForm from './MultiSelectForm';
 import { colorPack } from '../styles/styles';
 import Clipboard, { useClipboard } from '@react-native-clipboard/clipboard';
+import Tag from './Tag'
 
 const { width, height } = Dimensions.get("window");
-const Item = ({item}) => (
-    <View
-        // key={tag}
-        style={[
-            styles.selectedItem,
-            {
-            width: item.length * 6 + 50,
-            justifyContent: 'center',
-            height: 30,
-            borderColor: '#e9e9e9'
-            },
-            // tagContainerStyle || {}
-            ]
-        }
-    >
-        <Text
-            style={[
-                {
-                flex: 1,
-                color: '#525966',
-                fontSize: 15
-                },
-                // styleTextTag && styleTextTag,
-                // fontFamily ? { fontFamily } : {}
-            ]}
-            numberOfLines={1}
-        >
-            {item}
-        </Text>
-    </View>
-)
 
 export default RecipeForm = (props) => {
     const { isGuest, user } = useFirebaseContext()
@@ -169,7 +139,7 @@ export default RecipeForm = (props) => {
      };
 
     const renderItem = ({item}) => (
-        <Item item={item} />
+        <Tag item={item} />
     )
 
     return (
