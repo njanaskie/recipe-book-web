@@ -85,8 +85,8 @@ export default RecipeForm = (props) => {
         setState({
             url: props.url || 'https://www.youtube.com/watch?v=6GHPxpQcn_o',
             ingredients: props.ingredients || [],
-            type: props.type || [],
-            cuisine: props.cuisine || [],
+            type: [props.type] || null,
+            cuisine: [props.cuisine] || null,
             // createdAt: moment(props.createdAt) || moment(),
             savedBy: props.savedBy || uid,
             customTags: props.customTags || [],

@@ -1,32 +1,72 @@
 import React, { useState } from 'react'
-import { Dimensions, StyleSheet, Image, Text, TextInput, TouchableOpacity, View, Button, SafeAreaView } from 'react-native'
+import { Dimensions, StyleSheet, Image, Text, TextInput, TouchableOpacity, View, Button, SafeAreaView, FlatList } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { firebase } from '../firebase/firebase';
 import { colorPack } from '../styles/styles';
 import Tag from './Tag'
 import { Divider, Title, Subheading } from 'react-native-paper';
 import { AntDesign } from "@expo/vector-icons";
+import EditRecipe from './EditRecipe';
+import Modal from 'react-native-modal';
 
 const { width, height } = Dimensions.get("window");
 
 export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
-    
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const topLevelTags = [recipe.type, recipe.cuisine].concat(recipe.customTags);
+
+    console.log(topLevelTags)
+
+    const toggleModal = () => {
+        setIsModalVisible(!isModalVisible);
+      };
+
+    const closeEditModal = () => {
+        setIsModalVisible(false);
+    };
+
+    const renderItem = ({item}) => (
+        <Tag item={item} />
+    )
+
     return (
         <View style={styles.container}>
             <Image source={{ uri: urlData.image }} style={styles.image} />
             <Title style={styles.title}>Tags</Title>
-            <View style={styles.basicTags}>
-                <Tag item={recipe.cuisine} />
-                <Tag item={recipe.type} />
+            <View>
+                <FlatList
+                    horizontal
+                    data={topLevelTags}
+                    renderItem={renderItem}
+                    keyExtractor={item => item}
+                    style={styles.tags}
+                />
             </View>
             <Title style={styles.title}>Ingredients</Title>
-            {recipe.ingredients && recipe.ingredients.map(ingredient => <Tag item={ingredient} />)}
+            <View>
+                <FlatList
+                    horizontal
+                    data={recipe.ingredients}
+                    renderItem={renderItem}
+                    keyExtractor={item => item}
+                    style={styles.tags}
+                />
+            </View>
             <View style={styles.topLeftButton}>
-                <AntDesign name="close" size={30} color={colorPack.darkgrey} onPress={closeModal}/>
+                <AntDesign name="close" size={28} color={colorPack.darkgrey} onPress={closeModal}/>
             </View>
             <View style={styles.topRightButton}>
-                <AntDesign name="edit" size={30} color={colorPack.darkgrey} />
+                <AntDesign name="edit" size={28} color={colorPack.darkgrey} onPress={toggleModal}/>
             </View>
+            <Modal
+                isVisible={isModalVisible}
+                style={{ margin: 0 }}
+            >
+              <View style={{ flex: 1, backgroundColor: colorPack.backgroundColor, borderRadius: 5 }}>
+                <EditRecipe recipe={recipe} closeEditModal={closeEditModal}/>
+                <Button title="Hide modal" onPress={toggleModal} />
+              </View>
+            </Modal>
         </View>
     )
 }
@@ -50,6 +90,9 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         padding: 10
     },
+    tags: {
+        padding: 10
+    },
     title: {
         paddingTop: 10,
         paddingLeft: 10,
@@ -60,9 +103,9 @@ const styles = StyleSheet.create({
         bottom: '88%',
         left: 15,
         backgroundColor: 'white',
-        borderRadius: 50 / 2,
-        height: 50, 
-        width: 50,
+        borderRadius: 40 / 2,
+        height: 40, 
+        width: 40,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -71,9 +114,9 @@ const styles = StyleSheet.create({
         bottom: '88%',
         right: 15,
         backgroundColor: 'white',
-        borderRadius: 50 / 2,
-        height: 50, 
-        width: 50,
+        borderRadius: 40 / 2,
+        height: 40, 
+        width: 40,
         justifyContent: 'center',
         alignItems: 'center',
     }
