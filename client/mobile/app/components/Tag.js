@@ -16,6 +16,7 @@ export default function Tag({ item }) {
                 borderColor: colorPack.lightgrey,
                 borderWidth: 1,
                 backgroundColor: 'white',
+                paddingRight: 5,
                 },
                 // tagContainerStyle || {}
                 ]
