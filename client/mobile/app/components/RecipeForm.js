@@ -29,7 +29,8 @@ import { Divider, Title, Subheading } from 'react-native-paper';
 import MultiSelectForm from './MultiSelectForm';
 import { colorPack } from '../styles/styles';
 import Clipboard, { useClipboard } from '@react-native-clipboard/clipboard';
-import Tag from './Tag'
+import Tag from './Tag';
+import {Picker} from '@react-native-picker/picker';
 
 const { width, height } = Dimensions.get("window");
 
@@ -40,8 +41,8 @@ export default RecipeForm = (props) => {
     const initialFormState = {
         url: '',
         ingredients: [],
-        type: [],
-        cuisine: [],
+        type: '',
+        cuisine: '',
         // createdAt: '',
         customTags: [],
         savedBy: '',
@@ -85,8 +86,8 @@ export default RecipeForm = (props) => {
         setState({
             url: props.url || 'https://www.youtube.com/watch?v=6GHPxpQcn_o',
             ingredients: props.ingredients || [],
-            type: [props.type] || null,
-            cuisine: [props.cuisine] || null,
+            type: props.type || '',
+            cuisine: props.cuisine || '',
             // createdAt: moment(props.createdAt) || moment(),
             savedBy: props.savedBy || uid,
             customTags: props.customTags || [],
@@ -172,7 +173,19 @@ export default RecipeForm = (props) => {
                     <Text style={styles.clearButton} >Clear selection</Text>
                 </TouchableOpacity>
             </View>
-            <MultiSelect
+            <Picker 
+                onValueChange={value => setState({ ...state, type: value })}
+                selectedValue={state.type}
+                style={styles.picker}
+                itemStyle={styles.pickerItem}
+            >
+                {recipeTypes.map(recipeType => {
+                    return (
+                        <Picker.Item label={recipeType} value={recipeType} />
+                    )
+                })}
+            </Picker>
+            {/* <MultiSelect
                 single
                 items={recipeTypes.map(recipeType => {
                     return {
@@ -204,14 +217,29 @@ export default RecipeForm = (props) => {
                 hideDropdown={true}
                 fixedHeight
                 submitButtonColor="#3eb489"
-            />
+            /> */}
                 <View style={styles.subtitleGroup}>
                     <Text style={styles.subtitle}>Add the recipe cuisine</Text>
                     <TouchableOpacity onPress={clearSelectedCuisines}>
                         <Text style={styles.clearButton} >Clear selection</Text>
                     </TouchableOpacity>
                 </View>
-                <MultiSelect
+                {/* <View style={{ height: 20}}> */}
+                    <Picker 
+                        onValueChange={value => setState({ ...state, cuisine: value })}
+                        selectedValue={state.cuisine}
+                        style={styles.picker}
+                        itemStyle={styles.pickerItem}
+                    >
+                        {recipeCuisines.map(recipeCuisine => {
+                            return (
+                                <Picker.Item label={recipeCuisine} value={recipeCuisine} />
+                            )
+                        })}
+                    </Picker>
+
+                {/* </View> */}
+                {/* <MultiSelect
                     single
                     items={recipeCuisines.map(recipeCuisine => {
                         return {
@@ -243,7 +271,7 @@ export default RecipeForm = (props) => {
                     hideDropdown={true}
                     fixedHeight
                     submitButtonColor="#3eb489"
-                />
+                /> */}
             <Text style={styles.subtitle}>Add all or some of the ingredients used in the recipe. This can be used to search for recipes in the future.</Text>
             <Button title='Add ingredients' onPress={toggleIngredientModal}/>
             <Modal
@@ -492,5 +520,14 @@ const styles = StyleSheet.create({
     panelText: {
         marginLeft: 10,
         fontSize: 18
+    },
+    picker: {
+        paddingRight: 10,
+        paddingLeft: 10,
+        height: 100
+    },
+    pickerItem: {
+        fontSize: 18,
+        height: 120
     }
 })

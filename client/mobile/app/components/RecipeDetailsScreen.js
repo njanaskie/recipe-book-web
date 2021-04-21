@@ -4,18 +4,38 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { firebase } from '../firebase/firebase';
 import { colorPack } from '../styles/styles';
 import Tag from './Tag'
-import { Divider, Title, Subheading, Button } from 'react-native-paper';
+import { Divider, Title, Subheading, Button, Menu, Paragraph, Provider, Portal, Dialog, Card, IconButton } from 'react-native-paper';
 import { Feather } from "@expo/vector-icons";
 import EditRecipe from './EditRecipe';
 import Modal from 'react-native-modal';
 import LinearGradient from 'react-native-linear-gradient';
 import { LinkPreview } from '@flyerhq/react-native-link-preview';
+import { removeRecipeService } from '../services/recipeServices';
+import { useRecipesContext } from '../context/recipes-context';
 
 const { width, height } = Dimensions.get("window");
 
 export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const topLevelTags = [recipe.type, recipe.cuisine].concat(recipe.customTags);
+    const [isMenuVisible, setIsMenuVisible] = useState(false);
+    const [isRemoveModalVisible, setIsRemoveModalVisible] = useState(false);
+    const { recipeDispatch } = useRecipesContext()
+
+    const openMenu = () => setIsMenuVisible(true);
+  
+    const closeMenu = () => setIsMenuVisible(false);
+
+    const openRemoveModal = () => setIsRemoveModalVisible(true);
+  
+    const closeRemoveModal = () => setIsRemoveModalVisible(false);
+
+    const handleRemoveRecipe = () => {
+        closeRemoveModal()
+        // removeRecipe(recipe.id)
+        removeRecipeService({ id: recipe.id })
+        recipeDispatch({ type: 'REMOVE_RECIPE', id: recipe.id })
+    }
 
     const toggleModal = () => {
         setIsModalVisible(!isModalVisible);
@@ -69,11 +89,43 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
             {/* <Divider /> */}
             <Button icon='open-in-new' mode='outlined' color='white' style={styles.link} onPress={() => Linking.openURL(recipe.url)}>Go To Recipe</Button>
             <View style={styles.topLeftButton}>
-                <Feather name="x" size={24} color={colorPack.darkgrey} onPress={closeModal}/>
+                <IconButton icon="close" size={24} color={colorPack.darkgrey} onPress={closeModal}/>
             </View>
-            <View style={styles.topRightButton}>
-                <Feather name="edit" size={24} color={colorPack.darkgrey} onPress={toggleModal}/>
-            </View>
+            <Provider>
+                <View style={styles.topRightButton}>
+                <Menu
+                    visible={isMenuVisible}
+                    onDismiss={closeMenu}
+                    anchor={
+                        <Button onPress={openMenu}>
+                            {/* <View style={styles.topRightButton}> */}
+                                <Feather name="menu" size={24} color={colorPack.darkgrey} />
+                            {/* </View> */}
+                        </Button>
+                    }
+                >
+                    <Menu.Item onPress={toggleModal} title='Edit Recipe'/>
+                    <Menu.Item onPress={openRemoveModal} title='Remove Recipe' titleStyle={{ color: 'red' }}/>
+                </Menu>
+
+                </View>
+            </Provider>
+            <Modal
+                isVisible={isRemoveModalVisible}
+            >
+                <View>
+                    <Card>
+                        <Card.Title title='Confirm Removal' />
+                        <Card.Content>
+                            <Paragraph>Are you sure you want to remove this recipe?</Paragraph>
+                        </Card.Content>
+                        <Card.Actions>
+                            <Button onPress={closeRemoveModal}>Cancel</Button>
+                            <Button onPress={handleRemoveRecipe}>Remove</Button>
+                        </Card.Actions>
+                    </Card>
+                </View>
+            </Modal>
             <Modal
                 isVisible={isModalVisible}
                 style={{ margin: 0 }}
@@ -140,7 +192,7 @@ const styles = StyleSheet.create({
     },
     topLeftButton: {
         position: 'absolute',
-        bottom: '88%',
+        bottom: 745,
         left: 15,
         backgroundColor: 'white',
         borderRadius: 40 / 2,
@@ -151,7 +203,7 @@ const styles = StyleSheet.create({
     },
     topRightButton: {
         position: 'absolute',
-        bottom: '88%',
+        bottom: 745,
         right: 15,
         backgroundColor: 'white',
         borderRadius: 40 / 2,

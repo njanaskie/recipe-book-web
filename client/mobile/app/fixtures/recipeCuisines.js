@@ -1,11 +1,14 @@
 export default [
     "Mexican",
     "Italian",
-    "Asian",
+    "Chinese",
+    "Japanese",
+    "Korean",
+    "Thai",
     "Indian",
     "Mediterranean",
-    "Thai",
     "French",
     "German",
-    "Carribbean"
+    "Carribbean",
+    "Other"
 ]
