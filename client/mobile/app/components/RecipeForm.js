@@ -25,7 +25,7 @@ import Modal from 'react-native-modal';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Feather';
 import { Feather } from "@expo/vector-icons";
-import { Divider, Title, Subheading } from 'react-native-paper';
+import { Button as PaperButton, Divider, Title, Subheading, Caption } from 'react-native-paper';
 import MultiSelectForm from './MultiSelectForm';
 import { colorPack } from '../styles/styles';
 import Clipboard, { useClipboard } from '@react-native-clipboard/clipboard';
@@ -84,7 +84,7 @@ export default RecipeForm = (props) => {
 
     useEffect(() => {
         setState({
-            url: props.url || 'https://www.youtube.com/watch?v=6GHPxpQcn_o',
+            url: props.url || 'https://www.gimmesomeoven.com/fried-rice-recipe/',
             ingredients: props.ingredients || [],
             type: props.type || '',
             cuisine: props.cuisine || '',
@@ -167,113 +167,57 @@ export default RecipeForm = (props) => {
                 // underlineColorAndroid="transparent"
                 // autoCapitalize="none"
             />
-            <View style={styles.subtitleGroup}>
-                <Text style={styles.subtitle}>Add the type of recipe</Text>
-                <TouchableOpacity onPress={clearSelectedTypes}>
+            <View style={{ paddingHorizontal: 20, flexDirection: 'column'}}>
+                <Title>Type</Title>
+                {/* <TouchableOpacity onPress={clearSelectedTypes}>
                     <Text style={styles.clearButton} >Clear selection</Text>
-                </TouchableOpacity>
-            </View>
-            <Picker 
-                onValueChange={value => setState({ ...state, type: value })}
-                selectedValue={state.type}
-                style={styles.picker}
-                itemStyle={styles.pickerItem}
-            >
-                {recipeTypes.map(recipeType => {
-                    return (
-                        <Picker.Item label={recipeType} value={recipeType} />
-                    )
-                })}
-            </Picker>
-            {/* <MultiSelect
-                single
-                items={recipeTypes.map(recipeType => {
-                    return {
-                        id: recipeType,
-                        name: recipeType
-                    }
-                })}
-                ref={c => _multiSelectType = c}
-                uniqueKey="id"
-                onSelectedItemsChange={(selectedItems) => setState({ ...state, type: selectedItems })}
-                selectedItems={state.type}
-                selectText="Select Type"
-                // searchInputPlaceholderText="Search Type"
-                tagRemoveIconColor="#3eb489"
-                tagBorderColor="#3eb489"
-                tagTextColor="#3eb489"
-                selectedItemTextColor="#3eb489"
-                selectedItemIconColor="#3eb489"
-                // displayKey="name"
-                styleMainWrapper={styles.multiSelectContainer, { marginLeft: 20, marginRight: 20 }}
-                styleInputGroup={styles.multiSelectInputGroup}
-                searchInputStyle={styles.multiSelectSearchInputStyle}
-                styleDropdownMenu={styles.multiSelectDropdownMenu}
-                styleSelectorContainer={styles.multiSelectSelector}
-                styleTextDropdown={styles.multiSelectTextDropdown}
-                hideSubmitButton={true}
-                textInputProps={{ editable: false, autoFocus: false, }}
-                searchIcon={false}
-                hideDropdown={true}
-                fixedHeight
-                submitButtonColor="#3eb489"
-            /> */}
-                <View style={styles.subtitleGroup}>
-                    <Text style={styles.subtitle}>Add the recipe cuisine</Text>
-                    <TouchableOpacity onPress={clearSelectedCuisines}>
-                        <Text style={styles.clearButton} >Clear selection</Text>
-                    </TouchableOpacity>
-                </View>
-                {/* <View style={{ height: 20}}> */}
-                    <Picker 
-                        onValueChange={value => setState({ ...state, cuisine: value })}
-                        selectedValue={state.cuisine}
-                        style={styles.picker}
-                        itemStyle={styles.pickerItem}
-                    >
-                        {recipeCuisines.map(recipeCuisine => {
-                            return (
-                                <Picker.Item label={recipeCuisine} value={recipeCuisine} />
-                            )
-                        })}
-                    </Picker>
-
-                {/* </View> */}
-                {/* <MultiSelect
-                    single
-                    items={recipeCuisines.map(recipeCuisine => {
-                        return {
-                            id: recipeCuisine,
-                            name: recipeCuisine
-                        }
+                </TouchableOpacity> */}
+                <Picker 
+                    onValueChange={value => setState({ ...state, type: value })}
+                    selectedValue={state.type}
+                    style={styles.picker}
+                    itemStyle={styles.pickerItem}
+                >
+                    {recipeTypes.map(recipeType => {
+                        return (
+                            <Picker.Item label={recipeType} value={recipeType} />
+                        )
                     })}
-                    ref={c => _multiSelectCuisine = c}
-                    uniqueKey="id"
-                    onSelectedItemsChange={(selectedItems) => setState({ ...state, cuisine: selectedItems })}
-                    selectedItems={state.cuisine}
-                    selectText="Select Cuisine"
-                    // searchInputPlaceholderText="Search Cuisine"
-                    tagRemoveIconColor="#3eb489"
-                    tagBorderColor="#3eb489"
-                    tagTextColor="#3eb489"
-                    selectedItemTextColor="#3eb489"
-                    selectedItemIconColor="#3eb489"
-                    // displayKey="name"
-                    styleMainWrapper={styles.multiSelectContainer, { marginLeft: 20, marginRight: 20 }}
-                    styleInputGroup={styles.multiSelectInputGroup}
-                    searchInputStyle={styles.multiSelectSearchInputStyle}
-                    styleDropdownMenu={styles.multiSelectDropdownMenu}
-                    styleSelectorContainer={styles.multiSelectSelector}
-                    styleTextDropdown={styles.multiSelectTextDropdown}
-                    hideSubmitButton={true}
-                    textInputProps={{ editable: false, autoFocus: false, }}
-                    searchIcon={false}
-                    hideDropdown={true}
-                    fixedHeight
-                    submitButtonColor="#3eb489"
-                /> */}
-            <Text style={styles.subtitle}>Add all or some of the ingredients used in the recipe. This can be used to search for recipes in the future.</Text>
-            <Button title='Add ingredients' onPress={toggleIngredientModal}/>
+                </Picker>
+            </View>
+            <View style={{ paddingHorizontal: 20, flexDirection: 'column'}}>
+                <Title>Cuisine</Title>
+                {/* <TouchableOpacity onPress={clearSelectedCuisines}>
+                    <Text style={styles.clearButton} >Clear selection</Text>
+                </TouchableOpacity> */}
+                <Picker 
+                    onValueChange={value => setState({ ...state, cuisine: value })}
+                    selectedValue={state.cuisine}
+                    style={styles.picker}
+                    itemStyle={styles.pickerItem}
+                >
+                    {recipeCuisines.map(recipeCuisine => {
+                        return (
+                            <Picker.Item label={recipeCuisine} value={recipeCuisine} />
+                        )
+                    })}
+                </Picker>
+            </View>
+            <View >
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20 }}>
+                    <Title>Ingredients</Title>
+                    <PaperButton
+                        compact
+                        uppercase={false}
+                        onPress={toggleIngredientModal}
+                        // style={{ right: 40, alignSelf: 'center' }}
+                        // contentStyle={{ height: 100, width: 300 }}
+                    >
+                        Add ingredients
+                    </PaperButton>
+                </View>
+                <Caption style={styles.subtitle}>Add a few key ingredients or all of them. You can use ingredients to find your recipes in the future.</Caption>
+            </View>
             <Modal
                 isVisible={isIngredientModalVisible}
                 onBackdropPress={toggleIngredientModal}
@@ -318,8 +262,21 @@ export default RecipeForm = (props) => {
                     keyExtractor={item => item}
                 />
             </View>
-            <Text style={styles.subtitle}>Add your own tags to categorize recipes however you want</Text>
-            <Button title='Add tags' onPress={toggleTagModal}/>
+            <View >
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20 }}>
+                    <Title>Custom Tags</Title>
+                    <PaperButton
+                        compact
+                        uppercase={false}
+                        onPress={toggleTagModal}
+                        // style={{ right: 40, alignSelf: 'center' }}
+                        // contentStyle={{ height: 100, width: 300 }}
+                    >
+                        Add tags
+                    </PaperButton>
+                </View>
+                <Caption style={styles.subtitle}>Add your own tags to categorize recipes any way you want.</Caption>
+            </View>
             <Modal
                 isVisible={isTagModalVisible}
                 onBackdropPress={toggleTagModal}
@@ -491,7 +448,8 @@ const styles = StyleSheet.create({
     subtitle: {
         marginLeft: 20,
         marginRight: 20,
-        marginTop: 10
+        // marginTop: 10
+        width: 240
     },
     subtitleGroup: {
         // flex: 1,
@@ -522,12 +480,14 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     picker: {
-        paddingRight: 10,
-        paddingLeft: 10,
-        height: 100
+        // flex: 1,
+        // paddingRight: 10,
+        // paddingLeft: 10,
+        height: 100,
     },
     pickerItem: {
         fontSize: 18,
-        height: 120
+        height: 100,
+        // width: 200
     }
 })
