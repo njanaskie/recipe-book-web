@@ -4,7 +4,7 @@ import RecipeForm from './RecipeForm'
 import { useRecipesContext } from '../context/recipes-context'
 import { addRecipeService, scrapeURLService } from '../services/recipeServices'
 
-const AddRecipe = () => {
+const AddRecipe = ({ toggleFormModal }) => {
     const { recipes, recipeDispatch } = useRecipesContext()
     // const history = useHistory()
 
@@ -23,6 +23,7 @@ const AddRecipe = () => {
         <View>
             <RecipeForm
                 onSubmit={onSubmit}
+                toggleFormModal={toggleFormModal}
                 // results={recipes}
             />
         </View>

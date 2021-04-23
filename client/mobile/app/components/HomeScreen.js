@@ -58,7 +58,7 @@ export default function HomeScreen() {
       </View>
     );
   
-    const toggleModal = () => {
+    const toggleFormModal = () => {
       setIsModalVisible(!isModalVisible);
     };
   
@@ -73,7 +73,7 @@ export default function HomeScreen() {
             <Animatable.View animation="pulse" easing="ease-out" iterationCount="infinite">
               <TouchableOpacity
                   style={{ padding: 20 }}
-                  onPress={toggleModal}
+                  onPress={toggleFormModal}
               >
                   <Feather name="plus-circle" size={150} color={colorPack.mint}/>
               </TouchableOpacity>
@@ -83,8 +83,7 @@ export default function HomeScreen() {
                 style={{ margin: 0 }}
             >
               <View style={{ flex: 1, backgroundColor: colorPack.backgroundColor, borderRadius: 5 }}>
-                <AddRecipe />
-                <Button title="Hide modal" onPress={toggleModal} />
+                <AddRecipe toggleFormModal={toggleFormModal}/>
               </View>
             </Modal>
           </View>

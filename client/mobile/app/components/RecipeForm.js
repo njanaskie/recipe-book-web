@@ -55,8 +55,8 @@ export default RecipeForm = (props) => {
     const uid = user.uid
     const [isTagModalVisible, setIsTagModalVisible] = useState(false);
     const [isIngredientModalVisible, setIsIngredientTagModalVisible] = useState(false);
-    const [copiedText, setCopiedText] = useState('');
-    const [data, setString] = useClipboard();
+    // const [copiedText, setCopiedText] = useState('');
+    // const [data, setString] = useClipboard();
 
     // useEffect(() => {
     //     setString('hello world');
@@ -145,7 +145,11 @@ export default RecipeForm = (props) => {
 
     return (
         <SafeAreaView style={styles.container} onSubmit={onSubmit}>
-            <Title style={styles.title}>I want to save...</Title>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 10 }}>
+                <PaperButton color={colorPack.darkgrey} onPress={props.toggleFormModal}>Close</PaperButton>
+                <Title style={styles.title}>I want to save...</Title>
+                <PaperButton onPress={onSubmit}>Submit</PaperButton>
+            </View>
             {/* <Text>{data}</Text>
             <View >
                 <TouchableOpacity onPress={copyToClipboard}>
@@ -157,7 +161,10 @@ export default RecipeForm = (props) => {
 
                 <Text>{copiedText}</Text>
             </View> */}
-            <Text style={styles.subtitle}>Copy the recipe URL link into the text bar</Text>
+            <View style={{ paddingHorizontal: 20, flexDirection: 'column'}}>
+                <Title>Recipe URL</Title>
+                <Caption>Copy the recipe URL into the text bar</Caption>
+            </View>
             <TextInput
                 style={styles.input}
                 placeholder='Insert URL'
@@ -167,15 +174,16 @@ export default RecipeForm = (props) => {
                 // underlineColorAndroid="transparent"
                 // autoCapitalize="none"
             />
-            <View style={{ paddingHorizontal: 20, flexDirection: 'column'}}>
-                <Title>Type</Title>
+            <Divider />
+            <View style={{ paddingHorizontal: 20, flexDirection: 'row'}}>
+                <Title style={{ width: '30%', alignSelf: 'center'}}>Type</Title>
                 {/* <TouchableOpacity onPress={clearSelectedTypes}>
                     <Text style={styles.clearButton} >Clear selection</Text>
                 </TouchableOpacity> */}
                 <Picker 
                     onValueChange={value => setState({ ...state, type: value })}
                     selectedValue={state.type}
-                    style={styles.picker}
+                    style={{...styles.picker, flex: 1}}
                     itemStyle={styles.pickerItem}
                 >
                     {recipeTypes.map(recipeType => {
@@ -185,15 +193,16 @@ export default RecipeForm = (props) => {
                     })}
                 </Picker>
             </View>
-            <View style={{ paddingHorizontal: 20, flexDirection: 'column'}}>
-                <Title>Cuisine</Title>
+            <Divider />
+            <View style={{ paddingHorizontal: 20, flexDirection: 'row'}}>
+                <Title style={{ width: '30%', alignSelf: 'center'}}>Cuisine</Title>
                 {/* <TouchableOpacity onPress={clearSelectedCuisines}>
                     <Text style={styles.clearButton} >Clear selection</Text>
                 </TouchableOpacity> */}
                 <Picker 
                     onValueChange={value => setState({ ...state, cuisine: value })}
                     selectedValue={state.cuisine}
-                    style={styles.picker}
+                    style={{...styles.picker, flex: 1}}
                     itemStyle={styles.pickerItem}
                 >
                     {recipeCuisines.map(recipeCuisine => {
@@ -203,8 +212,9 @@ export default RecipeForm = (props) => {
                     })}
                 </Picker>
             </View>
+            <Divider />
             <View >
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 10 }}>
                     <Title>Ingredients</Title>
                     <PaperButton
                         compact
@@ -246,7 +256,7 @@ export default RecipeForm = (props) => {
                         styleInputGroup={styles.multiSelectInputGroup}
                         searchInputStyle={styles.multiSelectSearchInputStyle}
                         styleTextDropdown={styles.multiSelectTextDropdown}
-                        styleListContainer={{ height: 680 }}
+                        styleListContainer={{ height: height - 200 }}
                         hideDropdown={true}
                         textInputProps={{ autoFocus: false }}
                         fixedHeight
@@ -262,8 +272,9 @@ export default RecipeForm = (props) => {
                     keyExtractor={item => item}
                 />
             </View>
+            <Divider />
             <View >
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 10 }}>
                     <Title>Custom Tags</Title>
                     <PaperButton
                         compact
@@ -312,7 +323,7 @@ export default RecipeForm = (props) => {
                         styleInputGroup={styles.multiSelectInputGroup}
                         searchInputStyle={styles.multiSelectSearchInputStyle}
                         styleTextDropdown={styles.multiSelectTextDropdown}
-                        styleListContainer={{ height: 680 }}
+                        styleListContainer={{ height: height - 200 }}
                         hideDropdown={true}
                         textInputProps={{ autoFocus: false }}
                         fixedHeight
@@ -328,7 +339,6 @@ export default RecipeForm = (props) => {
                     keyExtractor={item => item}
                 />
             </View>
-            <Button onPress={onSubmit} title='Submit' />
         </SafeAreaView>
         
     )
@@ -370,7 +380,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         backgroundColor: 'white',
         marginTop: 10,
-        // marginBottom: 30,
+        marginBottom: 10,
         marginRight: 20,
         marginLeft: 20,
         paddingLeft: 16,
