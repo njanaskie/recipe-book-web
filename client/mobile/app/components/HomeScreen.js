@@ -29,6 +29,7 @@ import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import { colorPack } from '../styles/styles'
 import RecipeList from './RecipeList'
+import { Title } from 'react-native-paper';
 
 const { width, height } = Dimensions.get("window");
 const snapPoints = [ '95%', '15%'];
@@ -53,7 +54,10 @@ export default function HomeScreen() {
       <View style={styles.header}>
         <View style={styles.panelHeader}>
           <View style={styles.panelHandle} />
-          <LogoutButton />
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              {/* <Title>My Recipes</Title> */}
+              <LogoutButton />
+            </View>
         </View>
       </View>
     );

@@ -24,27 +24,16 @@ export const RecipeList = () => {
     if (!recipes || !recipes.length) {
         return <Text>No recipes</Text>
     }
-
-    const tableItems = recipes.map((recipe) => {
-        return (
-            <RecipeListItem key={recipe.id} recipe={recipe} />
-        )
-    })
     
     return (
-        // <View>
-        //     {tableItems}
-        // </View>
-        // <View style={styles.containter}>
-            <FlatList 
-                data={recipes}
-                renderItem={({ item }) => <RecipeListItem recipe={item} />}
-                keyExtractor={item => item.id}
-                numColumns={2}
-                columnWrapperStyle={{ justifyContent: 'space-between' }}
-                contentContainerStyle={styles.containter}
-            />
-        // </View>
+        <FlatList 
+            data={recipes}
+            renderItem={({ item }) => <RecipeListItem recipe={item} />}
+            keyExtractor={item => item.id}
+            numColumns={2}
+            columnWrapperStyle={{ justifyContent: 'space-between' }}
+            contentContainerStyle={styles.containter}
+        />
     )
 }
 

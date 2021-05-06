@@ -46,11 +46,11 @@ export const addRecipeService = async (recipe) => {
     }
 }
 
-export const getRecipesService = async () => {
+export const getRecipesService = async (page, itemsPerPage) => {
     const header = await createToken();
 
     try {
-        const res = await axios.get(`${url}/api/recipes`, header)
+        const res = await axios.get(`${url}/api/recipes?page=${page}&per_page=${itemsPerPage}`, header)
         return res.data
     } catch(e) {
         console.log(e)

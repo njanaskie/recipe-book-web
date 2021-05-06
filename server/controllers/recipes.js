@@ -22,9 +22,14 @@ scrapeURL = async (req, res) => {
 
 getRecipes = async (req, res) => {
         const auth = req.currentUser;
+        const skip = req.query.page - 1
+        const limit = req.query.per_page
+        console.log('req', req.query)
 
         if (auth) {
             const recipes = await Recipe.find({ savedBy: auth.uid })
+                .skip(parseInt(skip))
+                .limit(parseInt(limit))
             // const recipes = await Recipe.find({})
             return res.json(recipes.map((recipe) => recipe.toJSON() ));
         }

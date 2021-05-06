@@ -5,10 +5,18 @@ import { useRecipesContext } from '../context/recipes-context'
 import { getRecipesService } from '../services/recipeServices'
 
 const useAllRecipes = () => {
-    const [count, setCount] = useState(0)
+    const initialState = {
+        itemsPerPage: 2,
+        page: 1,
+        loading: true,
+        error: null
+    };
+    const [state, setState] = useState(initialState)
     const { recipes, recipeDispatch } = useRecipesContext()
     const isCurrent = useRef(true)
     const { user } = useFirebaseContext()
+
+    console.log('useallrecipes', state)
 
     React.useEffect(() => {
         return () => {
@@ -17,34 +25,20 @@ const useAllRecipes = () => {
     }, []) 
 
     React.useEffect(() => {
-        // const fetchData = () =>
-        //     database.collection('users').doc(user.uid).collection('recipes')
-        //     .orderBy('createdAt', 'desc')
-        //     .get()
-        //     .then((snapshot) => {
-        //         if (isCurrent.current) {
-        //             var docCount = snapshot.docs.length
-
-        //             const recipes = snapshot.docs.map((doc) => ({
-        //                 id: doc.id,
-        //                 ...doc.data()
-        //                 }))
-
-        //             recipeDispatch({ type: 'SET_RECIPES', recipes})
-        //             setCount(docCount)
-
-        //         }
-        //     }, (e) => {
-        //         console.log('Error with array. ', e)
-        //     });
-
-        // if (user) {
-        //     fetchData()
-        // }
         const fetchRecipes = async () => {
             if (isCurrent.current) {
-                const fetchedRecipes = await getRecipesService()
-                recipeDispatch({ type: 'SET_RECIPES', recipes: fetchedRecipes})
+                const fetchedRecipes = await getRecipesService(state.page, state.itemsPerPage)
+                console.log(fetchedRecipes.length)
+                recipeDispatch({
+                    type: 'SET_RECIPES',
+                    recipes: state.page === 1
+                        ? fetchedRecipes
+                        : [...recipes, ...fetchedRecipes]
+                })
+                setState((prevState, nextProps) => ({
+                    ...state,
+                    loading: false,
+                }))
             }
         }
         
@@ -54,7 +48,7 @@ const useAllRecipes = () => {
 
     }, [user])
 
-    return { recipes: recipes || [''], count }
+    return { recipes: recipes || [] }
 }
 
 export default useAllRecipes
