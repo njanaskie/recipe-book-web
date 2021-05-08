@@ -4,14 +4,14 @@ import { useFirebaseContext } from '../context/firebase-context'
 import { useRecipesContext } from '../context/recipes-context'
 import { getRecipesService } from '../services/recipeServices'
 
-const useAllRecipes = () => {
-    const initialState = {
-        itemsPerPage: 2,
-        page: 1,
-        loading: true,
-        error: null
-    };
-    const [state, setState] = useState(initialState)
+const useAllRecipes = (pageState) => {
+    // const initialState = {
+    //     itemsPerPage: 2,
+    //     page: 1,
+    //     loading: true,
+    //     error: null
+    // };
+    const [state, setState] = useState(pageState)
     const { recipes, recipeDispatch } = useRecipesContext()
     const isCurrent = useRef(true)
     const { user } = useFirebaseContext()

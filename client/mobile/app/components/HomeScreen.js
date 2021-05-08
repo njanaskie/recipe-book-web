@@ -35,7 +35,7 @@ const { width, height } = Dimensions.get("window");
 const snapPoints = [ '95%', '15%'];
 
 export default function HomeScreen() {
-    const recipes = useAllRecipes()
+    // const recipes = useAllRecipes()
     const ingredients = useIngredients()
     // const { recipes } = useRecipesContext()
     // const { ingredients } = useIngredientsContext()
