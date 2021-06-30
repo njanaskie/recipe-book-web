@@ -1,4 +1,4 @@
 export const config  = {
-    itemsPerPage: 10,
-    itemsFetched: 11
+    itemsPerPage: 2,
+    // itemsFetched: 11
 }

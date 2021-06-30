@@ -7,21 +7,25 @@ import { useRecipesContext } from '../context/recipes-context'
 import { FlatList, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 import useAllRecipes from '../hooks/useAllRecipes'
 import { getRecipesService } from '../services/recipeServices'
+import usePrevious from '../hooks/usePrevious'
 
 
 export const RecipeList = () => {
     const initialFormState = {
-        itemsPerPage: 4,
         isListEnd: false,
         page: 1,
         loading: true,
         loadingMore: false,
+        refreshing: false,
+        hasMoreToLoad: true,
         error: null
     }
     const [pageState, setPageState] = useState(initialFormState)
     // const { filters } = useFiltersContext()
     const { recipes, recipeDispatch } = useRecipesContext()
     const isCurrent = useRef(true)
+    const prevPage = usePrevious(pageState.page)
+    const itemsPerPage = config.itemsPerPage
     // const startIndex = (pageState.activePage * config.itemsPerPage) - config.itemsPerPage
     // const endIndex = startIndex + config.itemsPerPage
     // const selectedRecipes = selectRecipes(recipes, filters)
@@ -40,35 +44,59 @@ export const RecipeList = () => {
 
     fetchRecipes = async () => {
         // if (isCurrent.current) {
-            const fetchedRecipes = await getRecipesService(pageState.page, pageState.itemsPerPage)
-            if (fetchedRecipes.length > 0) {
+            const fetchedRecipes = await getRecipesService(pageState.page, itemsPerPage)
+            console.log(fetchedRecipes.map(recipe => recipe.url))
+            if (fetchedRecipes) {
                 recipeDispatch({
                     type: 'SET_RECIPES',
                     recipes: pageState.page === 1
                         ? fetchedRecipes
                         : [...recipes, ...fetchedRecipes]
                 })
-                setPageState((prevState, nextProps) => ({
-                    ...pageState,
-                    loading: false,
-                    loadingMore: false,
-                }))
-            } else {
-                setPageState(() => ({
-                    ...pageState,
-                    isListEnd: true
-                }))
-            }
+                // .then((res) => {
+                    setPageState((prevState, nextProps) => ({
+                        ...pageState,
+                        loading: false,
+                        loadingMore: false,
+                        refreshing: false,
+                        hasMoreToLoad: fetchedRecipes.length < itemsPerPage ? false : true
+                    }))
+                // }).catch(error => {
+                //     setPageState({ ...pageState, error, loading: false})
+                // })
+            } 
+            // else {
+            //     setPageState(() => ({
+            //         ...pageState,
+            //         isListEnd: true
+            //     }))
+            // }
         // }
     }
 
+    handleRefresh = () => {
+        console.log('handle refresh')
+        setPageState(
+          {
+            page: 1,
+            refreshing: true
+          },
+          () => {
+            fetchRecipes();
+          }
+        );
+      };
+
     handleLoadMore = () => {
        console.log('load more')
-       setPageState((prevState, nextProps) => ({
-            ...pageState,
-            page: prevState.page + 1,
+       setPageState((prevState) => ({
+            // ...pageState,
+            page: prevPage + 1,
             loadingMore: true
         }))
+        // () => {
+        //     fetchRecipes()
+        // }
     }
 
     renderFooter = () => {
@@ -97,17 +125,28 @@ export const RecipeList = () => {
     }
     
     return (
-        <FlatList 
-            data={recipes}
-            renderItem={({ item }) => <RecipeListItem recipe={item} />}
-            keyExtractor={item => item.id}
-            numColumns={2}
-            columnWrapperStyle={{ justifyContent: 'space-between' }}
-            contentContainerStyle={styles.containter}
-            onEndReached={handleLoadMore}
-            onEndReachedThreshold={0.5}
-            // ListFooterComponent={renderFooter}
-        />
+        !pageState.loading ? (
+            <FlatList 
+                data={recipes}
+                renderItem={({ item }) => <RecipeListItem recipe={item} />}
+                keyExtractor={item => item.id}
+                numColumns={2}
+                columnWrapperStyle={{ justifyContent: 'space-between' }}
+                contentContainerStyle={styles.containter}
+                onEndReached={pageState.hasMoreToLoad ? handleLoadMore : null}
+                onEndReachedThreshold={0.5}
+                // ListFooterComponent={renderFooter}
+                // onRefresh={handleRefresh}
+                // refreshing={pageState.refreshing}
+                // initialNumToRender={6}
+
+            />
+        ) : (
+            <View>
+                <Text>Loading recipes</Text>
+                <ActivityIndicator />
+            </View>
+        )
     )
 }
 
