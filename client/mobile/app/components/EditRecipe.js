@@ -4,7 +4,7 @@ import { useRecipesContext } from '../context/recipes-context'
 import { editRecipeService } from '../services/recipeServices'
 import { View } from 'react-native'
 
-const EditRecipe = ({ recipe, closeEditModal }) => {
+const EditRecipe = ({ recipe, toggleEditModal }) => {
     const { recipes, editRecipe, recipeDispatch } = useRecipesContext()
     // const history = useHistory()
 
@@ -12,7 +12,7 @@ const EditRecipe = ({ recipe, closeEditModal }) => {
         // editRecipe(recipe.id, recipeEdits)
         editRecipeService(recipe.id, recipeEdits)
         recipeDispatch({ type: 'EDIT_RECIPE', id: recipe.id, updates: recipeEdits })
-        closeEditModal()
+        toggleEditModal()
     }
 
     return (
@@ -21,6 +21,7 @@ const EditRecipe = ({ recipe, closeEditModal }) => {
                 {...recipe}
                 onSubmit={onSubmit}
                 results={recipes}
+                toggleFormModal={toggleEditModal}
             />
         </View>
     )

@@ -41,10 +41,6 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
         setIsModalVisible(!isModalVisible);
       };
 
-    const closeEditModal = () => {
-        setIsModalVisible(false);
-    };
-
     const renderItem = ({item}) => (
         // <View style={{marginRight: 10}}>
             <Tag item={item}/>
@@ -131,7 +127,7 @@ export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
                 style={{ margin: 0 }}
             >
               <View style={{ flex: 1, backgroundColor: colorPack.backgroundColor, borderRadius: 5 }}>
-                <EditRecipe recipe={recipe} closeEditModal={closeEditModal}/>
+                <EditRecipe recipe={recipe} toggleEditModal={toggleModal}/>
                 <Button title="Hide modal" onPress={toggleModal} />
               </View>
             </Modal>
