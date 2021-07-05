@@ -135,7 +135,7 @@ export const RecipeList = () => {
                 contentContainerStyle={styles.containter}
                 onEndReached={pageState.hasMoreToLoad ? handleLoadMore : null}
                 onEndReachedThreshold={0.5}
-                // ListFooterComponent={renderFooter}
+                ListFooterComponent={renderFooter}
                 // onRefresh={handleRefresh}
                 // refreshing={pageState.refreshing}
                 // initialNumToRender={6}
