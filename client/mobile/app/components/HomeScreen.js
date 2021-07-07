@@ -55,7 +55,7 @@ export default function HomeScreen() {
         <View style={styles.panelHeader}>
           <View style={styles.panelHandle} />
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              {/* <Title>My Recipes</Title> */}
+              <Title>My Recipes</Title>
               <LogoutButton />
             </View>
         </View>
@@ -79,7 +79,8 @@ export default function HomeScreen() {
                   style={{ padding: 20 }}
                   onPress={toggleFormModal}
               >
-                  <Feather name="plus-circle" size={150} color={colorPack.mint}/>
+                <Feather name="plus-circle" size={150} color={colorPack.mint}/>
+                <Text style={styles.buttonText}>Save a recipe!</Text>
               </TouchableOpacity>
             </Animatable.View>
             <Modal
@@ -129,6 +130,11 @@ const styles = StyleSheet.create({
     body: {
       justifyContent: "center",
       alignItems: "center",
+    },
+    buttonText: {
+      color: colorPack.darkgreen,
+      alignSelf: 'center',
+      paddingTop: 5
     },
     text: {
       fontSize: 18,

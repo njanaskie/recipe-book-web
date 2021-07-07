@@ -1,4 +1,5 @@
 export default [
+    "",
     "Mexican",
     "Italian",
     "Chinese",

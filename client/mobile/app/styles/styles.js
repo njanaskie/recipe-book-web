@@ -4,5 +4,6 @@ export const colorPack = {
     backgroundColor: '#dcf2ea',
     lightgrey: '#CCCCCC',
     grey: '#C4C4C4',
-    darkgrey: '#696969'
+    darkgrey: '#696969',
+    darkgreen: '#0a2e19'
   };

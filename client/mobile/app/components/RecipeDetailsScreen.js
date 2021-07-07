@@ -17,11 +17,12 @@ const { width, height } = Dimensions.get("window");
 
 export default function RecipeDetailsScreen ({ recipe, urlData, closeModal }) {
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const topLevelTags = [recipe.type, recipe.cuisine].concat(recipe.customTags);
+    const topLevelTags = ([recipe.type, recipe.cuisine].concat(recipe.customTags)).filter(tag => tag);
     const [isMenuVisible, setIsMenuVisible] = useState(false);
     const [isRemoveModalVisible, setIsRemoveModalVisible] = useState(false);
     const { recipeDispatch } = useRecipesContext()
 
+    console.log(recipe)
     const openMenu = () => setIsMenuVisible(true);
   
     const closeMenu = () => setIsMenuVisible(false);
