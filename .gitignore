@@ -1,7 +1,8 @@
 node_modules/
-client/web/public/dist/
+public/dist/
 .env.test
 .env.development
 .env
 .yarn*
 .DS_Store
+yarn-error.log
